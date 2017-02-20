@@ -9,18 +9,12 @@ import {
   navigator,
   Animated,
   Picker,
+  ScrollView,
   AsyncStorage
 } from 'react-native';
 
-import { Bar } from 'react-native-pathjs-charts'
+import { Bar } from 'react-native-pathjs-charts';
 
-const DropDown = require('react-native-dropdown');
-const {
-  Select,
-  Option,
-  OptionList,
-  updatePosition
-} = DropDown;
 
 var _navigator ;
 
@@ -31,19 +25,10 @@ class SportChartView extends React.Component {
       
 
     this.state = {
-      sport:''
+      sport:'',
   };
 
 }
-
-componentDidMount() {
-    updatePosition(this.refs['SELECT1']);
-    updatePosition(this.refs['OPTIONLIST']);
-  }
-
-  _getOptionList() {
-    return this.refs['OPTIONLIST'];
-  }
 
 
   _sport(sport) {
@@ -126,24 +111,22 @@ componentDidMount() {
     }
 
     return (
-      <View>
-      <Select
-            width={250}
-            ref="SELECT1"
-            optionListRef={this._getOptionList.bind(this)}
-            defaultValue="Select a Sport ..."
-            onSelect={this._sport.bind(this)}>
-            <Option>CHEST</Option>
-            <Option>BACK</Option>
-            <Option>Manitoba</Option>
-            <Option>lEGS</Option>
-            <Option>SHOULDERS</Option>
+        <View style={styles.container}>
 
-          </Select>
-          <Text>Selected sport of : {this.state.sport}</Text>
-        <OptionList ref="OPTIONLIST"/>
         <Bar data={data} options={options} accessorKey='v'/>
+        <Picker
+          prompt="Please choose sportclass"
+          style={{width:300}}
+          selectedValue={this.state.type}
+          onValueChange={(value) => this.setState({type: value})}>
+          <Picker.Item label="CHEST" value="CHEST"/>
+          <Picker.Item label="BACK" value="BACK" />
+          <Picker.Item label="lEGS" value="lEGS" />
+          <Picker.Item label="SHOULDERS" value="SHOULDERS" />
+          <Picker.Item label="STOMACH" value="STOMACH" />
+        </Picker>
       </View>
+ 
     )
   }
 }
@@ -154,8 +137,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF'
   },
     sportact:{
+      flex:1,
     height:50,
     width:200,
   },
+   
 });
 export default SportChartView;

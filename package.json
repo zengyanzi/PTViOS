@@ -13,6 +13,7 @@
     "react-native-check-box": "^1.0.4",
     "react-native-checkbox": "^1.1.0",
     "react-native-dropdown": "0.0.6",
+    "react-native-menu": "^0.20.2",
     "react-native-pathjs-charts": "0.0.25",
     "react-native-scrollable-tab-view": "^0.7.2",
     "react-native-slider": "^0.9.1",
