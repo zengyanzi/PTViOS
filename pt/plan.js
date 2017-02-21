@@ -15,10 +15,10 @@ import {
   ListView
 } from 'react-native';
 
+import { Icon } from 'react-native-elements';
 
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
-import Topview from './top.js'
 var screenW = Dimensions.get('window').width;
 
 
@@ -144,7 +144,23 @@ var PlanView = React.createClass({
             keyboardShouldPersistTaps="never">
    
              <View>
-                <Topview {...this.props}/>
+               <View style={[styles.Top,styles.Bottomline]}>
+                <View style={[styles.Topbar,styles.Left]}>
+                    <TouchableOpacity >
+                      <Icon   reverse  name='settings'   color='#38bda0' onPress={() => _navigator.push({title:'CreateplanView',id:'createplan'})} />
+                     </TouchableOpacity> 
+                </View>
+                <View style={styles.Topbar}>
+              </View>
+              
+              <View style={[styles.Topbar,styles.Right]}>
+              <TouchableOpacity 
+                      onPress={() => _navigator.push({title:'AdditemtodayView',id:'additemtoday'})}>
+                <Image source={require('../img/add_pressed.png') }/>
+              </TouchableOpacity> 
+              </View>
+              
+            </View>
             </View>
             <ListView style={styles.listview}
               scrollEnabled={this.state.scrollEnabled}
@@ -167,12 +183,12 @@ var styles = StyleSheet.create({
     backgroundColor: '#38bda0',
     justifyContent: 'center',
   },
-  Top:{
+   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-    justifyContent: 'center',
+     justifyContent: 'space-between',
   },
   Bottomline:{
     borderBottomWidth:2,
@@ -180,17 +196,15 @@ var styles = StyleSheet.create({
   },
 
   Topbar:{
-    flex:1,
-    alignItems: 'center',
+    flex:2,
+    flexDirection: 'row',
 
   },
-  Left:{
-    position: 'absolute', 
-    top: 5, 
-    left: 5
+   Left:{
+    flexDirection: 'row',
   },
   Right:{
-    position: 'absolute', 
+ position: 'absolute', 
     top: 5, 
     right: 5,
   },

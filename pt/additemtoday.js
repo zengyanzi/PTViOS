@@ -76,8 +76,20 @@ var AdditemtodayView = React.createClass({
             keyboardDismissMode='on-drag'
             keyboardShouldPersistTaps="never">
           <View style={styles.maincontain}>
-            <View>
-              <Topview {...this.props}/>
+                     <View style={[styles.Top,styles.Bottomline]}>
+              <View style={[styles.Topbar,styles.Left]}>
+                  <TouchableOpacity 
+                      onPress={() => _navigator.jumpBack()}>
+                    <Image source={require('../img/back.png') }/>
+                   </TouchableOpacity> 
+              </View>
+
+              <View style={styles.Topbar}>
+                
+              </View>
+              <View style={[styles.Topbar,styles.Right]}>
+               
+              </View>
             </View>
             <View>
               <Text style={styles.text}>Please Choose the Date</Text>
@@ -95,7 +107,8 @@ var AdditemtodayView = React.createClass({
                 <Text style={styles.text}>Please Choose the sport item</Text>
                 <Picker 
                   prompt="Please choose sportclass"
-                  style={{width:200,color:'#fff',alignItems:'center'}}
+                  style={{width:300}}
+                  itemStyle={{color:'white'}}
                   selectedValue={this.state.sportclass}
                   onValueChange={(value) => this.setState({sportclass: value})}>
                   <Picker.Item label="CHEST" value="1"/>
@@ -104,6 +117,7 @@ var AdditemtodayView = React.createClass({
                   <Picker.Item label="SHOULDERS" value="4" />
                   <Picker.Item label="STOMACH" value="5" />
               </Picker>
+
             </View>
             <View style={styles.slider}>
               <Text style={styles.text}>Please Choose the sport size</Text>

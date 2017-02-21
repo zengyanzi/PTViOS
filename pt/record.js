@@ -16,7 +16,7 @@ import {
   ListView
 } from 'react-native';
 
-
+import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
 
@@ -141,19 +141,23 @@ var RecordView = React.createClass({
          <ScrollView 
             contentContainerStyle={{flex:1}}
             keyboardDismissMode='on-drag'
-            keyboardShouldPersistTaps="never">
+            keyboardShouldPersistTaps="always">
             <View style={[styles.Top,styles.Bottomline]}>
-              <View style={[styles.Topbar,styles.Left]}>
-                  <TouchableOpacity 
-                      onPress={() => _navigator.push({title:'CreateplanView',id:'createplan'})}>
-                    <Image source={require('../img/setting_normal.png') }/>
-                   </TouchableOpacity> 
+             <TouchableOpacity >
+                      
+              <View style={styles.left}>
+                 
+                    
+                    <Icon   reverse  name='settings'   color='#38bda0' onPress={() => _navigator.push({title:'CreateplanView',id:'createplan'})} />
+                  
+                   
               </View>
+            </TouchableOpacity> 
               <View style={styles.Topbar}>
-                <Image source={require('../img/ptv_sized.png') }/>
+
               </View>
               
-              <View style={[styles.Topbar,styles.Right]}>
+              <View style={styles.right}>
               <TouchableOpacity 
                       onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
                 <Image source={require('../img/chart-pressed.png') }/>
@@ -188,7 +192,7 @@ var styles = StyleSheet.create({
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-    justifyContent: 'center',
+     justifyContent: 'space-between',
   },
   Bottomline:{
     borderBottomWidth:2,
@@ -196,19 +200,20 @@ var styles = StyleSheet.create({
   },
 
   Topbar:{
-    flex:1,
-    alignItems: 'center',
+    flex:2,
+    flexDirection: 'row',
+
+   
 
   },
-  Left:{
-    position: 'absolute', 
-    top: 5, 
-    left: 5
+   Left:{
+    flex:1,
+    flexDirection: 'row',
   },
   Right:{
-    position: 'absolute', 
-    top: 5, 
-    right: 5,
+  flex:1,
+  flexDirection: 'row',
+
   },
   maincontain:
   {

@@ -170,11 +170,6 @@ if(route.id === 'instructwelcome'){
       );
     }
 
-    if(route.id === 'Thome'){
-      return (
-        <ThomeView {...route.params} navigator={navigator} route={route}/>
-      );
-    }
     if(route.id === 'detailplan'){
       return (
         <DetailPlanView {...route.params} navigator={navigator} route={route}/>

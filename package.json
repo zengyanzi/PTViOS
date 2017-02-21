@@ -13,13 +13,15 @@
     "react-native-check-box": "^1.0.4",
     "react-native-checkbox": "^1.1.0",
     "react-native-dropdown": "0.0.6",
+    "react-native-elements": "^0.9.7",
     "react-native-menu": "^0.20.2",
     "react-native-pathjs-charts": "0.0.25",
     "react-native-scrollable-tab-view": "^0.7.2",
     "react-native-slider": "^0.9.1",
     "react-native-swipeable": "^0.3.2",
     "react-native-swipeout": "^2.0.12",
-    "react-native-tab-navigator": "^0.3.3"
+    "react-native-tab-navigator": "^0.3.3",
+    "react-native-vector-icons": "^4.0.0"
   },
   "devDependencies": {
     "babel-jest": "18.0.0",

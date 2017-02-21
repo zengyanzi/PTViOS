@@ -140,8 +140,20 @@ _editplan:function(){
             keyboardDismissMode='on-drag'
             keyboardShouldPersistTaps="never">
           <View style={styles.maincontain}>
-            <View>
-              <Topview {...this.props}/>
+            <View style={[styles.Top,styles.Bottomline]}>
+              <View style={[styles.Topbar,styles.Left]}>
+                  <TouchableOpacity 
+                      onPress={() => _navigator.jumpBack()}>
+                    <Image source={require('../img/back.png') }/>
+                   </TouchableOpacity> 
+              </View>
+
+              <View style={styles.Topbar}>
+                
+              </View>
+              <View style={[styles.Topbar,styles.Right]}>
+               
+              </View>
             </View>
             <View style={[styles.header,styles.Bottomline]}>
               <Image  source={require('../img/plan_normal.png') }/>

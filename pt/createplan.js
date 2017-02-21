@@ -167,7 +167,7 @@ var CreateplanView = React.createClass({
                     <View style={[styles.Top,styles.Bottomline]}>
                       <View style={[styles.Topbar,styles.Left]}>
                           <TouchableOpacity 
-                              onPress={() => _navigator.push({title:'ThomeView',id:'Thome'})}>
+                              onPress={() => _navigator.jumpBack()}>
                             <Image source={require('../img/back.png') }/>
                            </TouchableOpacity> 
                       </View>
@@ -205,11 +205,11 @@ var CreateplanView = React.createClass({
                           onDateChange={(date) => {this.setState({enddate: date});}}/>
                       </View>
                     </View>
-                    <View style={{flex:3}}>
+                    <View style={{flex:2}}>
                       <Text style={styles.text}>Please Choose attendance</Text>
                       {this.renderView()}
                     </View>
-                    <View style={{height:180,flex:1}}>
+                    <View style={{flexGrow:1,height:180}}>
                       <Text style={styles.text}>Please Choose Your Plan</Text>
                         <PlanCreateView {...this.props}/>
 
@@ -239,17 +239,13 @@ var CreateplanView = React.createClass({
 });
 
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
+   
   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-    justifyContent: 'center',
+     justifyContent: 'space-between',
   },
   Bottomline:{
     borderBottomWidth:2,
@@ -257,19 +253,15 @@ var styles = StyleSheet.create({
   },
 
   Topbar:{
-    flex:1,
-    alignItems: 'center',
+    flexDirection: 'row',
 
   },
-  Left:{
-    position: 'absolute', 
-    top: 5, 
-    left: 5
+   Left:{
+    flexDirection: 'row',
   },
   Right:{
-    position: 'absolute', 
-    top: 5, 
-    right: 5,
+    flexDirection: 'row',
+
   },
   maincontain:
   {
@@ -299,7 +291,7 @@ var styles = StyleSheet.create({
         flexDirection: 'row',
     },
   line: {
-        flex: 1,
+        flexDirection: 'row',
         height: 0.3,
         backgroundColor: '#fff',
     },

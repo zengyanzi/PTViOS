@@ -44,12 +44,7 @@ var ChartView = React.createClass({
                 console.log(result);
               });   
   },
-_editplan:function(){
-     _navigator.push({
-      title:'TraineeloinView',
-      id:'traineelogin'
-    })
-   },
+
 
  render: function(){
       return(
@@ -61,13 +56,13 @@ _editplan:function(){
             <View style={[styles.Top,styles.Bottomline]}>
               <View style={[styles.Topbar,styles.Left]}>
                   <TouchableOpacity 
-                      onPress={() => _navigator.push({title:'CreateplanView',id:'createplan'})}>
-                    <Image source={require('../img/setting_normal.png') }/>
+                      onPress={() => _navigator.jumpBack()}>
+                    <Image source={require('../img/back.png') }/>
                    </TouchableOpacity> 
               </View>
 
               <View style={styles.Topbar}>
-                <Image source={require('../img/ptv_sized.png') }/>
+                
               </View>
               <View style={[styles.Topbar,styles.Right]}>
                 <Image source={require('../img/add_pressed.png') }/>
@@ -122,10 +117,9 @@ var styles = StyleSheet.create({
     alignItems: 'center',
 
   },
-  Left:{
-    position: 'absolute', 
-    top: 5, 
-    left: 5
+   Left:{
+    flexDirection: 'row',
+
   },
   Right:{
     position: 'absolute', 
