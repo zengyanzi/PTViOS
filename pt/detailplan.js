@@ -72,21 +72,52 @@ var DetailPlanView = React.createClass({
     this.state = {
       dataSource: ds.cloneWithRows(detailrows),
       scrollEnabled: true,
+      btnsTypes:btnsTypes,
+      date:'2017-02-10'
 
     };
     return {
       dataSource: this.state.dataSource,
       scrollEnabled: true,
+      btnsTypes:this.state.btnsTypes,
+      date:this.state.date,
 
     };
 
   },
 
-    componentWillMount() {
-    AsyncStorage.getItem('userid',(err, result) => {
-                console.log(result);
-              });   
+   componentWillMount() {
+      let _that=this;
+      AsyncStorage.getItem('userid',(err, result) => {
+      console.log(result);
+      var trainee_id=result;
+      var day=this.props.date;
+      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+      var url = 'http://47.90.60.206:8080/pt_server/detailplan.action';
+      // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+      url += '?trainee_id='+trainee_id+'&day='+day;
+      console.log(url);
+      fetch(url).then(function(response) {  
+            return response.json();
+          }).then(function(res) {
+          console.log(res);
+           if (res["data"]!=null) {
+           
+          _that.setState({
+           dataSource: ds.cloneWithRows(res["data"]),
+           detailrows:res["data"]
+        })
+        }else{
+          Alert.alert('Fail to display','Please check your data'); 
+        }
+        
+     
+        });
+        
+       });  
+
   },
+
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });
@@ -94,12 +125,12 @@ var DetailPlanView = React.createClass({
 
   //  set active swipeout item
   handleSwipeout(sectionID,rowID) {
-    for (var i = 0; i < detailrows.length; i++) {
-
-      if (i != rowID) detailrows[i].active = false;
-      else detailrows[i].active = true;
+    for (var i = 0; i < this.state.detailrows.length; i++) {
+      
+      if (i != rowID) this.state.detailrows[i].active = false;
+      else this.state.detailrows[i].active = true;
     }
-    this.updateDataSource(detailrows);
+    this.updateDataSource(this.state.detailrows);
   },
 
   updateDataSource(data) {
@@ -113,7 +144,7 @@ var DetailPlanView = React.createClass({
     return (
       <Swipeout
         left={rowData.left}
-        right={rowData.right}
+        right={this.state.btnsTypes}
         rowID={rowID}
         sectionID={sectionID}
         autoClose={rowData.autoClose}
@@ -122,7 +153,7 @@ var DetailPlanView = React.createClass({
         onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
         scroll={event => this.allowScroll(event)}>
         <View style={styles.li}>
-              <Text style={styles.liText}>{rowData.text}Calories: {rowData.Calories}</Text>        
+              <Text style={styles.liText}>{rowData.item_name}Sportsize: {rowData.sportsize}</Text>               
         </View>
       </Swipeout>
     );
@@ -160,7 +191,7 @@ _editplan:function(){
             </View>
             <View style={[styles.header,styles.Bottomline]}>
               <Image  source={require('../img/plan_normal.png') }/>
-              <Text>Monday</Text>
+              <Text>{this.props.date} </Text>
               <Text>Total Calories: 2800</Text>
             </View>
 
@@ -168,6 +199,8 @@ _editplan:function(){
               scrollEnabled={this.state.scrollEnabled}
               dataSource={this.state.dataSource}
               renderRow={this.renderRow}
+              enableEmptySections={true}
+
               />
             <View>
             <BottomView {...this.props}/>

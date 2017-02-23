@@ -36,26 +36,26 @@ var btnsDefault = [ { text: 'Button' } ];
 
 var rows = [
   {
-     Pdate:"Monday",
+     Pdate:"2017-02-08",
      Calories :"457",
      text: "Row:5min;Treadmill:6min;Xtrainer:5min",
 
     right:btnsTypes,
     autoClose: true,
   }, {
-    Pdate:"Sunday",
+    Pdate:"2017-02-09",
     Calories :"457",
      text: "Row:5min;Treadmill:6min;Xtrainer:5min",
      right:btnsTypes,
     autoClose: true,
   }, {
-      Pdate:"Friday",
+      Pdate:"2017-02-10",
       Calories :"457",
       text: "Row:5min;Treadmill:6min;Xtrainer:5min",
      right:btnsTypes,
     autoClose: true,
   }, {
-    Pdate:"Tuesday",
+    Pdate:"2017-02-11",
     Calories :"457",
     text: "Row:5min;Treadmill:6min;Xtrainer:5min",
      right:btnsTypes,
@@ -123,7 +123,7 @@ var PlanView = React.createClass({
         onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
         scroll={event => this.allowScroll(event)}>
         <TouchableOpacity style={styles.btn}
-                onPress={() => _navigator.push({title:'DetailPlanView',id:'detailplan'})}>
+                onPress={() => _navigator.push({title:'DetailPlanView',id:'detailplan',params:{date:rowData.Pdate}})}>
           <View style={styles.li}>
             <View  style={styles.lidate}><Image  source={require('../img/plan_normal.png') }/><Text>{rowData.Pdate}</Text></View>
             

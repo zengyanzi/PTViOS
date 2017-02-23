@@ -76,7 +76,7 @@ var AdditemtodayView = React.createClass({
             keyboardDismissMode='on-drag'
             keyboardShouldPersistTaps="never">
           <View style={styles.maincontain}>
-                     <View style={[styles.Top,styles.Bottomline]}>
+           <View style={[styles.Top,styles.Bottomline]}>
               <View style={[styles.Topbar,styles.Left]}>
                   <TouchableOpacity 
                       onPress={() => _navigator.jumpBack()}>
