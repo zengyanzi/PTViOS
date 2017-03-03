@@ -13,7 +13,8 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Picker,
-  ListView
+  ListView,
+  Alert
 } from 'react-native';
 
 
@@ -73,15 +74,14 @@ var DetailPlanView = React.createClass({
       dataSource: ds.cloneWithRows(detailrows),
       scrollEnabled: true,
       btnsTypes:btnsTypes,
-      date:'2017-02-10'
+      day:this.props.date,
 
     };
     return {
       dataSource: this.state.dataSource,
       scrollEnabled: true,
       btnsTypes:this.state.btnsTypes,
-      date:this.state.date,
-
+      day:this.state.day
     };
 
   },
@@ -89,34 +89,36 @@ var DetailPlanView = React.createClass({
    componentWillMount() {
       let _that=this;
       AsyncStorage.getItem('userid',(err, result) => {
-      console.log(result);
-      var trainee_id=result;
-      var day=this.props.date;
-      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-      var url = 'http://47.90.60.206:8080/pt_server/detailplan.action';
-      // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-      url += '?trainee_id='+trainee_id+'&day='+day;
-      console.log(url);
-      fetch(url).then(function(response) {  
-            return response.json();
-          }).then(function(res) {
-          console.log(res);
-           if (res["data"]!=null) {
-           
-          _that.setState({
-           dataSource: ds.cloneWithRows(res["data"]),
-           detailrows:res["data"]
-        })
-        }else{
-          Alert.alert('Fail to display','Please check your data'); 
-        }
+        console.log(result);
+        var trainee_id=result;
+        var day=this.props.date;
+        var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+        var url = 'http://47.90.60.206:8080/pt_server/detailplan.action';
+        // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+        url += '?trainee_id='+trainee_id+'&day='+day;
+        console.log(url);
+        fetch(url).then(function(response) {  
+              return response.json();
+            }).then(function(res) {
+            console.log(res);
         
-     
-        });
+             if (res["data"]!=null) {
+             
+            _that.setState({
+             dataSource: ds.cloneWithRows(res["data"]),
+             detailrows:res["data"]
+          })
+          }else{
+            Alert.alert('Fail to display','Please check your data'); 
+          }
+          
+       
+       });
         
-       });  
+    });  
 
   },
+
 
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
@@ -139,12 +141,97 @@ var DetailPlanView = React.createClass({
     });
   },
 
+delete:function(rowData){
+    let _that=this;
+     AsyncStorage.getItem('userid',(err, result) => {
+        console.log(result);
+        var trainee_id=result;
+        var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+        var plan_id =rowData.id;
+        var url = 'http://47.90.60.206:8080/pt_server/delplan.action';
+        // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+        url += '?trainee_id='+trainee_id+'&plan_id='+plan_id;
+        console.log(url);
+              fetch(url).then(function(response) {  
+              return response.json();
+            }).then(function(res) {
+            console.log(res);
+        
+             if (res["data"]==true) {
 
+              var day=_that.props.date;
+              console.log(day);
+              var url = 'http://47.90.60.206:8080/pt_server/detailplan.action';
+              // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+              url += '?trainee_id='+trainee_id+'&day='+day;
+              console.log(url);
+              fetch(url).then(function(response) {  
+                    return response.json();
+                  }).then(function(res) {
+                  console.log(res);
+              
+                   if (res["data"]!=null) {
+                   
+                  _that.setState({
+                   dataSource: ds.cloneWithRows(res["data"]),
+                   detailrows:res["data"]
+                })
+                }else{
+                  Alert.alert('Fail to display','Please check your data'); 
+                }
+                
+             
+             });
+              
+          }else{
+            Alert.alert('Fail to display','Please check your data'); 
+          }
+          
+       
+       });
+    })
+ 
+  },
+ submitrecord:function(rowData){
+    let _that=this;
+     AsyncStorage.getItem('userid',(err, result) => {
+        console.log(result);
+        var trainee_id=result;
+        var day =rowData.day;
+        var item_id=rowData.item_id;
+        var sportsize=rowData.sportsize;
+        var url = 'http://47.90.60.206:8080/pt_server/addrecord2day.action';
+        // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+        url += '?trainee_id='+trainee_id+'&day='+day+'&item_id='+item_id+'&sportsize='+sportsize;
+        console.log(url);
+              fetch(url).then(function(response) {  
+              return response.json();
+            }).then(function(res) {
+            console.log(res);
+             if (res["data"]==true) {
+              Alert.alert('Submit','Successfully!'); 
+             }
+          
+
+       
+       });
+    })
+  },
   renderRow(rowData: string, sectionID: number, rowID: number) {
+
+    var btnsTypes = [
+      { text: 'Edit', onPress: function(){ _navigator.push({
+                title:'EditplanView',
+                id:'editplan',
+                params:{date:rowData.day}
+              })},type: 'primary',},
+        { text: 'Submit',onPress:  () => { this.submitrecord(rowData) },type:'secondary'},
+        { text: 'Delete',onPress: () => { this.delete(rowData) },type: 'delete'},
+  ];
     return (
       <Swipeout
         left={rowData.left}
-        right={this.state.btnsTypes}
+        right={btnsTypes}
         rowID={rowID}
         sectionID={sectionID}
         autoClose={rowData.autoClose}
@@ -191,7 +278,7 @@ _editplan:function(){
             </View>
             <View style={[styles.header,styles.Bottomline]}>
               <Image  source={require('../img/plan_normal.png') }/>
-              <Text>{this.props.date} </Text>
+              <Text>{this.state.day} </Text>
               <Text>Total Calories: 2800</Text>
             </View>
 
