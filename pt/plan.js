@@ -12,7 +12,8 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Picker,
-  ListView
+  ListView,
+  Alert
 } from 'react-native';
 
 import { Icon } from 'react-native-elements';
@@ -144,6 +145,32 @@ var PlanView = React.createClass({
     });
   },
 
+submitrecord:function(rowData){
+    let _that=this;
+     AsyncStorage.getItem('userid',(err, result) => {
+        console.log(result);
+        var trainee_id=result;
+        var day =rowData.day;
+        var item_id=rowData.item_id;
+        var sportsize=rowData.sportsize;
+        var url = 'http://47.90.60.206:8080/pt_server/submitday.action';
+        // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+        url += '?trainee_id='+trainee_id+'&day='+day;
+        console.log(url);
+              fetch(url).then(function(response) {  
+              return response.json();
+            }).then(function(res) {
+            console.log(res);
+             if (res["data"]==true) {
+              Alert.alert('Submit','Successfully!'); 
+             }
+          
+
+       
+       });
+    })
+  },
+
 
   renderRow(rowData: string, sectionID: number, rowID: number) {
      var btnsTypes = [
@@ -155,8 +182,8 @@ var PlanView = React.createClass({
                 sportclass:rowData.text
                 }
               })},type: 'primary',},
-        { text: 'Submit',onPress: () => { this.submitrecord(rowData) },type:'secondary'},
-        { text: 'Delete',onPress: () => { this.delete(rowData) },type: 'delete'},
+        { text: 'Submit',onPress: () => { this.submitrecord(rowData) },type:'secondary'}
+       
   ];
     return (
       <Swipeout

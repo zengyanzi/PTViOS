@@ -84,9 +84,44 @@ var RecordView = React.createClass({
 
   },
     componentWillMount() {
-    AsyncStorage.getItem('userid',(err, result) => {
-                console.log(result);
-              });   
+      let _that=this;
+      AsyncStorage.getItem('userid',(err, result) => {
+        console.log(result);
+        function format (d) {
+            return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+        }
+        var today =new Date();
+        var start = format(today);
+        var day1=new Date(today.getTime() + (1000* 60 * 60 * 24)*6);
+        var end=format(day1);
+        var trainee_id=result;
+        var day=this.props.date;
+        var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+        var url = 'http://47.90.60.206:8080/pt_server/myrecord.action';
+        // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+        url += '?trainee_id='+trainee_id+'&start='+start+'&end='+end;
+        console.log(url);
+        fetch(url).then(function(response) {  
+              return response.json();
+            }).then(function(res) {
+            console.log(res);
+           
+             if (res["data"]!=null) {
+    
+            _that.setState({
+             dataSource: ds.cloneWithRows(res["data"]),
+             
+             rows:res["data"]
+          })
+          }else{
+            Alert.alert('Fail to display','Please check your data'); 
+          }
+          
+       
+       });
+        
+    });  
+
   },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
@@ -94,13 +129,13 @@ var RecordView = React.createClass({
   },
 
   //  set active swipeout item
-  handleSwipeout(sectionID,rowID) {
-    for (var i = 0; i < rows.length; i++) {
+   handleSwipeout(sectionID,rowID) {
+    for (var i = 0; i < this.state.rows.length; i++) {
 
-      if (i != rowID) rows[i].active = false;
-      else rows[i].active = true;
+      if (i != rowID) this.state.rows[i].active = false;
+      else this.state.rows[i].active = true;
     }
-    this.updateDataSource(rows);
+    this.updateDataSource(this.state.rows);
   },
 
   updateDataSource(data) {
@@ -111,10 +146,21 @@ var RecordView = React.createClass({
 
 
   renderRow(rowData: string, sectionID: number, rowID: number) {
+     var btnsTypes = [
+      { text: 'Edit', onPress: function(){ _navigator.push({
+                title:'EditrecordView',
+                id:'editrecord',
+                params:
+                {date:rowData.day,
+                sportclass:rowData.text
+                }
+              })},type: 'primary',},
+        { text: 'Delete',onPress: () => { this.delete(rowData) },type: 'delete'},
+      ];
     return (
       <Swipeout
         left={rowData.left}
-        right={rowData.right}
+        right={btnsTypes}
         rowID={rowID}
         sectionID={sectionID}
         autoClose={rowData.autoClose}
@@ -123,11 +169,11 @@ var RecordView = React.createClass({
         onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
         scroll={event => this.allowScroll(event)}>
         <TouchableOpacity style={styles.btn}
-                onPress={() => _navigator.push({title:'DetailRecordView',id:'detailrecord'})}>
+                onPress={() => _navigator.push({title:'DetailRecordView',id:'detailrecord',params:{date:rowData.day}})}>
           <View style={styles.li}>
-            <View  style={styles.lidate}><Image  source={require('../img/plan_normal.png') }/><Text>{rowData.Pdate}</Text></View>
+            <View  style={styles.lidate}><Image  source={require('../img/plan_normal.png') }/><Text>{rowData.day}</Text></View>
             
-              <Text style={styles.liText}>Calories:{rowData.Calories} {rowData.text}</Text>
+              <Text style={styles.liText}>Sports: {rowData.text}</Text>
             
           </View>
         </TouchableOpacity>
@@ -170,6 +216,7 @@ var RecordView = React.createClass({
               scrollEnabled={this.state.scrollEnabled}
               dataSource={this.state.dataSource}
               renderRow={this.renderRow}
+              enableEmptySections={true}
               />
                   
 
