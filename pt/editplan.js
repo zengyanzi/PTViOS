@@ -35,20 +35,18 @@ var EditPlanView = React.createClass({
     this.state = {
     value: 0.2,
     sportdate:'10-02-2017',
-    sportname:['BB BENCH PRESS', 'DB FLYS', 'INCLINE DB BENCH','Rower','Treadmill'],
-    sportselected:'',
+
 
     };
     return {
      value:this.state.value,
      sportdate:this.state.sportdate,
-    sportname:this.state.sportname,
-     sportselected:this.state.sportselected,
+  
     };
 
   },
  //get the item 
-    componentWillMount() {
+   /* componentWillMount() {
     let _that=this;
     AsyncStorage.getItem('userid',(err, result) => {
                 console.log(result);
@@ -78,54 +76,33 @@ var EditPlanView = React.createClass({
         
     });  
 
-  },
+  },*/
   //save the modify item to database
  _save:function(){
-    console.log(this.state.sportselected);
-    var itemname=this.state.sportselected;
-    var item_id;
     var sportsize=this.state.value;
     var day=this.props.date;
-     AsyncStorage.getItem('userid',(err, result) => {
-                console.log(result);
-    var trainee_id=result;
-    var url = 'http://47.90.60.206:8080/pt_server/item.action'; // get the item data again 
-    fetch(url).then(function(response) {  
-              return response.json();
-            }).then(function(res) {
-               if (res["data"]!=null) {
-               //find the id of selected item
-               
-               for(i in res["data"]){
-                if(itemname==res["data"][i]["name"]){
-                   item_id=res["data"][i]["id"];
-                }
-                 
-               }
-                console.log(item_id);
-                var urlsave='http://47.90.60.206:8080/pt_server/additem2day.action'; 
-                urlsave += '?trainee_id='+trainee_id+'&day='+day+'&item_id='+item_id+'&sportsize='+sportsize;
-                console.log(urlsave);
+    var dayplan_id=this.props.dayplan_id;
+              
+    var urlsave='http://47.90.60.206:8080/pt_server/additem2day.action'; 
+    urlsave += '?dayplan_id='+dayplan_id+'&sportsize='+sportsize;
+    console.log(urlsave);
 
-                   fetch(urlsave).then(function(response) {  
-                                return response.json();
-                              }).then(function(res) {
-                              console.log(res);
-                       _navigator.push({
-                      title:'ThomeView',
-                      id:'Thome',
-                  
-                       })
-                      });
-              }else{
-                Alert.alert('Fail to display','Please check your data'); 
-          }
-          
-       
-       });
+       fetch(urlsave).then(function(response) {  
+                    return response.json();
+                  }).then(function(res) {
+                if (res["data"]!=null) {     
+                  console.log(res);
+                   _navigator.push({
+                  title:'ThomeView',
+                  id:'Thome',
+      
+                   })
+          }else{
+            Alert.alert('Fail to display','Please check your data'); 
+        }
 
 
-    });
+});
 
  },
  render: function(){
@@ -154,22 +131,8 @@ var EditPlanView = React.createClass({
               <Text style={styles.text}>Sport Date {this.props.date}</Text>
             </View>
             <View>
-                <Text style={styles.text}>Please Choose the sport item</Text>
-                <Picker 
-                  prompt="Please choose sportclass"
-                  style={{width:300}}
-                  itemStyle={{color:'white'}}
-                  selectedValue={this.state.sportselected}
-                  onValueChange={(value) => this.setState({sportselected: value})}>
-                 
-                    { this.state.sportname.map((s, i) => {
-                        return <Picker.Item
-                                 key={i}
-                                 value={s}
-                                 label={s} />
-                     }) }
-               
-              </Picker>
+                <Text style={styles.text}>{this.props.itemname}</Text>
+                
             </View>
             <View style={styles.slider}>
               <Text style={styles.text}>Please Choose the sport size</Text>
@@ -285,9 +248,8 @@ var styles = StyleSheet.create({
      backgroundColor: '#2cb395',
      height: 50,
      borderRadius: 5,
-     width:240,
-     marginTop: 50,
-     marginLeft:80,
+     width:320,
+     marginTop:50
   },
 
 });

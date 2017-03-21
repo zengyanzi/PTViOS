@@ -293,9 +293,9 @@ var styles = StyleSheet.create({
      backgroundColor: '#2cb395',
      height: 50,
      borderRadius: 5,
-     width:240,
+     width:320,
      marginTop: 50,
-     marginLeft:80,
+
   },
 
 });

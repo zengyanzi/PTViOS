@@ -80,6 +80,69 @@ var PlanInfoView = React.createClass({
     };
 
   },
+//get the option 
+    componentWillMount() {
+       let _that=this;
+      var url = 'http://47.90.60.206:8080/pt_server/optionplan.action';
+      
+      console.log(url);
+
+      console.log(this.props.planid);
+      var optionplanid=this.props.planid;
+      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});  
+      fetch(url).then(function(response) {  
+              return response.json();
+            }).then(function(res) { 
+              
+               if (res["data"]!=null) {
+                for (var i = 0; i < res["data"].length; i++) {
+                  if (res["data"][i]["id"]===optionplanid) {
+                    var optionItems=res["data"][i]["optionItems"];
+
+                  };
+                  console.log(optionItems);
+                  var urlitem = 'http://47.90.60.206:8080/pt_server/item.action';
+                  console.log(urlitem);
+                  fetch(urlitem).then(function(response) {  
+                      return response.json();
+                    }).then(function(result) {
+                      console.log(result["data"]);
+                      if (result["data"]!=null) {
+                        var planinfo=[]
+                        for (var i = 0; i < result["data"].length; i++) {
+                          for (var j = 0; j < optionItems.length; j++) {
+                            if (result["data"][i]["id"]===optionItems[j]["item_id"]) {
+                              var iteminfo={};
+                              iteminfo.itemname=result["data"][i]["name"];
+                              iteminfo.sportsize=optionItems[j]["sportsize"];
+                              planinfo.push(iteminfo);
+                            };
+                          };
+                          
+                        };
+                        console.log(planinfo);
+                         _that.setState({
+                           dataSource: ds.cloneWithRows(planinfo),
+                           detailrows:planinfo
+                        })
+                      }else{
+                            Alert.alert('Fail to display','Please check your data'); 
+                      }
+                    }); 
+
+                };
+               //get the sport item name from the database
+       
+              }else{
+                Alert.alert('Fail to display','Please check your data'); 
+          }
+          
+       
+       });
+        
+
+
+  },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });
@@ -87,12 +150,13 @@ var PlanInfoView = React.createClass({
 
   //  set active swipeout item
   handleSwipeout(sectionID,rowID) {
-    for (var i = 0; i < detailrows.length; i++) {
-
-      if (i != rowID) detailrows[i].active = false;
-      else detailrows[i].active = true;
+    for (var i = 0; i < this.state.detailrows.length; i++) {
+      
+      if (i != rowID) this.state.detailrows[i].active = false;
+      else this.state.detailrows[i].active = true;
     }
-    this.updateDataSource(detailrows);
+    this.updateDataSource(this.state.detailrows);
+
   },
 
   updateDataSource(data) {
@@ -115,7 +179,7 @@ var PlanInfoView = React.createClass({
         onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
         scroll={event => this.allowScroll(event)}>
         <View style={styles.li}>
-              <Text style={styles.liText}>{rowData.text}Calories: {rowData.Calories}</Text>        
+              <Text style={styles.liText}>{rowData.itemname} sportsize: {rowData.sportsize}</Text>        
         </View>
       </Swipeout>
     );
@@ -136,12 +200,24 @@ _editplan:function(){
             keyboardDismissMode='on-drag'
             keyboardShouldPersistTaps="never">
           <View style={styles.maincontain}>
-            <View>
-            <Topview {...this.props}/>
+        
+             <View style={[styles.Top,styles.Bottomline]}>
+              <View style={[styles.Topbar,styles.Left]}>
+                  <TouchableOpacity 
+                      onPress={() => _navigator.jumpBack()}>
+                    <Image source={require('../img/back.png') }/>
+                   </TouchableOpacity> 
+              </View>
+              <View style={styles.Topbar}>
+                <Image source={require('../img/ptv_sized.png') }/>
+              </View>
+              <View style={[styles.Topbar,styles.Right]}>
+                
+              </View>
             </View>
+         
             <View style={[styles.header,styles.Bottomline]}>
-              <Text style={{fontSize:20}}>Full Body Workout</Text>
-              <Text>Total Calories: 2800</Text>
+                <Text style={{fontSize:20}}>{this.props.plantitle}</Text>
             </View>
 
             <ListView style={styles.listview}
@@ -180,9 +256,7 @@ var styles = StyleSheet.create({
 
   },
   Left:{
-    position: 'absolute', 
-    top: 5, 
-    left: 5
+    flexDirection: 'row',
   },
   Right:{
     position: 'absolute', 

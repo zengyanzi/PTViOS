@@ -223,7 +223,10 @@ delete:function(rowData){
       { text: 'Edit', onPress: function(){ _navigator.push({
                 title:'EditplanView',
                 id:'editplan',
-                params:{date:rowData.day}
+                params:{date:rowData.day,
+                  itemname:rowData.item_name,
+                  dayplan_id:rowData.id
+                }
               })},type: 'primary',},
         { text: 'Submit',onPress:  () => { this.submitrecord(rowData) },type:'secondary'},
         { text: 'Delete',onPress: () => { this.delete(rowData) },type: 'delete'},
@@ -279,7 +282,6 @@ _editplan:function(){
             <View style={[styles.header,styles.Bottomline]}>
               <Image  source={require('../img/plan_normal.png') }/>
               <Text>{this.state.day} </Text>
-              <Text>Total Calories: 2800</Text>
             </View>
 
             <ListView style={styles.listview}

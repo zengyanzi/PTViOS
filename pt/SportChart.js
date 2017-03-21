@@ -264,6 +264,12 @@ componentWillMount() {
         <View style={styles.container}>
   
         <Bar data={data} options={options} accessorKey='v'/>
+               <View>
+              <TouchableOpacity style={styles.btn}
+              onPress={this.UPDATE}>
+              <Text style={styles.text}>UPDATE</Text>
+              </TouchableOpacity>
+       </View> 
         <Picker
           prompt="Please choose sportclass"
           style={{width:300}}
@@ -276,12 +282,7 @@ componentWillMount() {
                                  label={s} />
                      }) }
         </Picker>
-       <View>
-              <TouchableOpacity style={styles.btn}
-              onPress={this.UPDATE}>
-              <Text style={styles.text}>UPDATE</Text>
-              </TouchableOpacity>
-       </View> 
+
       </View>
  
     )

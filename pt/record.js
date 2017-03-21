@@ -91,9 +91,9 @@ var RecordView = React.createClass({
             return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
         }
         var today =new Date();
-        var start = format(today);
-        var day1=new Date(today.getTime() + (1000* 60 * 60 * 24)*6);
-        var end=format(day1);
+        var end = format(today);
+        var day1=new Date(today.getTime() -(1000* 60 * 60 * 24)*6);
+        var start=format(day1);
         var trainee_id=result;
         var day=this.props.date;
         var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});

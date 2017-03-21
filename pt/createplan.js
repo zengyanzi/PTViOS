@@ -145,6 +145,11 @@ var CreateplanView = React.createClass({
             return response.json();
           }).then(function(res) {
           console.log(res);
+          _navigator.push({
+                  title:'ThomeView',
+                  id:'Thome',
+      
+                   })
         })
 
      });
