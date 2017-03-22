@@ -147,14 +147,6 @@ var RecordView = React.createClass({
 
   renderRow(rowData: string, sectionID: number, rowID: number) {
      var btnsTypes = [
-      { text: 'Edit', onPress: function(){ _navigator.push({
-                title:'EditrecordView',
-                id:'editrecord',
-                params:
-                {date:rowData.day,
-                sportclass:rowData.text
-                }
-              })},type: 'primary',},
         { text: 'Delete',onPress: () => { this.delete(rowData) },type: 'delete'},
       ];
     return (

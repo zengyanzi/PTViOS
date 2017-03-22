@@ -152,33 +152,11 @@ var EditRecordView = React.createClass({
               </View>
             </View>
             <View>
-              <Text style={styles.text}>Please Choose the Date</Text>
-              <DatePicker
-                style={styles.datepicker}
-                date={this.state.date}
-                mode="date"
-                placeholder="Date"
-                format="YYYY-MM-DD"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                onDateChange={(date) => {this.setState({date: date});}}/>
+              <Text style={styles.text}>{this.props.date}</Text>
             </View>
             <View>
-                <Text style={styles.text}>Please Choose the sport item</Text>
-                <Picker 
-                  prompt="Please choose sportclass"
-                  style={{width:200}}
-                  itemStyle={{color:'white'}}
-                  selectedValue={this.state.sportselected}
-                  onValueChange={(value) => this.setState({sportselected: value})}>
-                 
-                    { this.state.sportname.map((s, i) => {
-                        return <Picker.Item
-                                 key={i}
-                                 value={s}
-                                 label={s} />
-                     }) }
-              </Picker>
+                <Text style={styles.text}>{this.props.itemname}</Text>
+                
             </View>
             <View style={styles.slider}>
               <Text style={styles.text}>Please Choose the sport size</Text>
@@ -293,9 +271,9 @@ var styles = StyleSheet.create({
      backgroundColor: '#2cb395',
      height: 50,
      borderRadius: 5,
-     width:240,
+     width:320,
      marginTop: 50,
-     marginLeft:80,
+
   },
 
 });

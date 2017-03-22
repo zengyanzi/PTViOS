@@ -137,9 +137,10 @@ var DetailRecordView = React.createClass({
       { text: 'Edit', onPress: function(){ _navigator.push({
                 title:'EditrecordView',
                 id:'editrecord',
-                params:{date:rowData.day}
+                params:{date:rowData.day,
+                  itemname:rowData.itemname
+                }
               })},type: 'primary',},
-        { text: 'Submit',onPress:  () => { this.submitrecord(rowData) },type:'secondary'},
         { text: 'Delete',onPress: () => { this.delete(rowData) },type: 'delete'},
        ];
     return (
@@ -154,7 +155,7 @@ var DetailRecordView = React.createClass({
         onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
         scroll={event => this.allowScroll(event)}>
         <View style={styles.li}>
-              <Text style={styles.liText}>{rowData.itemname}Sportsize: {rowData.sportsize} </Text>     
+              <Text style={styles.liText}>{rowData.itemname}  Sportsize: {rowData.sportsize} </Text>     
         </View>
       </Swipeout>
     );
@@ -193,7 +194,6 @@ _editplan:function(){
             <View style={[styles.header,styles.Bottomline]}>
               <Image  source={require('../img/plan_normal.png') }/>
               <Text style={{fontSize:20}}>{this.props.date}</Text>
-              <Text>Total Calories: 2800</Text>
             </View>
 
             <ListView style={styles.listview}
