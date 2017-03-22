@@ -35,12 +35,13 @@ var AdditemtodayView = React.createClass({
         }
     this.state = {
     value: 0.2,
-    sportname:['BB BENCH PRESS', 'DB FLYS', 'INCLINE DB BENCH','Rower','Treadmill'],
-    sportselected:'',
+    sportname:[],
+    sportselected:'Rower',
+
     };
     return {
      value:this.state.value,
-      sportname:this.state.sportname,
+     sportname:this.state.sportname,
      sportselected:this.state.sportselected,
 
 
@@ -64,9 +65,8 @@ componentWillMount() {
                 
                 arr.push(sportobj[i]["name"]);
                }
-               console.log(arr);
                 _that.setState({
-                  sportname:arr
+                  sportname:arr,
               })
               }else{
                 Alert.alert('Fail to display','Please check your data'); 
@@ -93,7 +93,7 @@ _submit:function(){
             }).then(function(res) {
                if (res["data"]!=null) {
                //find the id of selected item
-               
+               console.log(res["data"]);
                for(i in res["data"]){
                 if(itemname==res["data"][i]["name"]){
                    item_id=res["data"][i]["id"];
