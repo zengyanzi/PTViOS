@@ -64,7 +64,7 @@ var rows = [
   
 ];
 
-var RecordView = React.createClass({
+var GymView = React.createClass({
 
   getInitialState: function(){
     _navigator = this.props.navigator;
@@ -83,46 +83,7 @@ var RecordView = React.createClass({
     };
 
   },
-    componentWillMount() {
-      let _that=this;
-      AsyncStorage.getItem('userid',(err, result) => {
-        console.log(result);
-        function format (d) {
-            return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-        }
-        var today =new Date();
-        var end = format(today);
-        var day1=new Date(today.getTime() -(1000* 60 * 60 * 24)*6);
-        var start=format(day1);
-        var trainee_id=result;
-        var day=this.props.date;
-        var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-        var url = 'http://47.90.60.206:8080/pt_server/myrecord.action';
-        // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-        url += '?trainee_id='+trainee_id+'&start='+start+'&end='+end;
-        console.log(url);
-        fetch(url).then(function(response) {  
-              return response.json();
-            }).then(function(res) {
-            console.log(res);
-           
-             if (res["data"]!=null) {
-    
-            _that.setState({
-             dataSource: ds.cloneWithRows(res["data"]),
-             
-             rows:res["data"]
-          })
-          }else{
-            Alert.alert('Fail to display','Please check your data'); 
-          }
-          
-       
-       });
-        
-    });  
 
-  },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });
@@ -130,12 +91,12 @@ var RecordView = React.createClass({
 
   //  set active swipeout item
    handleSwipeout(sectionID,rowID) {
-    for (var i = 0; i < this.state.rows.length; i++) {
+    for (var i = 0; i < rows.length; i++) {
 
-      if (i != rowID) this.state.rows[i].active = false;
-      else this.state.rows[i].active = true;
+      if (i != rowID) rows[i].active = false;
+      else rows[i].active = true;
     }
-    this.updateDataSource(this.state.rows);
+    this.updateDataSource(rows);
   },
 
   updateDataSource(data) {
@@ -237,8 +198,6 @@ var styles = StyleSheet.create({
     flex:2,
     flexDirection: 'row',
 
-   
-
   },
    Left:{
     flex:1,
@@ -282,4 +241,4 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-module.exports = RecordView;
+module.exports = GymView;

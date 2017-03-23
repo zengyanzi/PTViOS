@@ -20,7 +20,9 @@ import PlanView from './plan.js';
 import SwipeoutExample from './SwipeoutExample.js';
 import SwipeableExample from './swipeable-example.js';
 import RecordView from './record.js';
-import LogoutView from './logout.js';
+import ProfileView from './profile.js';
+import GymView from './gym.js';
+import TrainerView from './trainer.js';
 
 var screenW = Dimensions.get('window').width;
 
@@ -44,16 +46,6 @@ var ThomeView = React.createClass({
   },
 
  render: function(){ 
-     var TrainerView =(
-      <View style={styles.container}>
-        <Text>find your trainer here</Text>
-      </View>    
-    );
-    var ProfileView =(
-      <View style={styles.container}>
-        <Text>here is the profile</Text>
-      </View>    
-    );
        return (
 
            <ScrollView 
@@ -92,7 +84,7 @@ var ThomeView = React.createClass({
                     renderSelectedIcon={() => <Image  source={require('../img/gym_pressed.png') }/>}
                     onPress={() => this.setState({ selectedTab: 'Gym' })}       
                     >
-                    <SwipeableExample {...this.props}/>
+                    <GymView {...this.props}/>
                     
                 </TabNavigator.Item>
                 <TabNavigator.Item
@@ -103,7 +95,7 @@ var ThomeView = React.createClass({
                     onPress={() => this.setState({ selectedTab: 'Trainer' })}       
                     >
 
-                     {TrainerView}
+                    <TrainerView {...this.props}/>
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'Profile'}
@@ -113,7 +105,7 @@ var ThomeView = React.createClass({
                     onPress={() => this.setState({ selectedTab: 'Profile' })}       
                     >
 
-                     <LogoutView {...this.props}/>
+                     <ProfileView {...this.props}/>
                 </TabNavigator.Item>
               </TabNavigator>
             </View>

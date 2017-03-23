@@ -65,7 +65,11 @@ var ChartView = React.createClass({
                 
               </View>
               <View style={[styles.Topbar,styles.Right]}>
-                <Image source={require('../img/add_pressed.png') }/>
+                <TouchableOpacity 
+                onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
+                  <Image source={require('../img/add_pressed.png') }/>
+
+                </TouchableOpacity> 
               </View>
             </View>
 
