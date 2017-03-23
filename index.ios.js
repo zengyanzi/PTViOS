@@ -25,6 +25,8 @@ import EditRecordView from './pt/editrecord';
 import DetailRecordView from './pt/detailrecord';
 import ChartView from './pt/chart';
 import AdditemtodayView from'./pt/additemtoday';
+import AddrecordtodayView from'./pt/addrecordtoday';
+
 export default class ptvios extends Component {
  constructor(props) {
         super(props);
@@ -208,6 +210,11 @@ if(route.id === 'instructwelcome'){
     if(route.id === 'additemtoday'){
       return (
         <AdditemtodayView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'addrecordtoday'){
+      return (
+        <AddrecordtodayView {...route.params} navigator={navigator} route={route}/>
       );
     }
   }

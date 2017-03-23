@@ -182,7 +182,7 @@ var RecordView = React.createClass({
             keyboardShouldPersistTaps="always">
             <View style={[styles.Top,styles.Bottomline]}>
                 <TouchableOpacity 
-                onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
+                onPress={() => _navigator.push({title:'Addrecordtoday',id:'addrecordtoday'})}>
                   <Image source={require('../img/add_pressed.png') }/>
 
                 </TouchableOpacity> 
