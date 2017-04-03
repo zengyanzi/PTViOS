@@ -8,7 +8,6 @@ import React, { Component } from 'react';
 import {
   AppRegistry,ScrollView,View,Text,Image,Navigator,TouchableOpacity,BackAndroid,StyleSheet,AsyncStorage
 } from 'react-native';
-
 var _navigator;
 import InstructwelcomeView from'./pt/instructwelcome';
 import InstructregisterView from'./pt/instructregister';
@@ -26,79 +25,73 @@ import DetailRecordView from './pt/detailrecord';
 import ChartView from './pt/chart';
 import AdditemtodayView from'./pt/additemtoday';
 import AddrecordtodayView from'./pt/addrecordtoday';
-
 export default class ptvios extends Component {
- constructor(props) {
-        super(props);
-        this.state = {};
-        var type;
-        AsyncStorage.getItem('type',(err, result) => {
-                console.log(result);
-                type=result;
-                if (type!==null) {
-                  if (type=="instructor") {
-                    var email;
-                    AsyncStorage.getItem('email',(err,result)=>{
-                      // console.log(result);
-                      email=result;
-                      var password;
-                      AsyncStorage.getItem('password',(err,result)=>{
-                      // console.log(result);
-                      password=result;
-
-                          var url = 'http://47.90.60.206:8080/pt_server/instructorlogin.action';
-                          
-                          url += '?email='+email+'&password='+password;
-                          console.log(url);
-                          fetch(url).then(function(response) {  
-                                  return response.json();
-                                }).then(function(res) {
-                                console.log(res);
-                                  if (res["data"]!=null) {
-                                    _navigator.push({
-                                      title:'ClientInfoView',
-                                      id:'clientinfo'
-                                    });
-                                  }
-                                });
-                      });
-                    });
-                  }else{
-                    var email;
-                    AsyncStorage.getItem('email',(err,result)=>{
-                      // console.log(result);
-                      email=result;
-                      var password;
-                      AsyncStorage.getItem('password',(err,result)=>{
-                      // console.log(result);
-                      password=result;
-                      var url = 'http://47.90.60.206:8080/pt_server/traineelogin.action';
-                          url += '?email='+email+'&password='+password;
-                          console.log(url);
-                          fetch(url).then(function(response) {  
-                                  return response.json();
-                                }).then(function(res) {
-                                console.log(res);
-                                  if (res["data"]!=null) {
-                                    _navigator.push({
-                                      title:'ThomeView',
-                                      id:'Thome'
-                                    });
-                                  }
-                                });
-                      });
+  constructor(props) {
+    super(props);
+    this.state = {};
+    var type;
+    AsyncStorage.getItem('type',(err, result) => {
+      console.log(result);
+      type=result;
+      if (type!==null) {
+        if (type=="instructor") {
+          var email;
+          AsyncStorage.getItem('email',(err,result)=>{
+            // console.log(result);
+            email=result;
+            var password;
+            AsyncStorage.getItem('password',(err,result)=>{
+            // console.log(result);
+              password=result;
+              var url = 'http://47.90.60.206:8080/pt_server/instructorlogin.action';    
+              url += '?email='+email+'&password='+password;
+              console.log(url);
+              fetch(url).then(function(response) {  
+                return response.json();
+              }).then(function(res) {
+                  console.log(res);
+                  if (res["data"]!=null) {
+                    _navigator.push({
+                      title:'ClientInfoView',
+                      id:'clientinfo'
                     });
                   }
-              };
-          });   
-}
-
+              });
+            });
+          });
+        }else{
+          var email;
+          AsyncStorage.getItem('email',(err,result)=>{
+            // console.log(result);
+            email=result;
+            var password;
+            AsyncStorage.getItem('password',(err,result)=>{
+            // console.log(result);
+              password=result;
+              var url = 'http://47.90.60.206:8080/pt_server/traineelogin.action';
+              url += '?email='+email+'&password='+password;
+              console.log(url);
+              fetch(url).then(function(response) {  
+                return response.json();
+              }).then(function(res) {
+                console.log(res);
+                if (res["data"]!=null) {
+                  _navigator.push({
+                    title:'ThomeView',
+                    id:'Thome'
+                   });
+                  }
+              });
+            });
+          });
+        }
+      };
+    });   
+  }
 configureScenceAndroid(){
     return Navigator.SceneConfigs.FadeAndroid;
   }
-
-
- renderSceneAndroid(route,navigator){
+renderSceneAndroid(route,navigator){
     _navigator = navigator;
     if(route.id === 'main'){
       return (
@@ -106,32 +99,27 @@ configureScenceAndroid(){
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps="never"
-        >
-        
-       <View style={styles.container}>
+        >       
+         <View style={styles.container}>
+         </View>
+         <View style={styles.maincontain}>
+          <Image source={require('./img/ptv.png')} style={{width: 280, height: 140}}/>
 
-       </View>
-       <View style={styles.maincontain}>
-        <Image source={require('./img/ptv.png')} style={{width: 280, height: 140}}/>
-
-            <View style={styles.choose}>
-              <TouchableOpacity style={styles.btn}
-              onPress={() => _navigator.push({title:'InstructwelcomeView',id:'instructwelcome'})}>
-              <Text style={styles.text}>I am Instructor</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.btn}
-             onPress={() => _navigator.push({title:'TraineewelcomeView',id:'traineewelcome'})}>
-              <Text style={styles.text}> I am trainee</Text>
-              </TouchableOpacity>
-            </View>
-        </View>
-      </ScrollView>
+              <View style={styles.choose}>
+                <TouchableOpacity style={styles.btn}
+                onPress={() => _navigator.push({title:'InstructwelcomeView',id:'instructwelcome'})}>
+                <Text style={styles.text}>I am Instructor</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btn}
+               onPress={() => _navigator.push({title:'TraineewelcomeView',id:'traineewelcome'})}>
+                <Text style={styles.text}> I am trainee</Text>
+                </TouchableOpacity>
+              </View>
+          </View>
+        </ScrollView>
        );
     }
- 
-
-  
-if(route.id === 'instructwelcome'){
+    if(route.id === 'instructwelcome'){
       return (
         <InstructwelcomeView {...route.params} navigator={navigator} route={route} />
        );
@@ -171,7 +159,6 @@ if(route.id === 'instructwelcome'){
         <PlanView {...route.params} navigator={navigator} route={route}/>
       );
     }
-
     if(route.id === 'detailplan'){
       return (
         <DetailPlanView {...route.params} navigator={navigator} route={route}/>
@@ -218,7 +205,7 @@ if(route.id === 'instructwelcome'){
       );
     }
   }
-render(){
+  render(){
     var renderScene = this.renderSceneAndroid;
     var configureScence = this.configureScenceAndroid;
     return (
@@ -226,14 +213,12 @@ render(){
         debugOverlay={false}
         initialRoute={{ title: 'Main', id:'main'}}
         configureScence={{ configureScence }}
-        renderScene={renderScene}/>
-   );
+        renderScene={renderScene}
+      />
+    );
   }
-
 }
-
 const styles = StyleSheet.create({
- 
   container:{
     flex: 1,
     backgroundColor: '#38bda0',

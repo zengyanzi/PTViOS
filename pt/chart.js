@@ -1,9 +1,6 @@
-
 import React, { Component } from 'react';
-
-
 import {
-   Image,
+  Image,
   View,
   Text,
   StyleSheet,
@@ -15,87 +12,68 @@ import {
   Picker,
   ListView
 } from 'react-native';
-
-
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
 import ScrollableTabView , { ScrollableTabBar, }from'react-native-scrollable-tab-view';
 import SportChartView from './SportChart';
 import TimeChartView from './TimeChart';
-
 var screenW = Dimensions.get('window').width;
-
 var _navigator ;
-
 var ChartView = React.createClass({
-
   getInitialState: function(){
     _navigator = this.props.navigator;
     this.state = {
- 
     };
     return {
-
     };
-
   },
   componentWillMount() {
     AsyncStorage.getItem('userid',(err, result) => {
-                console.log(result);
-              });   
+      console.log(result);
+    });   
   },
-
-
- render: function(){
-      return(
-         <ScrollView 
-            contentContainerStyle={{flex:1}}
-            keyboardDismissMode='on-drag'
-            keyboardShouldPersistTaps="never">
-          <View style={styles.maincontain}>
-            <View style={[styles.Top,styles.Bottomline]}>
-              <View style={[styles.Topbar,styles.Left]}>
-                  <TouchableOpacity 
-                      onPress={() => _navigator.jumpBack()}>
-                    <Image source={require('../img/back.png') }/>
-                   </TouchableOpacity> 
-              </View>
-
-              <View style={styles.Topbar}>
-                
-              </View>
-              <View style={[styles.Topbar,styles.Right]}>
-                <TouchableOpacity 
-                onPress={() => _navigator.push({title:'Addrecordtoday',id:'addrecordtoday'})}>
-                  <Image source={require('../img/add_pressed.png') }/>
-
-                </TouchableOpacity> 
-              </View>
-            </View>
-
-                <ScrollableTabView
-               
-                initialPage={1}
-                renderTabBar={() => <ScrollableTabBar  />}
-                >
-                  <ScrollView tabLabel="ChartBySport" style={styles.tabView}>
-                    <View style={styles.card}>
-                      <SportChartView {...this.props}/>
-                    </View>
-                  </ScrollView>
-                  <ScrollView tabLabel="ChartByTime" style={styles.tabView}>
-                    <View style={styles.card}>
-                      <TimeChartView {...this.props}/>
-                    </View>
-                  </ScrollView>
-                </ScrollableTabView>
-            
+  render: function(){
+  return(
+    <ScrollView 
+        contentContainerStyle={{flex:1}}
+        keyboardDismissMode='on-drag'
+        keyboardShouldPersistTaps="never">
+      <View style={styles.maincontain}>
+        <View style={[styles.Top,styles.Bottomline]}>
+         <View style={[styles.Topbar,styles.Left]}>
+              <TouchableOpacity 
+                  onPress={() => _navigator.jumpBack()}>
+                <Image source={require('../img/back.png') }/>
+               </TouchableOpacity> 
           </View>
-        </ScrollView>
-        );
-
+          <View style={styles.Topbar}>
+          </View>
+          <View style={[styles.Topbar,styles.Right]}>
+            <TouchableOpacity 
+            onPress={() => _navigator.push({title:'Addrecordtoday',id:'addrecordtoday'})}>
+              <Image source={require('../img/add_pressed.png') }/>
+            </TouchableOpacity> 
+          </View>
+        </View>
+        <ScrollableTabView   
+          initialPage={1}
+          renderTabBar={() => <ScrollableTabBar  />}
+        >
+          <ScrollView tabLabel="ChartBySport" style={styles.tabView}>
+            <View style={styles.card}>
+              <SportChartView {...this.props}/>
+            </View>
+          </ScrollView>
+          <ScrollView tabLabel="ChartByTime" style={styles.tabView}>
+            <View style={styles.card}>
+              <TimeChartView {...this.props}/>
+            </View>
+          </ScrollView>
+        </ScrollableTabView>  
+      </View>
+     </ScrollView>
+    );
   },
-
 });
 
 var styles = StyleSheet.create({

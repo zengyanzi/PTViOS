@@ -1,9 +1,6 @@
-
 import React, { Component } from 'react';
-
-
 import {
-   Image,
+  Image,
   View,
   Text,
   StyleSheet,
@@ -15,66 +12,51 @@ import {
   Picker,
   ListView
 } from 'react-native';
-
-
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
-
 var screenW = Dimensions.get('window').width;
-
-
 var _navigator ;
-
 var TopView = React.createClass({
-
   getInitialState: function(){
     _navigator = this.props.navigator;
     this.state = {
- 
     };
     return {
-
     };
-
   },
-
-_editplan:function(){
+  _editplan:function(){
      _navigator.push({
       title:'TraineeloinView',
       id:'traineelogin'
     })
    },
-
- render: function(){
-      return(
-         <ScrollView 
-            contentContainerStyle={{flex:1}}
-            keyboardDismissMode='on-drag'
-            keyboardShouldPersistTaps="never">
-          <View style={styles.maincontain}>
-            <View style={[styles.Top,styles.Bottomline]}>
-              <View style={[styles.Topbar,styles.Left]}>
-                  <TouchableOpacity 
-                      onPress={() => _navigator.push({title:'CreateplanView',id:'createplan'})}>
-                    <Image source={require('../img/setting_normal.png') }/>
-                   </TouchableOpacity> 
-              </View>
-              <View style={styles.Topbar}>
-                <Image source={require('../img/ptv_sized.png') }/>
-              </View>
-              <View style={[styles.Topbar,styles.Right]}>
-                <TouchableOpacity 
-                onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
-                  <Image source={require('../img/add_pressed.png') }/>
-
-                </TouchableOpacity> 
-              </View>
+  render: function(){
+    return(
+      <ScrollView 
+        contentContainerStyle={{flex:1}}
+        keyboardDismissMode='on-drag'
+        keyboardShouldPersistTaps="never">
+        <View style={styles.maincontain}>
+          <View style={[styles.Top,styles.Bottomline]}>
+            <View style={[styles.Topbar,styles.Left]}>
+              <TouchableOpacity 
+                  onPress={() => _navigator.push({title:'CreateplanView',id:'createplan'})}>
+                <Image source={require('../img/setting_normal.png') }/>
+               </TouchableOpacity> 
             </View>
-            
-          </View>
-        </ScrollView>
-        );
-
+            <View style={styles.Topbar}>
+              <Image source={require('../img/ptv_sized.png') }/>
+            </View>
+            <View style={[styles.Topbar,styles.Right]}>
+              <TouchableOpacity 
+                  onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
+                <Image source={require('../img/add_pressed.png') }/>
+              </TouchableOpacity> 
+            </View>
+          </View> 
+        </View>
+      </ScrollView>
+    );
   },
 
 });

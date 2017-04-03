@@ -1,9 +1,6 @@
-
 import React, { Component } from 'react';
-
-
 import {
-   Image,
+  Image,
   View,
   Text,
   StyleSheet,
@@ -16,81 +13,39 @@ import {
   ListView,
   Alert,
 } from 'react-native';
-
-
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
-
 var screenW = Dimensions.get('window').width;
-
-
 var _navigator ;
- var btnsDefault = [ { text: 'Button' } ];
-
-  var btnsTypes = [
-      { text: 'Detail', onPress: function(){ _navigator.push({
-                title:'PlanInfoView',
-                id:'planinfo'
-              })},type: 'primary',},
-
-      
-  ];
+var btnsDefault = [ { text: 'Button' } ];
   var detailrows = [
   {
     rowID:'1',
-     Calories :"957",
-     text: "Full Body Workout",
-     right:btnsTypes,
+    Calories :"957",
+    text: "Full Body Workout",
     autoClose: true,
   }, {
     rowID:'2',
     Calories :"1457",
     text: "Strength,Shape,Tone",
-    right:btnsTypes,
     autoClose: true,
   }, {
     rowID:'3',
     Calories :"1657",
     text: "Mixed Cadio",
-    right:btnsTypes,
     autoClose: true,
   }, {
     rowID:'4',
     Calories :"1257",
     text: "Tone Shape",
-    right:btnsTypes,
   },
    {
     rowID:'5',
     Calories :"1257",
     text: "Tone Shape",
-    right:btnsTypes,
   },
-   {
-    rowID:'6',
-    Calories :"1257",
-    text: "Tone Shape",
-    right:btnsTypes,
-  },
-   {
-    rowID:'7',
-    Calories :"1257",
-    text: "Tone Shape",
-    right:btnsTypes,
-  },
-   {
-    rowID:'8',
-    Calories :"1257",
-    text: "Tone Shape",
-    right:btnsTypes,
-  },
-
-  ];
-
-
-
+];
 var PlanCreateView = React.createClass({
-
   getInitialState: function(){
     _navigator = this.props.navigator;
     var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
@@ -99,59 +54,50 @@ var PlanCreateView = React.createClass({
       scrollEnabled: true,
       optionplanid:'',
       planid:1,
-
     };
     return {
       dataSource: this.state.dataSource,
       scrollEnabled: true,
       optionplanid:this.state.optionplanid,
       planid:this.state.planid
-
     };
-
   },
 //get the option 
-    componentWillMount() {
-       let _that=this;
-      var url = 'http://47.90.60.206:8080/pt_server/optionplan.action';
-      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});  
-      fetch(url).then(function(response) {  
-              return response.json();
-            }).then(function(res) { 
-              console.log(res["data"])
-               if (res["data"]!=null) {
-               //get the sport item name from the database
-              _that.setState({
-             dataSource: ds.cloneWithRows(res["data"]),
-             detailrows:res["data"]
-          })
-              }else{
-                Alert.alert('Fail to display','Please check your data'); 
-          }
-          
-       
-       });
-        
-
-
+  componentWillMount() {
+    let _that=this;
+    var url = 'http://47.90.60.206:8080/pt_server/optionplan.action';
+    var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});  
+    fetch(url).then(function(response) {  
+      return response.json();
+    }).then(function(res) { 
+      console.log(res["data"])
+      if (res["data"]!=null) {
+       //get the sport item name from the database
+        _that.setState({
+          dataSource: ds.cloneWithRows(res["data"]),
+          detailrows:res["data"]
+        })
+      }else{
+        Alert.alert('Fail to display','Please check your data'); 
+      } 
+    });
   },
 // set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });
   },
-
   //  set active swipeout item
   handleSwipeout(sectionID,rowID) {
-    for (var i = 0; i < this.state.detailrows.length; i++) {
-      
-      if (i != rowID) this.state.detailrows[i].active = false;
-      else this.state.detailrows[i].active = true;
+    for (var i = 0; i < this.state.detailrows.length; i++) {     
+      if (i != rowID) {
+        this.state.detailrows[i].active = false;
+      }
+      else {
+        this.state.detailrows[i].active = true;
+      }
     }
     this.updateDataSource(this.state.detailrows);
-
   },
-
-
   updateDataSource(data) {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(data),
@@ -159,19 +105,15 @@ var PlanCreateView = React.createClass({
   },
 
   renderRow(rowData: string, sectionID: number, rowID: number,) {
-         var btnsTypes = [
+    var btnsTypes = [
       { text: 'Detail', onPress: function(){ _navigator.push({
                 title:'PlanInfoView',
                 id:'planinfo',
                 params:{plantitle:rowData.title,
                   planid:rowData.id
                 }
-              })},type: 'primary',},
-
-          
+              })},type: 'primary',},          
       ];
-
-  
     return (
       <Swipeout
         left={rowData.left}
@@ -181,58 +123,43 @@ var PlanCreateView = React.createClass({
         autoClose={rowData.autoClose}
         backgroundColor='transparent'
         close={!rowData.active}
-   
-
         onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
         scroll={event => this.allowScroll(event)}>
-         <TouchableHighlight style={styles.li} activeOpacity={0.5} underlayColor = '#2cb395'  onPress={() =>this.setState({planid:rowData.id})}>
-          
-                <Text style={styles.liText}>Plan NO: {rowData.id} {rowData.title}</Text>        
-          
+         <TouchableHighlight style={styles.li} activeOpacity={0.5} underlayColor = '#2cb395'  onPress={() =>this.setState({planid:rowData.id})}>      
+            <Text style={styles.liText}>Plan NO: {rowData.id} {rowData.title}</Text>             
         </TouchableHighlight >
-
       </Swipeout>
     );
   },
-
-
 _editplan:function(){
-     _navigator.push({
-      title:'TraineeloinView',
-      id:'traineelogin'
-    })
-   },
-
- render: function(){
-
-      return(
-         <ScrollView 
-            contentContainerStyle={{flex:1}}
-            keyboardDismissMode='on-drag'
-            keyboardShouldPersistTaps="never">
-          <View style={styles.maincontain}>
-            <Text style={styles.text}>Your Plan is NO: {this.state.planid}</Text>
-            <ListView style={styles.listview}
-              scrollEnabled={this.state.scrollEnabled}
-              dataSource={this.state.dataSource}
-              initialListSize={6}
-              renderRow={this.renderRow}
-              />
-          </View>
-
-        </ScrollView>
-        );
-
+  _navigator.push({
+    title:'TraineeloinView',
+    id:'traineelogin'
+  })
+},
+render: function(){
+  return(
+     <ScrollView 
+        contentContainerStyle={{flex:1}}
+        keyboardDismissMode='on-drag'
+        keyboardShouldPersistTaps="never">
+      <View style={styles.maincontain}>
+        <Text style={styles.text}>Your Plan is NO: {this.state.planid}</Text>
+        <ListView style={styles.listview}
+          scrollEnabled={this.state.scrollEnabled}
+          dataSource={this.state.dataSource}
+          initialListSize={6}
+          renderRow={this.renderRow}
+          />
+      </View>
+    </ScrollView>
+  );
+}, 
+  componentDidUpdate() {
+    var planid=this.state.planid.toString();
+    AsyncStorage.setItem("planid",planid);
   },
-
-        componentDidUpdate() {
-        var planid=this.state.planid.toString();
-        AsyncStorage.setItem("planid",planid);
-
-    },
-
 });
-
 var styles = StyleSheet.create({
    container:{
     flex: 1,

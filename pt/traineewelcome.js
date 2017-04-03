@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-
-
 import {
   Image,
   View,
@@ -13,11 +11,8 @@ import {
   Navigator,
   AsyncStorage
 } from 'react-native';
-
 //navigation
 var _navigator;
-
-
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
     return false;
@@ -28,36 +23,27 @@ BackAndroid.addEventListener('hardwareBackPress', function() {
   _navigator.pop();
   return true;
 });
-
-
 var TraineewelcomeView = React.createClass({
-
   getInitialState: function(){
     _navigator = this.props.navigator;
     AsyncStorage.setItem("type",'trainee');
-            var type = AsyncStorage.getItem('type',(err, result) => {
-                console.log(result);
-              });   
+    var type = AsyncStorage.getItem('type',(err, result) => {
+      console.log(result);
+    });   
     return {
-
     };
   },
-
-
- render: function(){
-
-     return (
-          <ScrollView 
+  render: function(){
+    return (
+      <ScrollView 
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps="never"
-      >
-        
+      >        
        <View style={styles.container}>
        </View>
        <View style={styles.maincontain}>
          <Image source={require('../img/welcometrainer.png')} style={{width: 280, height: 140}} />
-
             <View style={styles.choose}>
               <TouchableOpacity style={styles.btn}
               onPress={() => _navigator.push({title:'TraineeregisterView',id:'traineeregister'})}>
@@ -67,18 +53,15 @@ var TraineewelcomeView = React.createClass({
              onPress={() => _navigator.push({title:'TraineeloginView',id:'traineelogin'})}>
               <Text style={styles.text}> Login</Text>
               </TouchableOpacity>
-
             </View>
-
         </View>
-            <TouchableOpacity style={styles.bottom}
-             onPress={() => _navigator.push({title:'Main',id:'main'})}>
-              <Text style={styles.text}>Back to Choose</Text>
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.bottom}
+           onPress={() => _navigator.push({title:'Main',id:'main'})}>
+            <Text style={styles.text}>Back to Choose</Text>
+          </TouchableOpacity>
       </ScrollView>
-       );
+    );
   }
-
 });
 var styles = StyleSheet.create({
   container:{

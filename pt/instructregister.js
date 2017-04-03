@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
   Image,
   View,
@@ -13,14 +12,11 @@ import {
   DatePickerAndroid,
   navigator
 } from 'react-native';
-
 import t from 'tcomb-form-native';
 import DatePicker from './date.js';
-
 //import Storage from 'react-native-storage';
 var _navigator ;
 var Form =t.form.Form;
-
 var User = t.struct({
   name: t.String,              // a required string
   surname: t.maybe(t.String),  // an optional string
@@ -29,19 +25,14 @@ var User = t.struct({
   password:t.String,
   //rememberMe: t.Boolean        // a boolean
 });
-
 var options = {
-   fields: {
+  fields: {
     password: {
       password: true,
       secureTextEntry: true,
     },
   }
 }; // optional rendering options (see documentation)
-
-
-
-
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
     return false;
@@ -52,31 +43,23 @@ BackAndroid.addEventListener('hardwareBackPress', function() {
   _navigator.pop();
   return true;
 });
-
-
-
 var InstructregisterView = React.createClass({
-
   getInitialState: function(){
     _navigator = this.props.navigator;
-   this.state={
-    date:''
-   };
+    this.state={
+      date:''
+    };
     return {
-
     };
   },
-
    _register: function () {
-
     var value = this.refs.form.getValue();
     var name = value["name"];
     var surname = value["surname"];
     var email = value["email"];
     var phone = value["phone"];
     // var birthday = this.state.date;
-    var password = value["password"];
-    
+    var password = value["password"];   
     var url = 'http://47.90.60.206:8080/pt_server/instructorregister.action';
     url += '?name='+name+'&surname='+surname+'&email='+email+'&phone='+phone+'&password='+password;
     fetch(url, {
@@ -95,37 +78,32 @@ var InstructregisterView = React.createClass({
       title:'InstructloginView',
       id:'instructlogin'
     })
-
-
-
   },
-
-
-  render: function(){
+ render: function(){
     return (
       <ScrollView 
             contentContainerStyle={{flex:1}}
             keyboardDismissMode='on-drag'
             keyboardShouldPersistTaps="never"
- >
+      >
         <View style={styles.maincontain}>
-            <View>
-              <Form
-                ref="form"
-                type={User}
-                options={options}/>
-              <TouchableHighlight style={styles.button} onPress={this._register} underlayColor='#99d9f4'>
-                <Text style={styles.buttonText}>Save</Text>
-              </TouchableHighlight>
-            </View>
+          <View>
+            <Form
+              ref="form"
+              type={User}
+              options={options}/>
+            <TouchableHighlight style={styles.button} onPress={this._register} underlayColor='#99d9f4'>
+              <Text style={styles.buttonText}>Save</Text>
+            </TouchableHighlight>
+          </View>
         </View>
         <TouchableOpacity style={styles.bottom}
              onPress={() => _navigator.push({title:'InstructwelcomeView',id:'instructwelcome'})}>
-              <Text style={{color:"white",fontSize:18}}>Back</Text>
+          <Text style={{color:"white",fontSize:18}}>Back</Text>
         </TouchableOpacity>
       </ScrollView>
-       );
-    }
+    );
+  }
 });
 var styles = StyleSheet.create({
   container:{

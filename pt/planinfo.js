@@ -1,9 +1,6 @@
-
 import React, { Component } from 'react';
-
-
 import {
-   Image,
+  Image,
   View,
   Text,
   StyleSheet,
@@ -15,157 +12,114 @@ import {
   Picker,
   ListView
 } from 'react-native';
-
-
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
 import Topview from './top.js';
-
 var screenW = Dimensions.get('window').width;
-
 var _navigator ;
- var btnsDefault = [ { text: 'Button' } ];
-
-  var btnsTypes = [
-      { text: 'Edit', onPress: function(){ _navigator.push({
-                title:'EditplanView',
-                id:'editplan'
-              })},type: 'primary',},
-        { text: 'Submit',onPress: function(){ alert('confirm to submit?') },type:'secondary'},
-        { text: 'Delete',onPress: function(){ alert('Confirm to delete?') },type: 'delete'},
-  ];
-  var detailrows = [
-    {
-       Calories :"457",
-       text:"Rower Moderate  5 min 30 sec fast:60 sec slow",
-       right: btnsTypes,
-      autoClose: true,
-    }, {
-
-      Calories :"457",
-       text: "Walking Weighted Lunge  Controlled  Light 3 15  60Sec",
-      right: btnsTypes,
-      autoClose: true,
-    }, {
-
-        Calories :"457",
-        text: "Upper Back 18,29 30-60 sec 1 1",
-      right: btnsTypes,
-      autoClose: true,
-    }, {
-
-      Calories :"457",
-      text: "Bike Fast  3min  Moderate  15  60Sec",
-      right:btnsTypes,
-    },
-    
-  ];
-
-
-
+var detailrows = [
+  {
+    Calories :"457",
+    text:"Rower Moderate  5 min 30 sec fast:60 sec slow",
+    autoClose: true,
+  }, {
+    Calories :"457",
+    text: "Walking Weighted Lunge  Controlled  Light 3 15  60Sec",
+    autoClose: true,
+  }, {
+    Calories :"457",
+    text: "Upper Back 18,29 30-60 sec 1 1",
+    autoClose: true,
+  }, {
+    Calories :"457",
+    text: "Bike Fast  3min  Moderate  15  60Sec",
+  },
+];
 var PlanInfoView = React.createClass({
-
   getInitialState: function(){
     _navigator = this.props.navigator;
     var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
     this.state = {
       dataSource: ds.cloneWithRows(detailrows),
       scrollEnabled: true,
-
     };
     return {
       dataSource: this.state.dataSource,
       scrollEnabled: true,
-
     };
-
   },
 //get the option 
-    componentWillMount() {
-       let _that=this;
-      var url = 'http://47.90.60.206:8080/pt_server/optionplan.action';
-      
-      console.log(url);
-
-      console.log(this.props.planid);
-      var optionplanid=this.props.planid;
-      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});  
-      fetch(url).then(function(response) {  
-              return response.json();
-            }).then(function(res) { 
-              
-               if (res["data"]!=null) {
-                for (var i = 0; i < res["data"].length; i++) {
-                  if (res["data"][i]["id"]===optionplanid) {
-                    var optionItems=res["data"][i]["optionItems"];
-
+  componentWillMount() {
+    let _that=this;
+    var url = 'http://47.90.60.206:8080/pt_server/optionplan.action';
+    console.log(url);
+    console.log(this.props.planid);
+    var optionplanid=this.props.planid;
+    var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});  
+    fetch(url).then(function(response) {  
+      return response.json();
+    }).then(function(res) {       
+      if (res["data"]!=null) {
+        for (var i = 0; i < res["data"].length; i++) {
+          if (res["data"][i]["id"]===optionplanid) {
+            var optionItems=res["data"][i]["optionItems"];
+          };
+          console.log(optionItems);
+          var urlitem = 'http://47.90.60.206:8080/pt_server/item.action';
+          console.log(urlitem);
+          fetch(urlitem).then(function(response) {  
+            return response.json();
+          }).then(function(result) {
+            console.log(result["data"]);
+            if (result["data"]!=null) {
+              var planinfo=[]
+              for (var i = 0; i < result["data"].length; i++) {
+                for (var j = 0; j < optionItems.length; j++) {
+                  if (result["data"][i]["id"]===optionItems[j]["item_id"]) {
+                    var iteminfo={};
+                    iteminfo.itemname=result["data"][i]["name"];
+                    iteminfo.sportsize=optionItems[j]["sportsize"];
+                    planinfo.push(iteminfo);
                   };
-                  console.log(optionItems);
-                  var urlitem = 'http://47.90.60.206:8080/pt_server/item.action';
-                  console.log(urlitem);
-                  fetch(urlitem).then(function(response) {  
-                      return response.json();
-                    }).then(function(result) {
-                      console.log(result["data"]);
-                      if (result["data"]!=null) {
-                        var planinfo=[]
-                        for (var i = 0; i < result["data"].length; i++) {
-                          for (var j = 0; j < optionItems.length; j++) {
-                            if (result["data"][i]["id"]===optionItems[j]["item_id"]) {
-                              var iteminfo={};
-                              iteminfo.itemname=result["data"][i]["name"];
-                              iteminfo.sportsize=optionItems[j]["sportsize"];
-                              planinfo.push(iteminfo);
-                            };
-                          };
-                          
-                        };
-                        console.log(planinfo);
-                         _that.setState({
-                           dataSource: ds.cloneWithRows(planinfo),
-                           detailrows:planinfo
-                        })
-                      }else{
-                            Alert.alert('Fail to display','Please check your data'); 
-                      }
-                    }); 
-
-                };
-               //get the sport item name from the database
-       
-              }else{
-                Alert.alert('Fail to display','Please check your data'); 
-          }
-          
-       
-       });
-        
-
-
+                };   
+              };
+              console.log(planinfo);
+               _that.setState({
+                dataSource: ds.cloneWithRows(planinfo),
+                detailrows:planinfo
+              })
+            }else{
+              Alert.alert('Fail to display','Please check your data'); 
+            }
+          }); 
+        };
+                 //get the sport item name from the database
+      }else{
+        Alert.alert('Fail to display','Please check your data'); 
+      }   
+    });
   },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });
   },
-
   //  set active swipeout item
   handleSwipeout(sectionID,rowID) {
-    for (var i = 0; i < this.state.detailrows.length; i++) {
-      
-      if (i != rowID) this.state.detailrows[i].active = false;
-      else this.state.detailrows[i].active = true;
+    for (var i = 0; i < this.state.detailrows.length; i++) {   
+      if (i != rowID){
+        this.state.detailrows[i].active = false;
+      } 
+      else {
+        this.state.detailrows[i].active = true;
+      }
     }
     this.updateDataSource(this.state.detailrows);
-
   },
-
   updateDataSource(data) {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(data),
     });
   },
-
-
   renderRow(rowData: string, sectionID: number, rowID: number) {
     return (
       <Swipeout
@@ -184,54 +138,44 @@ var PlanInfoView = React.createClass({
       </Swipeout>
     );
   },
-
-
-_editplan:function(){
+  _editplan:function(){
      _navigator.push({
       title:'TraineeloinView',
       id:'traineelogin'
     })
    },
-
- render: function(){
-      return(
-        <ScrollView 
-            contentContainerStyle={{flex:1}}
-            keyboardDismissMode='on-drag'
-            keyboardShouldPersistTaps="never">
-          <View style={styles.maincontain}>
-        
-             <View style={[styles.Top,styles.Bottomline]}>
-              <View style={[styles.Topbar,styles.Left]}>
-                  <TouchableOpacity 
-                      onPress={() => _navigator.jumpBack()}>
-                    <Image source={require('../img/back.png') }/>
-                   </TouchableOpacity> 
-              </View>
-              <View style={styles.Topbar}>
-                <Image source={require('../img/ptv_sized.png') }/>
-              </View>
-              <View style={[styles.Topbar,styles.Right]}>
-                
-              </View>
+  render: function(){
+    return(
+      <ScrollView 
+          contentContainerStyle={{flex:1}}
+          keyboardDismissMode='on-drag'
+          keyboardShouldPersistTaps="never">
+        <View style={styles.maincontain}>
+          <View style={[styles.Top,styles.Bottomline]}>
+            <View style={[styles.Topbar,styles.Left]}>
+                <TouchableOpacity 
+                    onPress={() => _navigator.jumpBack()}>
+                  <Image source={require('../img/back.png') }/>
+                 </TouchableOpacity> 
             </View>
-         
-            <View style={[styles.header,styles.Bottomline]}>
-                <Text style={{fontSize:20}}>{this.props.plantitle}</Text>
+            <View style={styles.Topbar}>
+              <Image source={require('../img/ptv_sized.png') }/>
             </View>
-
-            <ListView style={styles.listview}
-              scrollEnabled={this.state.scrollEnabled}
-              dataSource={this.state.dataSource}
-              renderRow={this.renderRow}/>
+            <View style={[styles.Topbar,styles.Right]}>     
+            </View>
           </View>
-        </ScrollView>
-        );
-
+          <View style={[styles.header,styles.Bottomline]}>
+              <Text style={{fontSize:20}}>{this.props.plantitle}</Text>
+          </View>
+          <ListView style={styles.listview}
+            scrollEnabled={this.state.scrollEnabled}
+            dataSource={this.state.dataSource}
+            renderRow={this.renderRow}/>
+        </View>
+      </ScrollView>
+    );
   },
-
 });
-
 var styles = StyleSheet.create({
    container:{
     flex: 1,

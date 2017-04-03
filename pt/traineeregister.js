@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
-
 import {
-   Image,
+  Image,
   View,
   Text,
   StyleSheet,
@@ -13,7 +11,6 @@ import {
 } from 'react-native';
 var t = require('tcomb-form-native');
 import DatePicker from './date.js';
-
 var Form =t.form.Form;
 var _ = require('lodash');
 var _navigator ;
@@ -29,7 +26,6 @@ var Person = t.struct({
   password:t.String,            // a required number
   //rememberMe: t.Boolean        // a boolean
 });
-
 var options = {
    fields: {
     password: {
@@ -39,20 +35,13 @@ var options = {
 
   }
 }; // optional rendering options (see documentation)
-
-
-
 var TraineeregisterView = React.createClass({
-
   getInitialState: function(){
     _navigator = this.props.navigator;
     return {
-
     };
   },
-
    _register: function () {
-
     var value = this.refs.form.getValue();
     var name = value["name"];
     var surname = value["surname"];
@@ -77,40 +66,32 @@ var TraineeregisterView = React.createClass({
       title:'TraineeloinView',
       id:'traineelogin'
     })
-
-
   },
-
-
-
- render: function(){
+  render: function(){
     return (
       <ScrollView 
             contentContainerStyle={{flex:1}}
             keyboardDismissMode='on-drag'
             keyboardShouldPersistTaps="never"
->
-
- 
-
+      >
         <View style={styles.maincontain}>
-            <View style={styles.formstyle}>
-              <Form
-                ref="form"
-                type={Person}
-                options={options}/>
-              <TouchableHighlight style={styles.button} onPress={this._register} underlayColor='#99d9f4'>
-                <Text style={styles.buttonText}>Save</Text>
-              </TouchableHighlight>
-            </View>
+          <View style={styles.formstyle}>
+            <Form
+              ref="form"
+              type={Person}
+              options={options}/>
+            <TouchableHighlight style={styles.button} onPress={this._register} underlayColor='#99d9f4'>
+              <Text style={styles.buttonText}>Save</Text>
+            </TouchableHighlight>
+          </View>
         </View>
         <TouchableOpacity style={styles.bottom}
              onPress={() => _navigator.push({title:'TraineewelcomeView',id:'traineewelcome'})}>
-              <Text style={{color:"white",fontSize:18}}>Back</Text>
+          <Text style={{color:"white",fontSize:18}}>Back</Text>
         </TouchableOpacity>
       </ScrollView>
-       );
-    }
+    );
+  }
 });
 var styles = StyleSheet.create({
   container:{

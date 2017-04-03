@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
-
 import {
-   Image,
+  Image,
   View,
   Text,
   StyleSheet,
@@ -13,9 +11,7 @@ import {
   Alert,
   AsyncStorage
 } from 'react-native';
-
 import t from 'tcomb-form-native';
-
 //navigation
 var _navigator;
 var Form =t.form.Form;
@@ -32,14 +28,10 @@ var options = {
     },
   }
 };
-
-
 var TraineeloginView = React.createClass({
-
     getInitialState: function(){
     _navigator = this.props.navigator;
     return {
-
     };
   },
    _login:function(){
@@ -50,64 +42,60 @@ var TraineeloginView = React.createClass({
       // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
       url += '?email='+email+'&password='+password;
       fetch(url).then(function(response) {  
-            return response.json();
-          }).then(function(res) {
-          console.log(res);
-            if (res["data"]!=null) {
-             AsyncStorage.setItem("email",email);
-             AsyncStorage.setItem("password",password);
-             var userid=res['data']['id'].toString();
-             AsyncStorage.setItem('userid',userid);
-             console.log(userid);
-
-              _navigator.push({
-                title:'ThomeView',
-                id:'Thome'
-              });
-          }else{
+        return response.json();
+      }).then(function(res) {
+        console.log(res);
+        if (res["data"]!=null) {
+          AsyncStorage.setItem("email",email);
+          AsyncStorage.setItem("password",password);
+          var userid=res['data']['id'].toString();
+          AsyncStorage.setItem('userid',userid);
+          console.log(userid);
+          _navigator.push({
+            title:'ThomeView',
+            id:'Thome'
+          });
+        }else{
           Alert.alert('Fail to login','Please check your password');  
-          }
-        });
+        }
+      });
     },
  render: function(){
    return (
-          <ScrollView 
+      <ScrollView 
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps="never"
-      >
-        
-       <View style={styles.container}>
+      >  
+        <View style={styles.container}>
           <View style={styles.Top}>
-           <Text style={styles.WelcomeText}>Welcome Back to Training</Text>
+            <Text style={styles.WelcomeText}>Welcome Back to Training</Text>
           </View>
-       </View>
-       <View style={styles.maincontain}>
-             <Form 
-                ref="form"
-                type={User}
-                options={options}/>
-
-
-            <View style={styles.choose}>
-              <TouchableOpacity style={styles.btn}
-              onPress={this._login}>
-              <Text style={styles.text}>login</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.btn}
-                onPress={() => _navigator.push({title:'traineeregister',id:'traineeregister'})}>
-              <Text style={styles.text}>Forget</Text>
-              </TouchableOpacity>
-            </View>
+        </View>
+        <View style={styles.maincontain}>
+          <Form 
+            ref="form"
+            type={User}
+            options={options}
+          />
+          <View style={styles.choose}>
+            <TouchableOpacity style={styles.btn}
+            onPress={this._login}>
+            <Text style={styles.text}>login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btn}
+              onPress={() => _navigator.push({title:'traineeregister',id:'traineeregister'})}>
+            <Text style={styles.text}>Forget</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <TouchableOpacity style={styles.bottom}
              onPress={() => _navigator.push({title:'TraineewelcomeView',id:'traineewelcome'})}>
-              <Text style={{color:"white",fontSize:18}}>Back</Text>
+          <Text style={{color:"white",fontSize:18}}>Back</Text>
         </TouchableOpacity>
       </ScrollView>
-       );
+    );
   }
-
 });
 var styles = StyleSheet.create({
   container:{

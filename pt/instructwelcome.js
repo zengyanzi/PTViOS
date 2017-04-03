@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-
-
 import {
   Image,
   View,
@@ -11,38 +9,29 @@ import {
   Navigator,
   AsyncStorage
 } from 'react-native';
-
 //navigation
 var _navigator;
-
-
 var InstructwelcomeView = React.createClass({
-
   getInitialState: function(){
     _navigator = this.props.navigator;
     AsyncStorage.setItem("type",'instructor');
-            var type = AsyncStorage.getItem('type',(err, result) => {
-                console.log(result);
-              });    
+    var type = AsyncStorage.getItem('type',(err, result) => {
+      console.log(result);
+    });    
     return {
-
     };
   },
-
   render: function(){
     return (
-          <ScrollView 
+      <ScrollView 
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps="never"
-      >
-        
+      >      
        <View style={styles.container}>
- 
        </View>
        <View style={styles.maincontain}>
          <Image source={require('../img/welcomeinstruct.png')} style={{width: 280, height: 140}}  />
-
             <View style={styles.choose}>
               <TouchableOpacity style={styles.btn}
               onPress={() => _navigator.push({title:'InstructregisterView',id:'instructregister'})}>
@@ -51,14 +40,12 @@ var InstructwelcomeView = React.createClass({
               <TouchableOpacity style={styles.btn}
              onPress={() => _navigator.push({title:'InstructloginView',id:'instructlogin'})}>
               <Text style={styles.text}> Login</Text>
-              </TouchableOpacity>
-              
+              </TouchableOpacity>              
             </View>
-
         </View>
         <TouchableOpacity style={styles.bottom}
              onPress={() => _navigator.push({title:'Main',id:'main'})}>
-              <Text style={styles.text}>Back to Choose</Text>
+          <Text style={styles.text}>Back to Choose</Text>
         </TouchableOpacity>
       </ScrollView>
     );

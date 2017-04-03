@@ -1,9 +1,6 @@
-
 import React, { Component } from 'react';
-
-
 import {
-   Image,
+  Image,
   View,
   Text,
   StyleSheet,
@@ -15,19 +12,11 @@ import {
   Picker,
   ListView
 } from 'react-native';
-
 import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
 import { List, ListItem } from 'react-native-elements';
-
-
 var screenW = Dimensions.get('window').width;
-
-
 var _navigator ;
-
-
-
 const list = [
   {
     title: 'gender',
@@ -53,78 +42,55 @@ const list = [
     title: ' BMI',
     icon: 'fingerprint'
   },
-
-
 ]
-
 var ProfileView = React.createClass({
-
   getInitialState: function(){
     _navigator = this.props.navigator;
     var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-
     this.state = {
-
-
     };
     return {
-   
-
     };
-
   },
-
-
-
-
   _logout: function(){
-            _navigator.push({
-            title:'main',
-            id:'main'
-           });  
-      AsyncStorage.removeItem('type',(err,result)=>{
-        console.log(result);
-      });
-
-      AsyncStorage.removeItem('email',(err,result)=>{
-        console.log(result);
-      });
-      AsyncStorage.removeItem('password',(err,result)=>{
-        console.log(result);
-      
-      });
+    _navigator.push({
+      title:'main',
+      id:'main'
+    });  
+    AsyncStorage.removeItem('type',(err,result)=>{
+      console.log(result);
+    });
+    AsyncStorage.removeItem('email',(err,result)=>{
+      console.log(result);
+    });
+    AsyncStorage.removeItem('password',(err,result)=>{
+      console.log(result);    
+    });
   },
-
-
- render: function(){
-      return(
-         <ScrollView 
-            contentContainerStyle={{flex:1}}
-            keyboardDismissMode='on-drag'
-            keyboardShouldPersistTaps="always">
-            <View style={styles.maincontain}>
-              <View style={[styles.Top,styles.Bottomline]}>
-                  <TouchableOpacity 
-                  onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
-                    <Image source={require('../img/add_pressed.png') }/>
-
-                  </TouchableOpacity> 
-                <View style={styles.Topbar}>
-
-                </View>
-                
-                <View style={styles.right}>
-                <TouchableOpacity 
-                        onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
-                  <Image source={require('../img/chart-pressed.png') }/>
-                </TouchableOpacity> 
-                </View>
-
-              </View>
-            <View>
-
+  render: function(){
+    return(
+      <ScrollView 
+        contentContainerStyle={{flex:1}}
+        keyboardDismissMode='on-drag'
+        keyboardShouldPersistTaps="always">
+        <View style={styles.maincontain}>
+          <View style={[styles.Top,styles.Bottomline]}>
+            <TouchableOpacity 
+              onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
+                <Image source={require('../img/add_pressed.png') }/>
+            </TouchableOpacity> 
+            <View style={styles.Topbar}>
+            </View>     
+            <View style={styles.right}>
+              <TouchableOpacity 
+                      onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
+                <Image source={require('../img/chart-pressed.png') }/>
+              </TouchableOpacity> 
             </View>
-           <View >
+          </View>
+          <View>
+          </View>
+          <View >
             <List>
               <ListItem
                 roundAvatar
@@ -148,25 +114,20 @@ var ProfileView = React.createClass({
                 ))
               }
             </List>
-
-            </View>  
-            <View >
-              <TouchableOpacity style={styles.btn}
-              onPress={this._logout}>
-              <Text style={styles.text}>Logout</Text>
-              </TouchableOpacity>
-            </View>       
-
-      </View>   
-        </ScrollView>
-        );
-
+          </View>  
+          <View >
+            <TouchableOpacity style={styles.btn}
+            onPress={this._logout}>
+            <Text style={styles.text}>Logout</Text>
+            </TouchableOpacity>
+          </View>       
+        </View>   
+      </ScrollView>
+    );
   },
-
 });
-
 var styles = StyleSheet.create({
-   container:{
+  container:{
     flex: 1,
     backgroundColor: '#38bda0',
     justifyContent: 'center',

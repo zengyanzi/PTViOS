@@ -1,9 +1,7 @@
 
 import React, { Component } from 'react';
-
-
 import {
-   Image,
+  Image,
   View,
   Text,
   StyleSheet,
@@ -15,93 +13,59 @@ import {
   Picker,
   ListView
 } from 'react-native';
-
 import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
 import { SearchBar } from 'react-native-elements';
 import Swiper from 'react-native-swiper';
-
-
 var width = Dimensions.get('window').width;
-
-
 var _navigator ;
-
-
-
 var TrainerView = React.createClass({
-
   getInitialState: function(){
     _navigator = this.props.navigator;
-  
     this.state = {
- 
-
     };
     return {
-
-
     };
-
-  },
-    
-
+  },    
  render: function(){
-      return(
-         <ScrollView 
-            contentContainerStyle={{flex:1}}
-            keyboardDismissMode='on-drag'
-            keyboardShouldPersistTaps="always">
-            <View style={[styles.Top,styles.Bottomline]}>
-                <TouchableOpacity 
-                onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
-                  <Image source={require('../img/add_pressed.png') }/>
-
-                </TouchableOpacity> 
-              <View style={styles.Topbar}>
-
-              </View>
-              
-              <View style={styles.right}>
-              <TouchableOpacity 
-                      onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
-                <Image source={require('../img/chart-pressed.png') }/>
-              </TouchableOpacity> 
-              </View>
-              
-            </View>
-
-  
-            <SearchBar
-             
-              placeholder='Find your tainer here' />
-
+  return(
+     <ScrollView 
+        contentContainerStyle={{flex:1}}
+        keyboardDismissMode='on-drag'
+        keyboardShouldPersistTaps="always">
+        <View style={[styles.Top,styles.Bottomline]}>
+          <TouchableOpacity 
+            onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
+            <Image source={require('../img/add_pressed.png') }/>
+           </TouchableOpacity> 
+          <View style={styles.Topbar}>
+          </View>     
+          <View style={styles.right}>
+          <TouchableOpacity 
+              onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
+            <Image source={require('../img/chart-pressed.png') }/>
+          </TouchableOpacity> 
+          </View>
+        </View>
+        <SearchBar placeholder='Find your tainer here' />
         <Swiper style={styles.wrapper} showsButtons={true}>
-        <View style={styles.slide1}>
-          <Text style={styles.text}>Find a trainer</Text>
-
-          <Image resizeMode='stretch' style={styles.image} source={require('../img/tra1.jpg')} />
-          
-        </View>
-        <View style={styles.slide2}>
-          <Text style={styles.text}>Happy</Text>
-            <Image resizeMode='stretch' style={styles.image} source={require('../img/tra1.jpg')} />
-        </View>
-        <View style={styles.slide3}>
-          <Text style={styles.text}>And Healthy</Text>
-           <Image resizeMode='stretch' style={styles.image} source={require('../img/tra1.jpg')} />
-        </View>
-      </Swiper>  
-
-
-             
-          </ScrollView>
-        );
-
+          <View style={styles.slide1}>
+            <Text style={styles.text}>Find a trainer</Text>
+             <Image resizeMode='stretch' style={styles.image} source={require('../img/tr1.jpg')} /> 
+          </View>
+          <View style={styles.slide2}>
+            <Text style={styles.text}>Happy</Text>
+              <Image resizeMode='stretch' style={styles.image} source={require('../img/tr2.jpg')} />
+          </View>
+          <View style={styles.slide3}>
+            <Text style={styles.text}>And Healthy</Text>
+             <Image resizeMode='stretch' style={styles.image} source={require('../img/tr3.jpg')} />
+          </View>
+        </Swiper>  
+      </ScrollView>
+    );
   },
-
 });
-
 var styles = StyleSheet.create({
    container:{
     flex: 1,
@@ -119,11 +83,9 @@ var styles = StyleSheet.create({
     borderBottomWidth:2,
     borderColor:'gray'
   },
-
   Topbar:{
     flex:2,
     flexDirection: 'row',
-
   },
    Left:{
     flex:1,
@@ -139,7 +101,6 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#38bda0',
     flexDirection:'column',
-
   },
     image: {
     width,
