@@ -16,6 +16,7 @@ import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
 import { SearchBar } from 'react-native-elements'
 import Swiper from 'react-native-swiper';
+import URLnetowrk from './network';
 var width = Dimensions.get('window').width;
 var _navigator ;
 var GymView = React.createClass({

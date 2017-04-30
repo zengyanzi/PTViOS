@@ -16,6 +16,7 @@ var Slider = require('react-native-slider');
 import Dimensions from 'Dimensions';
 import DatePicker from './date.js';
 import Topview from './top.js';
+import URLnetowrk from './network';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var AdditemtodayView = React.createClass({
@@ -39,7 +40,7 @@ var AdditemtodayView = React.createClass({
     let _that=this;
     AsyncStorage.getItem('userid',(err, result) => {
       console.log(result);
-      var url = 'http://47.90.60.206:8080/pt_server/item.action';  
+      var url = URLnetowrk+'item.action';  
       fetch(url).then(function(response) {  
         return response.json();
       }).then(function(res) {            
@@ -68,7 +69,7 @@ var AdditemtodayView = React.createClass({
     AsyncStorage.getItem('userid',(err, result) => {
       console.log(result);
       var trainee_id=result;
-      var url = 'http://47.90.60.206:8080/pt_server/item.action'; // get the item data again 
+      var url = URLnetowrk+'item.action'; // get the item data again 
       fetch(url).then(function(response) {  
         return response.json();
       }).then(function(res) {
@@ -81,7 +82,7 @@ var AdditemtodayView = React.createClass({
             }  
           }
           console.log(item_id);
-          var urlsave='http://47.90.60.206:8080/pt_server/additem2day.action'; 
+          var urlsave=URLnetowrk+'additem2day.action'; 
           urlsave += '?trainee_id='+trainee_id+'&day='+day+'&item_id='+item_id+'&sportsize='+sportsize;
           console.log(urlsave);
           fetch(urlsave).then(function(response) {  

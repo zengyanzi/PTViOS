@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
+import URLnetowrk from './network';
 import Swipeout from 'react-native-swipeout';
 var screenW = Dimensions.get('window').width;
 var rows = [
@@ -68,7 +69,7 @@ var PlanView = React.createClass({
       var trainee_id=result;
       var day=this.props.date;
       var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-      var url = 'http://47.90.60.206:8080/pt_server/myplan.action';
+      var url = URLnetowrk+'myplan.action';
       // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
       url += '?trainee_id='+trainee_id+'&start='+start+'&end='+end;
       console.log(url);
@@ -116,20 +117,57 @@ var PlanView = React.createClass({
       var day =rowData.day;
       var item_id=rowData.item_id;
       var sportsize=rowData.sportsize;
-      var url = 'http://47.90.60.206:8080/pt_server/submitday.action';
-      // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+      var url = URLnetowrk+'submitday.action';
       url += '?trainee_id='+trainee_id+'&day='+day;
       console.log(url);
-        fetch(url).then(function(response) {  
-          return response.json();
-        }).then(function(res) {
-          console.log(res);
-          if (res["data"]==true) {
-            Alert.alert('Submit','Successfully!'); 
-          } 
-        });
-      })
-    },
+      fetch(url).then(function(response) {  
+        return response.json();
+      }).then(function(res) {
+        console.log(res);
+        if (res["data"]==true) {
+          Alert.alert('Submit','Successfully!'); 
+          function format (d) {
+            return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+          }
+          var today =new Date();
+          var start = format(today);
+          var day1=new Date(today.getTime() + (1000* 60 * 60 * 24)*6);
+          var end=format(day1);
+          var trainee_id=result;
+          var day=_that.props.date;
+          var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+          var urlrefresh = URLnetowrk+'myplan.action';
+          // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+          urlrefresh += '?trainee_id='+trainee_id+'&start='+start+'&end='+end;
+          console.log(urlrefresh);
+          console.log(rowData.day);
+          fetch(urlrefresh).then(function(response) {  
+            return response.json();
+          }).then(function(res) {
+            var key;
+            if (res["data"]!=null) {
+              for (var i = 0; i < res["data"].length; i++) {
+                for (var j in res["data"][i]) {
+                  if (rowData.day == res["data"][i]["day"]) {
+                     key=i
+                  };
+                };
+              };
+             console.log(key);
+             res["data"].splice(key,1);
+             console.log(res["data"])
+              _that.setState({
+                dataSource: ds.cloneWithRows(res["data"]),
+                rows:res["data"]
+            });
+            }else{
+              Alert.alert('Fail to display','Please check your data'); 
+            }     
+          })
+        }
+      });
+    })
+  },
   renderRow(rowData: string, sectionID: number, rowID: number) {
       var btnsTypes = [
         { text: 'Submit',onPress: () => { this.submitrecord(rowData) },type:'secondary'}    

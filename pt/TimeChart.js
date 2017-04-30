@@ -9,7 +9,8 @@ import {
   AsyncStorage,
   Alert
 } from 'react-native';
-import { Bar } from 'react-native-pathjs-charts'
+import { Bar } from 'react-native-pathjs-charts';
+import URLnetowrk from './network';
 var _navigator ;
 var TimeChartView = React.createClass({
   getInitialState: function(){
@@ -43,7 +44,7 @@ var TimeChartView = React.createClass({
   //set the item and data
 componentWillMount() {
   let _that=this; 
-  var urlitem = 'http://47.90.60.206:8080/pt_server/item.action';  
+  var urlitem = URLnetowrk+'item.action';  
   fetch(urlitem).then(function(response) {  
     return response.json();
   }).then(function(res) {       
@@ -75,7 +76,7 @@ componentWillMount() {
     console.log(trainee_id);
     console.log(startday);
     console.log(end);
-    var url = 'http://www.zhimainz.com:8080/pt_server/stat.action';
+    var url = URLnetowrk+'stat.action';
     // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
     url += '?trainee_id='+trainee_id+'&start='+startday+'&end='+end;
     console.log(url);

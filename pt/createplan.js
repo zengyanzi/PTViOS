@@ -19,6 +19,7 @@ import DatePicker from './date.js';
 import CheckBox from 'react-native-check-box';
 import keys from './keys.json';
 import PlanCreateView from './plancreate';
+import URLnetowrk from './network';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var radio_props = [
@@ -116,7 +117,7 @@ var CreateplanView = React.createClass({
         }
       }
       var attendanceday=attendance.join();// join the addendance number
-      var url = 'http://www.zhimainz.com:8080/pt_server/createplan.action';
+      var url = URLnetowrk+'createplan.action';
         // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
       url += '?traineeid='+traineeid+'&start='+start+'&end='+end+'&attendance='+attendance+'&optionplanid='+optionplanid;
       fetch(url).then(function(response) {  

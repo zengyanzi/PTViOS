@@ -15,7 +15,8 @@ import {
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
 import Topview from './top.js';
-import BottomView from './bottom.js'
+import BottomView from './bottom.js';
+import URLnetowrk from './network';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
   var detailrows = [
@@ -57,7 +58,7 @@ var DetailRecordView = React.createClass({
       var trainee_id=result;
       var day=this.props.date;
       var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-      var url = 'http://47.90.60.206:8080/pt_server/detailrecord.action';
+      var url = URLnetowrk+'detailrecord.action';
               // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
       url += '?trainee_id='+trainee_id+'&day='+day;
       console.log(url);

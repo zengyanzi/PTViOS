@@ -12,6 +12,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { Bar } from 'react-native-pathjs-charts';
+import URLnetowrk from './network';
 var _navigator ;
 var SportChartView = React.createClass({
   getInitialState: function(){
@@ -45,7 +46,7 @@ var SportChartView = React.createClass({
   //set the item and data
 componentWillMount() {
   let _that=this;   
-  var urlitem = 'http://47.90.60.206:8080/pt_server/item.action';  
+  var urlitem = URLnetowrk+'item.action';  
   fetch(urlitem).then(function(response) {  
     return response.json();
   }).then(function(res) {           
@@ -77,7 +78,7 @@ componentWillMount() {
     console.log(trainee_id);
     console.log(startday);
     console.log(end);
-    var url = 'http://www.zhimainz.com:8080/pt_server/stat.action';
+    var url = URLnetowrk+'stat.action';
       // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
     url += '?trainee_id='+trainee_id+'&start='+startday+'&end='+end;
     console.log(url);
@@ -127,7 +128,7 @@ componentWillMount() {
     AsyncStorage.getItem('userid',(err, result) => {
     console.log(result);
     var trainee_id=result;
-    var url = 'http://47.90.60.206:8080/pt_server/item.action'; // get the item data again 
+    var url = URLnetowrk+'item.action'; // get the item data again 
     fetch(url).then(function(response) {  
       return response.json();
     }).then(function(res) {
@@ -139,7 +140,7 @@ componentWillMount() {
           }  
         }
         console.log(item_id);
-        var urlupdate = 'http://47.90.60.206:8080/pt_server/statsport.action';
+        var urlupdate = URLnetowrk+'statsport.action';
         urlupdate += '?trainee_id='+trainee_id+'&start='+startday+'&end='+end+'&item_id='+item_id;
         console.log(urlupdate);
         fetch(urlupdate).then(function(response) {  

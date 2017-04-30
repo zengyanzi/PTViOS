@@ -14,6 +14,7 @@ import {
   Alert,
 } from 'react-native';
 import Dimensions from 'Dimensions';
+import URLnetowrk from './network';
 import Swipeout from 'react-native-swipeout';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
@@ -65,7 +66,7 @@ var PlanCreateView = React.createClass({
 //get the option 
   componentWillMount() {
     let _that=this;
-    var url = 'http://47.90.60.206:8080/pt_server/optionplan.action';
+    var url = URLnetowrk+'optionplan.action';
     var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});  
     fetch(url).then(function(response) {  
       return response.json();

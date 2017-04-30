@@ -25,6 +25,7 @@ import DetailRecordView from './pt/detailrecord';
 import ChartView from './pt/chart';
 import AdditemtodayView from'./pt/additemtoday';
 import AddrecordtodayView from'./pt/addrecordtoday';
+import URLnetowrk from './pt/network';
 export default class ptvios extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +44,7 @@ export default class ptvios extends Component {
             AsyncStorage.getItem('password',(err,result)=>{
             // console.log(result);
               password=result;
-              var url = 'http://47.90.60.206:8080/pt_server/instructorlogin.action';    
+              var url = URLnetowrk+'instructorlogin.action';    
               url += '?email='+email+'&password='+password;
               console.log(url);
               fetch(url).then(function(response) {  
@@ -68,7 +69,7 @@ export default class ptvios extends Component {
             AsyncStorage.getItem('password',(err,result)=>{
             // console.log(result);
               password=result;
-              var url = 'http://47.90.60.206:8080/pt_server/traineelogin.action';
+              var url = URLnetowrk+'traineelogin.action';
               url += '?email='+email+'&password='+password;
               console.log(url);
               fetch(url).then(function(response) {  

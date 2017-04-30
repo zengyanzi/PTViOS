@@ -15,7 +15,7 @@ import {
     DatePickerAndroid
 } from 'react-native';
 var Dimensions = require('Dimensions');
-
+import URLnetowrk from './network';
 var screenW = Dimensions.get('window').width;
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){

@@ -10,6 +10,7 @@ import {
   AsyncStorage
 } from 'react-native';
 //navigation
+import URLnetowrk from './network';
 var _navigator;
 var InstructwelcomeView = React.createClass({
   getInitialState: function(){

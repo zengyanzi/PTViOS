@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 var Slider = require('react-native-slider');
 import Dimensions from 'Dimensions';
+import URLnetowrk from './network';
 import Topview from './top.js';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
@@ -70,7 +71,7 @@ var EditPlanView = React.createClass({
     var sportsize=this.state.value;
     var day=this.props.date;
     var dayplan_id=this.props.dayplan_id;           
-    var urlsave='http://47.90.60.206:8080/pt_server/additem2day.action'; 
+    var urlsave=URLnetowrk+'additem2day.action'; 
     urlsave += '?dayplan_id='+dayplan_id+'&sportsize='+sportsize;
     console.log(urlsave);
     fetch(urlsave).then(function(response) {  

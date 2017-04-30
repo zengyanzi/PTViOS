@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
+import URLnetowrk from './network';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var TopView = React.createClass({

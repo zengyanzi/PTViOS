@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
+import URLnetowrk from './network';
 import Swipeout from 'react-native-swipeout';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
@@ -68,7 +69,7 @@ var RecordView = React.createClass({
         var trainee_id=result;
         var day=this.props.date;
         var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-        var url = 'http://47.90.60.206:8080/pt_server/myrecord.action';
+        var url = URLnetowrk+'myrecord.action';
         // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
         url += '?trainee_id='+trainee_id+'&start='+start+'&end='+end;
         console.log(url);

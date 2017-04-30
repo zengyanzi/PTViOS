@@ -16,7 +16,8 @@ import {
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
 import Topview from './top.js';
-import BottomView from './bottom.js'
+import BottomView from './bottom.js';
+import URLnetowrk from './network';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var detailrows = [
@@ -59,7 +60,7 @@ var DetailPlanView = React.createClass({
         var trainee_id=result;
         var day=this.props.date;
         var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-        var url = 'http://47.90.60.206:8080/pt_server/detailplan.action';
+        var url = URLnetowrk+'detailplan.action';
         // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
         url += '?trainee_id='+trainee_id+'&day='+day;
         console.log(url);
@@ -106,7 +107,7 @@ var DetailPlanView = React.createClass({
       var trainee_id=result;
       var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
       var plan_id =rowData.id;
-      var url = 'http://47.90.60.206:8080/pt_server/delplan.action';
+      var url = URLnetowrk+'delplan.action';
       // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
       url += '?trainee_id='+trainee_id+'&plan_id='+plan_id;
       console.log(url);
@@ -117,7 +118,7 @@ var DetailPlanView = React.createClass({
         if (res["data"]==true) {
           var day=_that.props.date;
           console.log(day);
-          var url = 'http://47.90.60.206:8080/pt_server/detailplan.action';
+          var url =URLnetowrk+'detailplan.action';
           // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
           url += '?trainee_id='+trainee_id+'&day='+day;
           console.log(url);
@@ -148,7 +149,7 @@ var DetailPlanView = React.createClass({
       var day =rowData.day;
       var item_id=rowData.item_id;
       var sportsize=rowData.sportsize;
-      var url = 'http://47.90.60.206:8080/pt_server/addrecord2day.action';
+      var url = URLnetowrk+'addrecord2day.action';
       // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
       url += '?trainee_id='+trainee_id+'&day='+day+'&item_id='+item_id+'&sportsize='+sportsize;
       console.log(url);

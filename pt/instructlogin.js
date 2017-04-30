@@ -14,6 +14,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import t from 'tcomb-form-native';
+import URLnetowrk from './network';
 //navigation
 var _navigator;
 var Form =t.form.Form;
@@ -50,7 +51,7 @@ var InstructloginView = React.createClass({
     var value = this.refs.form.getValue();
     var email = value["email"];
     var password=value["password"];
-    var url = 'http://47.90.60.206:8080/pt_server/instructorlogin.action';
+    var url = URLnetowrk+'instructorlogin.action';
     // var url = 'http://192.168.1.15:8080/pt_server/instructorlogin.action';
     // var url = 'http://192.168.20.17:8080/pt_server/instructorlogin.action';   
     url += '?email='+email+'&password='+password;

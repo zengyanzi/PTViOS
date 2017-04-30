@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import t from 'tcomb-form-native';
 import DatePicker from './date.js';
+import URLnetowrk from './network';
 //import Storage from 'react-native-storage';
 var _navigator ;
 var Form =t.form.Form;
@@ -60,7 +61,7 @@ var InstructregisterView = React.createClass({
     var phone = value["phone"];
     // var birthday = this.state.date;
     var password = value["password"];   
-    var url = 'http://47.90.60.206:8080/pt_server/instructorregister.action';
+    var url = URLnetowrk+'instructorregister.action';
     url += '?name='+name+'&surname='+surname+'&email='+email+'&phone='+phone+'&password='+password;
     fetch(url, {
       method: 'GET',

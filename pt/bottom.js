@@ -15,6 +15,7 @@ import {
 import TabNavigator from 'react-native-tab-navigator';
 import Dimensions from 'Dimensions';
 import PlanView from './plan.js';
+import URLnetowrk from './network';
 import SwipeoutExample from './SwipeoutExample.js';
 import SwipeableExample from './swipeable-example.js'
 var screenW = Dimensions.get('window').width;
