@@ -26,6 +26,15 @@ import ChartView from './pt/chart';
 import AdditemtodayView from'./pt/additemtoday';
 import AddrecordtodayView from'./pt/addrecordtoday';
 import URLnetowrk from './pt/network';
+import NewitemView from './pt/newitem';
+import ProfileModifyView from './pt/profilemodify';
+import EmailModifyView from './pt/emailmodify';
+import PhoneModifyView from './pt/phonemodify';
+import PasswordModifyView from './pt/passwordmodify';
+import GenderModifyView from './pt/gendermodify';
+import HModifyView from './pt/hmodify';
+import IwView from './pt/iwmodify';
+import TwView from './pt/twmodify';
 export default class ptvios extends Component {
   constructor(props) {
     super(props);
@@ -203,6 +212,56 @@ renderSceneAndroid(route,navigator){
     if(route.id === 'addrecordtoday'){
       return (
         <AddrecordtodayView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'newitem'){
+      return (
+        <NewitemView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'profilemodify'){
+      return (
+        <ProfileModifyView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'phonemodify'){
+      return (
+        <PhoneModifyView {...route.params} navigator={navigator} route={route}/>
+      );
+    }  
+    if(route.id === 'passwordmodify'){
+      return (
+        <PasswordModifyView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'birthmodify'){
+      return (
+        <BirthModifyView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'gendermodify'){
+      return (
+        <GenderModifyView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'hmodify'){
+      return (
+        <HModifyView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'iwmodify'){
+      return (
+        <IwView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'twmodify'){
+      return (
+        <TwView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'bmimodify'){
+      return (
+        <BModifyView {...route.params} navigator={navigator} route={route}/>
       );
     }
   }

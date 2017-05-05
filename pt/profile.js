@@ -10,53 +10,33 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Picker,
+  Modal,
   ListView
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
-import URLnetowrk from './network';
 import { List, ListItem } from 'react-native-elements';
+import URLnetowrk from './network';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
-const list = [
-  {
-    title: 'gender',
-    icon: 'person'
-  },
-  {
-    title: 'birthday',
-    icon: 'date-range'
-  },
-  {
-    title: 'height',
-    icon: 'tag-faces'
-  },
-    {
-    title: 'initial weight',
-    icon: 'bookmark'
-  },
-    {
-    title: 'taget weight',
-    icon: 'star'
-  },
-   {
-    title: ' BMI',
-    icon: 'fingerprint'
-  },
-]
 var ProfileView = React.createClass({
+
   getInitialState: function(){
     _navigator = this.props.navigator;
     var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
     this.state = {
+       email:'jenny@gmail.com',
+       bmi:'16'
     };
-    return {
+    return {      
+      email:this.state.email,
+      bmi:this.state.bmi
     };
   },
   _logout: function(){
     _navigator.push({
-      title:'main',
-      id:'main'
+    title:'main',
+    id:'main'
     });  
     AsyncStorage.removeItem('type',(err,result)=>{
       console.log(result);
@@ -65,70 +45,114 @@ var ProfileView = React.createClass({
       console.log(result);
     });
     AsyncStorage.removeItem('password',(err,result)=>{
-      console.log(result);    
+      console.log(result);   
     });
+  },
+  componentWillMount() {
+    let _that=this;
+    AsyncStorage.getItem('email',(err,result)=>{
+       email=result;
+       _that.setState({
+          email:email
+       })
+    })
+    AsyncStorage.getItem('bmi',(err,result)=>{
+       bmi=parseFloat(result).toFixed(2);
+       console.log(bmi);
+       _that.setState({
+          bmi:bmi
+       })
+    })
   },
   render: function(){
     return(
-      <ScrollView 
+     <ScrollView 
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps="never">
         <View style={styles.maincontain}>
           <View style={[styles.Top,styles.Bottomline]}>
-            <TouchableOpacity 
-              onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
-                <Image source={require('../img/add_pressed.png') }/>
-            </TouchableOpacity> 
             <View style={styles.Topbar}>
-            </View>     
+            </View>        
             <View style={styles.right}>
-              <TouchableOpacity 
-                      onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
-                <Image source={require('../img/chart-pressed.png') }/>
-              </TouchableOpacity> 
             </View>
           </View>
-          <View>
-          </View>
           <View >
-            <List>
-              <ListItem
-                roundAvatar
-                title='Zeng Jenny'
-                subtitle={
-                  <View style={styles.subtitleView}>
-                    <Text style={styles.ratingText}>zeng@gmail.com</Text>
-                  </View>
-                }
-                avatar={require('../img/profile_normal.png')}
-              />
-            </List>
-            <List>
-              {
-                list.map((item, i) => (
-                  <ListItem
-                    key={i}
-                    title={item.title}
-                    leftIcon={{name: item.icon}}
-                  />
-                ))
-              }
-            </List>
-          </View>  
-          <View >
-            <TouchableOpacity style={styles.btn}
-            onPress={this._logout}>
-            <Text style={styles.text}>Logout</Text>
+            <TouchableOpacity onPress={() => _navigator.push({title:'ProfileModifyView',id:'profilemodify',params:{email:this.state.email}})}>
+              <List>
+                <ListItem
+                  roundAvatar
+                  title='Zeng Jenny'
+                  subtitle={
+                    <View style={styles.subtitleView}>
+                      <Text style={styles.ratingText}>{this.state.email}</Text>
+                    </View>
+                  }
+                  avatar={require('../img/profile_normal.png')}
+                />
+              </List>
             </TouchableOpacity>
-          </View>       
+            <List>
+              <TouchableOpacity onPress={() => _navigator.push({title:'GenderModifyView',id:'gendermodify',params:{email:this.state.email}})}>
+                <ListItem
+                  roundAvatar
+                  title='Gender'
+                  avatar={require('../img/gender.png')}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => _navigator.push({title:'BirthModifyView',id:'birthmodify',params:{email:this.state.email}})}>
+                <ListItem
+                  roundAvatar
+                  title='Birthday'
+                  avatar={require('../img/plan_normal.png')}
+                /> 
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => _navigator.push({title:'HModifyView',id:'hmodify',params:{email:this.state.email}})}>
+                <ListItem
+                    roundAvatar
+                    title='Height'
+                    avatar={require('../img/height.png')}
+                  />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => _navigator.push({title:'IwModifyView',id:'iwmodify',params:{email:this.state.email}})}>
+                <ListItem
+                    roundAvatar
+                    title='Initial Weight'
+                    avatar={require('../img/weight.png')}
+                  />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => _navigator.push({title:'TwModifyView',id:'twmodify',params:{email:this.state.email}})}>
+                <ListItem
+                    roundAvatar
+                    title='Target Weight'
+                    avatar={require('../img/target.png')}
+                  />
+              </TouchableOpacity>
+              <ListItem
+                    roundAvatar
+                    title='BMI'
+                    subtitle={
+                    <View style={styles.subtitleView}>
+                      <Text style={styles.ratingText}>{this.state.bmi}</Text>
+                    </View>
+                  }
+                    avatar={require('../img/Heart.png')}
+                  />
+              </List>         
+            <View>
+              <TouchableOpacity style={styles.btn}
+              onPress={this._logout}>
+                <Text style={styles.text}>Logout</Text>
+              </TouchableOpacity>
+            </View>       
+          </View> 
         </View>   
       </ScrollView>
     );
   },
 });
 var styles = StyleSheet.create({
-  container:{
+   container:{
     flex: 1,
     backgroundColor: '#38bda0',
     justifyContent: 'center',
@@ -148,23 +172,20 @@ var styles = StyleSheet.create({
   Topbar:{
     flex:2,
     flexDirection: 'row',
-
   },
    Left:{
     flex:1,
     flexDirection: 'row',
   },
   Right:{
-  flex:1,
-  flexDirection: 'row',
-
+    flex:1,
+    flexDirection: 'row',
   },
   maincontain:
   {
     flex: 1,
     backgroundColor: '#38bda0',
     flexDirection:'column',
-
   },
    subtitleView: {
     flexDirection: 'row',
@@ -183,7 +204,7 @@ var styles = StyleSheet.create({
      alignItems: 'center',
      justifyContent: 'center',
      backgroundColor: '#2cb395',
-     height: 30,
+     height: 50,
      borderRadius: 5,
    }
 });
