@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Picker,
+  Linking,
   ListView,
   Alert
 } from 'react-native';
@@ -20,6 +21,7 @@ import Swipeout from 'react-native-swipeout';
 import Topview from './top.js';
 import BottomView from './bottom.js'
 import URLnetowrk from './network';
+
 var screenW = Dimensions.get('window').width;
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
@@ -43,6 +45,32 @@ var btnsDefault = [ { text: 'Button' } ];
 //       Location:"24 shally rd,Tamaki drive"
 //     }
 //   ];
+
+ class CustomButton extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  propTypes: {
+    url: React.PropTypes.string,
+  }
+  render() {
+    return (
+      <TouchableOpacity
+        style={styles.button}
+        underlayColor="#a5a5a5"
+        onPress={()=>Linking.canOpenURL(this.props.url).then(supported => {
+           if (supported) {
+               Linking.openURL(this.props.url);
+           } else {
+              console.log('无法打开该URI: ' + this.props.url);
+           }
+        })}>
+        <Text style={styles.buttonText}>{this.props.text}</Text>
+      </TouchableOpacity>
+    );
+  }
+}
+
 var DetailGymView = React.createClass({
   getInitialState: function(){
     _navigator = this.props.navigator;
@@ -244,7 +272,14 @@ var DetailGymView = React.createClass({
             <View style={{flexDirection:'row'}}>  
               <Image source={require('../img/location.png') }/>
               <Text style={styles.liText}>  Location: {this.state.location} </Text>
-            </View>                
+            </View> 
+            <View style={{marginTop:20}}>
+               <Text text="iOS平台,Linking演示"/>
+               <CustomButton url={'http://www.lcode.org'}  text="点击打开http网页(http://www.lcode.org)"/>
+               <CustomButton url={'https://www.baidu.com'} text="点击打开https网页(https://www.baidu.com)"/>
+               <CustomButton url={'smsto:18352402477'}  text="点击进行发送短信(smsto:18352402477)"/> 
+               <CustomButton url={'tel:9876543210'}  text="点击进行发送短信(tel:9876543210)"/> 
+            </View>              
           </View>
           <View>
             <BottomView {...this.props}/>
