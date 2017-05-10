@@ -81,6 +81,10 @@ var GenderModifyView = React.createClass({
               <Text style={styles.text}>Save</Text>
              </TouchableOpacity>
           </View> 
+          <TouchableOpacity style={styles.btn}
+             onPress={() =>_navigator.jumpBack()}>
+          <Text style={{color:"white",fontSize:18}}>Back</Text>
+          </TouchableOpacity>  
         </View>       
       </ScrollView>
     );

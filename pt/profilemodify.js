@@ -76,7 +76,11 @@ var ProfileModifyView = React.createClass({
               />
               </TouchableOpacity>
             </List>
-          </View>   
+          </View> 
+          <TouchableOpacity style={styles.btn}
+             onPress={() =>_navigator.jumpBack()}>
+            <Text style={{color:"white",fontSize:18}}>Back</Text>
+          </TouchableOpacity>  
         </View>   
       </ScrollView>
     );

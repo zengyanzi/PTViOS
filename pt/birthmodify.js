@@ -55,7 +55,7 @@ var BirthModifyView = React.createClass({
        <ScrollView 
           contentContainerStyle={{flex:1}}
           keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps={false}>
+          keyboardShouldPersistTaps='never'>
           <View style={styles.maincontain}>
             <View style={[styles.Top,styles.Bottomline]}>      
               <View style={styles.Topbar}>
@@ -80,6 +80,10 @@ var BirthModifyView = React.createClass({
               onPress={this._save}>
               <Text style={styles.text}>Save</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.btn}
+             onPress={() =>_navigator.jumpBack()}>
+              <Text style={{color:"white",fontSize:18}}>Back</Text>
+            </TouchableOpacity>  
           </View>   
         </View>       
       </ScrollView>

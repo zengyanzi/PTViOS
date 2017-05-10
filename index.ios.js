@@ -33,8 +33,11 @@ import PhoneModifyView from './pt/phonemodify';
 import PasswordModifyView from './pt/passwordmodify';
 import GenderModifyView from './pt/gendermodify';
 import HModifyView from './pt/hmodify';
+import BirthModifyView from './pt/birthmodify';
 import IwView from './pt/iwmodify';
 import TwView from './pt/twmodify';
+import DetailGymView from './pt/detailgym';
+
 export default class ptvios extends Component {
   constructor(props) {
     super(props);
@@ -264,6 +267,12 @@ renderSceneAndroid(route,navigator){
         <BModifyView {...route.params} navigator={navigator} route={route}/>
       );
     }
+    if(route.id === 'detailgym'){
+      return (
+        <DetailGymView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+
   }
   render(){
     var renderScene = this.renderSceneAndroid;
