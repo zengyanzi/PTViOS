@@ -21,7 +21,7 @@ import Swipeout from 'react-native-swipeout';
 import Topview from './top.js';
 import BottomView from './bottom.js'
 import URLnetowrk from './network';
-
+import StarRating from 'react-native-star-rating';
 var screenW = Dimensions.get('window').width;
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
@@ -79,14 +79,17 @@ var DetailGymView = React.createClass({
       slogan:"Enjoy your everyday with Jetts",  
       open:"7x24 membership",
       contact:"0800-0201-023",
-      location:"24 shally rd,Tamaki drive"
+      location:"24 shally rd,Tamaki drive",
+      starCount: 3
     };
     return {
        name:this.state.name,
        slogan:this.state.slogan,
        open:this.state.open,
        contact:this.state.contact,
-       location:this.state.location
+       location:this.state.location,
+      starCount:this.state.starCount
+
     };
   },
   // componentWillMount() {
@@ -178,28 +181,7 @@ var DetailGymView = React.createClass({
         });
       }) 
     },
-  submitrecord:function(rowData){
-    let _that=this;
-    AsyncStorage.getItem('userid',(err, result) => {
-      console.log(result);
-      var trainee_id=result;
-      var day =rowData.day;
-      var item_id=rowData.item_id;
-      var sportsize=rowData.sportsize;
-      var url = URLnetowrk+'addrecord2day.action';
-      // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-      url += '?trainee_id='+trainee_id+'&day='+day+'&item_id='+item_id+'&sportsize='+sportsize;
-      console.log(url);
-        fetch(url).then(function(response) {  
-          return response.json();
-        }).then(function(res) {
-          console.log(res);
-          if (res["data"]==true) {
-            Alert.alert('Submit','Successfully!'); 
-          }
-       });
-    })
-  },
+
   // renderRow(rowData: string, sectionID: number, rowID: number) {
   //   var btnsTypes = [
   //     { text: 'Edit', onPress: function(){ _navigator.push({
@@ -232,6 +214,11 @@ var DetailGymView = React.createClass({
   //     </Swipeout>
   //   );
   // },
+  onStarRatingPress(rating) {
+    this.setState({
+      starCount: rating,
+    });
+  },
   render: function(){
     return(
        <ScrollView 
@@ -240,12 +227,6 @@ var DetailGymView = React.createClass({
           keyboardShouldPersistTaps='never'>
         <View style={styles.maincontain}>
           <View style={[styles.Top,styles.Bottomline]}>
-            <View style={[styles.Topbar,styles.Left]}>
-              <TouchableOpacity 
-                  onPress={() => _navigator.jumpBack()}>
-                <Image source={require('../img/back.png') }/>
-              </TouchableOpacity> 
-            </View>
             <View style={styles.Topbar}>
               <Image source={require('../img/ptv_sized.png') }/>
             </View>
@@ -265,6 +246,9 @@ var DetailGymView = React.createClass({
               <Image source={require('../img/phone.png') }/>
               <Text style={styles.liText}>   Contact: {this.state.contact} </Text>
             </View>
+            <View>
+              <CustomButton url={'tel:'+this.state.contact} text="Call the Gym right now"/>
+            </View>
             <View style={{flexDirection:'row'}}>  
               <Image source={require('../img/open.png') }/>
               <Text style={styles.liText}>  open: {this.state.open} </Text>
@@ -273,16 +257,22 @@ var DetailGymView = React.createClass({
               <Image source={require('../img/location.png') }/>
               <Text style={styles.liText}>  Location: {this.state.location} </Text>
             </View> 
-            <View style={{marginTop:20}}>
-               <Text text="iOS平台,Linking演示"/>
-               <CustomButton url={'http://www.lcode.org'}  text="点击打开http网页(http://www.lcode.org)"/>
-               <CustomButton url={'https://www.baidu.com'} text="点击打开https网页(https://www.baidu.com)"/>
-               <CustomButton url={'smsto:18352402477'}  text="点击进行发送短信(smsto:18352402477)"/> 
-               <CustomButton url={'tel:9876543210'}  text="点击进行发送短信(tel:9876543210)"/> 
-            </View>              
+            <View style={{flexDirection:'column'}}> 
+              <Text style={styles.liText}>Write your rating  </Text>
+              <StarRating
+              disabled={false}
+              maxStars={5}
+              starColor={'#38bda0'}
+              rating={this.state.starCount}
+              selectedStar={(rating) => this.onStarRatingPress(rating)}
+              />
+            </View>             
           </View>
           <View>
-            <BottomView {...this.props}/>
+            <TouchableOpacity style={styles.btn}
+             onPress={() =>_navigator.jumpBack()}>
+              <Text style={{color:"white",fontSize:18}}>Back</Text>
+            </TouchableOpacity> 
           </View>     
         </View>
       </ScrollView>
@@ -355,5 +345,12 @@ var styles = StyleSheet.create({
     fontSize: 16,
     height:50,
   },
+  btn:{
+     alignItems: 'center',
+     justifyContent: 'center',
+     backgroundColor: '#2cb395',
+     height: 30,
+     borderRadius: 5,
+   },
 });
 module.exports = DetailGymView;

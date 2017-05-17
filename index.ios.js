@@ -37,7 +37,7 @@ import BirthModifyView from './pt/birthmodify';
 import IwView from './pt/iwmodify';
 import TwView from './pt/twmodify';
 import DetailGymView from './pt/detailgym';
-
+import Gymcreate from './pt/gymcreate.js';
 export default class ptvios extends Component {
   constructor(props) {
     super(props);
@@ -270,6 +270,11 @@ renderSceneAndroid(route,navigator){
     if(route.id === 'detailgym'){
       return (
         <DetailGymView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'gymcreate'){
+      return (
+        <Gymcreate {...route.params} navigator={navigator} route={route}/>
       );
     }
 

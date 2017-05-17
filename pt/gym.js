@@ -30,6 +30,30 @@ var GymView = React.createClass({
     return {
     };
   },
+  _search:function(text){
+    var query=this.state.keyword;
+    var url = URLnetowrk+'search_gym.action'; // get the item data again
+    url+= '?query='+query;
+    console.log(url);
+    fetch(url).then(function(response) {  
+       return response.json();
+    }).then(function(res) {
+      console.log(res);
+      if (res["data"].length!=0) {
+        console.log(res);
+        _navigator.push({
+          title:'DetailGymView',
+          id:'detailgym',
+          params:{data:res["data"][0]}
+        })
+      }else{
+        _navigator.push({
+          title:'Gymcreate',
+          id:'gymcreate',
+        })
+      }
+    });
+  },
   render: function(){
     return(
       <ScrollView 
@@ -51,7 +75,10 @@ var GymView = React.createClass({
           </View>
         </View>
         <SearchBar
-            placeholder='Find your Gym here' />             
+            round
+            onSubmitEditing={() => this._search()}
+            onChangeText={(text) => this.setState({keyword: text})}
+            placeholder='Find your Gym here' />                          
         <ScrollableTabView           
             initialPage={1}
             renderTabBar={() => <ScrollableTabBar  />}

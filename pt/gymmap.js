@@ -13,7 +13,8 @@ import {
   AsyncStorage,
   Picker,
   ListView,
-  Alert
+  Alert,
+  WebView
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
@@ -93,21 +94,10 @@ var GymmapView = React.createClass({
 
   render() {
     return (
-      <View style={styles.container}>
-        <MapView
-          ref="map"
-          mapType="terrain"
-          style={styles.map}
-          region={this.state.region}
-          onRegionChange={this.onRegionChange}
-        >
-        </MapView>
-        <View style={styles.bubble}>
-          <Text style={{ textAlign: 'center'}}>
-            {`${this.state.region.latitude.toPrecision(7)}, ${this.state.region.longitude.toPrecision(7)}`}
-          </Text>
-        </View>
-      </View>
+        <WebView
+            source={{uri: 'https://www.google.co.nz/maps/search/gym'}}
+            style={{marginTop: 20}}
+        />
     );
   },
 });

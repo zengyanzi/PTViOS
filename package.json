@@ -20,11 +20,12 @@
     "react-native-pathjs-charts": "0.0.25",
     "react-native-scrollable-tab-view": "^0.7.2",
     "react-native-slider": "^0.9.1",
+    "react-native-star-rating": "^1.0.7",
     "react-native-swipeable": "^0.3.2",
     "react-native-swipeout": "^2.0.12",
     "react-native-swiper": "^1.5.4",
     "react-native-tab-navigator": "^0.3.3",
-    "react-native-vector-icons": "^4.0.0",
+    "react-native-vector-icons": "^4.1.1",
     "rnpm": "^1.9.0"
   },
   "devDependencies": {
