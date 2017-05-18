@@ -9,13 +9,14 @@ import {
   AppRegistry,ScrollView,View,Text,Image,Navigator,TouchableOpacity,BackAndroid,StyleSheet,AsyncStorage
 } from 'react-native';
 var _navigator;
-import InstructwelcomeView from'./pt/instructwelcome';
-import InstructregisterView from'./pt/instructregister';
-import InstructloginView from'./pt/instructlogin';
+import InstructwelcomeView from'./in/instructwelcome';
+import InstructregisterView from'./in/instructregister';
+import InstructloginView from'./in/instructlogin';
 import TraineewelcomeView from './pt/traineewelcome';
 import TraineeloginView from './pt/traineelogin';
 import TraineeregisterView from './pt/traineeregister';
 import ThomeView from './pt/Thome';
+import IhomeView from './in/Ihome';
 import DetailPlanView from './pt/detailplan';
 import EditPlanView from './pt/editplan';
 import CreateplanView from './pt/createplan';
@@ -38,6 +39,12 @@ import IwView from './pt/iwmodify';
 import TwView from './pt/twmodify';
 import DetailGymView from './pub/detailgym';
 import Gymcreate from './pub/gymcreate.js';
+import IPhoneModifyView from './in/iphonemodify';
+import IPasswordModifyView from './in/ipasswordmodify';
+import IGenderModifyView from './in/igendermodify';
+import IBirthModifyView from './in/ibirthmodify';
+import Description from './in/description';
+import IProfileModifyView from './in/iprofilemodify';
 export default class ptvios extends Component {
   constructor(props) {
     super(props);
@@ -65,8 +72,8 @@ export default class ptvios extends Component {
                   console.log(res);
                   if (res["data"]!=null) {
                     _navigator.push({
-                      title:'ClientInfoView',
-                      id:'clientinfo'
+                      title:'IhomeView',
+                      id:'Ihome'
                     });
                   }
               });
@@ -165,6 +172,11 @@ renderSceneAndroid(route,navigator){
     if(route.id === 'Thome'){
       return (
         <ThomeView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'Ihome'){
+      return (
+        <IhomeView {...route.params} navigator={navigator} route={route}/>
       );
     }
       if(route.id === 'plan'){
@@ -277,7 +289,26 @@ renderSceneAndroid(route,navigator){
         <Gymcreate {...route.params} navigator={navigator} route={route}/>
       );
     }
-
+    if(route.id === 'ibirthmodify'){
+      return (
+        <IBirthModifyView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'igendermodify'){
+      return (
+        <IGenderModifyView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'hmodify'){
+      return (
+        <HModifyView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'iwmodify'){
+      return (
+        <IwView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
   }
   render(){
     var renderScene = this.renderSceneAndroid;
