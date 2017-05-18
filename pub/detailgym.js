@@ -19,7 +19,6 @@ import {
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
 import Topview from './top.js';
-import BottomView from './bottom.js'
 import URLnetowrk from './network';
 import StarRating from 'react-native-star-rating';
 var screenW = Dimensions.get('window').width;
@@ -75,20 +74,10 @@ var DetailGymView = React.createClass({
   getInitialState: function(){
     _navigator = this.props.navigator;
     this.state = {
-      name :"Jetts",
-      slogan:"Enjoy your everyday with Jetts",  
-      open:"7x24 membership",
-      contact:"0800-0201-023",
-      location:"24 shally rd,Tamaki drive",
       starCount: 3
     };
     return {
-       name:this.state.name,
-       slogan:this.state.slogan,
-       open:this.state.open,
-       contact:this.state.contact,
-       location:this.state.location,
-      starCount:this.state.starCount
+       starCount:this.state.starCount
 
     };
   },
@@ -236,26 +225,26 @@ var DetailGymView = React.createClass({
           <View style={styles.li}>
             <View style={{flexDirection:'row'}}>
               <Image source={require('../img/gymname.png') }/>
-              <Text style={styles.liText}>  Name:{this.state.name}</Text> 
+              <Text style={styles.liText}>  Name:{this.props.data.name}</Text> 
             </View>
             <View style={{flexDirection:'row'}}>  
               <Image source={require('../img/slogan.png') }/>   
-              <Text style={styles.liText}>  Slogan: {this.state.slogan} </Text>
+              <Text style={styles.liText}>  Slogan: {this.props.data.description} </Text>
             </View>
             <View style={{flexDirection:'row'}}>  
               <Image source={require('../img/phone.png') }/>
-              <Text style={styles.liText}>   Contact: {this.state.contact} </Text>
+              <Text style={styles.liText}>   Contact: {this.props.data.contact} </Text>
             </View>
             <View>
-              <CustomButton url={'tel:'+this.state.contact} text="Call the Gym right now"/>
+              <CustomButton url={'tel:'+this.props.data.contact} text="Call the Gym right now"/>
             </View>
             <View style={{flexDirection:'row'}}>  
               <Image source={require('../img/open.png') }/>
-              <Text style={styles.liText}>  open: {this.state.open} </Text>
+              <Text style={styles.liText}>  open: {this.props.data.opendate} </Text>
             </View>
             <View style={{flexDirection:'row'}}>  
               <Image source={require('../img/location.png') }/>
-              <Text style={styles.liText}>  Location: {this.state.location} </Text>
+              <Text style={styles.liText}>  Location: {this.props.data.location} </Text>
             </View> 
             <View style={{flexDirection:'column'}}> 
               <Text style={styles.liText}>Write your rating  </Text>

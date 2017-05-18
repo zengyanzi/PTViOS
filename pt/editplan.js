@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 var Slider = require('react-native-slider');
 import Dimensions from 'Dimensions';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 import Topview from './top.js';
 var screenW = Dimensions.get('window').width;
 var _navigator ;

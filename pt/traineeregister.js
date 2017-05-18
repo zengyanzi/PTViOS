@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 var t = require('tcomb-form-native');
 import DatePicker from './date.js';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 var Form =t.form.Form;
 var _ = require('lodash');
 var _navigator ;

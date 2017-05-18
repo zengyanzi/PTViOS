@@ -14,7 +14,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import t from 'tcomb-form-native';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 //navigation
 var _navigator;
 var Form =t.form.Form;

@@ -16,7 +16,7 @@ var Slider = require('react-native-slider');
 import Dimensions from 'Dimensions';
 import DatePicker from './date.js';
 import Topview from './top.js';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var AddrecordtodayView = React.createClass({

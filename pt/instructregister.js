@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import t from 'tcomb-form-native';
 import DatePicker from './date.js';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 //import Storage from 'react-native-storage';
 var _navigator ;
 var Form =t.form.Form;

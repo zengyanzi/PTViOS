@@ -25,7 +25,7 @@ import DetailRecordView from './pt/detailrecord';
 import ChartView from './pt/chart';
 import AdditemtodayView from'./pt/additemtoday';
 import AddrecordtodayView from'./pt/addrecordtoday';
-import URLnetowrk from './pt/network';
+import URLnetowrk from './pub/network';
 import NewitemView from './pt/newitem';
 import ProfileModifyView from './pt/profilemodify';
 import EmailModifyView from './pt/emailmodify';
@@ -36,8 +36,8 @@ import HModifyView from './pt/hmodify';
 import BirthModifyView from './pt/birthmodify';
 import IwView from './pt/iwmodify';
 import TwView from './pt/twmodify';
-import DetailGymView from './pt/detailgym';
-import Gymcreate from './pt/gymcreate.js';
+import DetailGymView from './pub/detailgym';
+import Gymcreate from './pub/gymcreate.js';
 export default class ptvios extends Component {
   constructor(props) {
     super(props);

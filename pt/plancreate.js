@@ -14,7 +14,7 @@ import {
   Alert,
 } from 'react-native';
 import Dimensions from 'Dimensions';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 import Swipeout from 'react-native-swipeout';
 var screenW = Dimensions.get('window').width;
 var _navigator ;

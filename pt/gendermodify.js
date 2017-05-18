@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var GenderModifyView = React.createClass({

@@ -16,7 +16,7 @@ import {
 import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
 import { FormLabel, FormInput } from 'react-native-elements';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var EmailModifyView = React.createClass({

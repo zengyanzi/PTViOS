@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 //navigation
 var _navigator;
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
     return false;

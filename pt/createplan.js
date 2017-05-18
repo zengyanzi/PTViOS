@@ -19,7 +19,7 @@ import DatePicker from './date.js';
 import CheckBox from 'react-native-check-box';
 import keys from './keys.json';
 import PlanCreateView from './plancreate';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var radio_props = [

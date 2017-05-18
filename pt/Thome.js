@@ -15,11 +15,9 @@ import {
 import TabNavigator from 'react-native-tab-navigator';
 import Dimensions from 'Dimensions';
 import PlanView from './plan.js';
-import SwipeoutExample from './SwipeoutExample.js';
-import SwipeableExample from './swipeable-example.js';
 import RecordView from './record.js';
 import ProfileView from './profile.js';
-import GymView from './gym.js';
+import GymView from '../pub/gym.js';
 import TrainerView from './trainer.js';
 var screenW = Dimensions.get('window').width;
 var _navigator ;

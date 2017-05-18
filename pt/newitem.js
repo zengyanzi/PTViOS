@@ -18,7 +18,7 @@ var Slider = require('react-native-slider');
 import { Icon } from 'react-native-elements';
 import DatePicker from './date.js';
 import Dimensions from 'Dimensions';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 import { FormLabel, FormInput } from 'react-native-elements';
 var screenW = Dimensions.get('window').width;
 var _navigator ;

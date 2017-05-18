@@ -17,7 +17,7 @@ import {
 import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
 import t from 'tcomb-form-native';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var Form =t.form.Form;

@@ -15,7 +15,7 @@ import {
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
 import Topview from './top.js';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var detailrows = [

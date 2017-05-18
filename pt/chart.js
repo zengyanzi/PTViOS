@@ -16,7 +16,7 @@ import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
 import ScrollableTabView , { ScrollableTabBar, }from'react-native-scrollable-tab-view';
 import SportChartView from './SportChart';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 import TimeChartView from './TimeChart';
 var screenW = Dimensions.get('window').width;
 var _navigator ;

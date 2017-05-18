@@ -10,7 +10,7 @@ import {
   Alert
 } from 'react-native';
 import { Bar } from 'react-native-pathjs-charts';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 var _navigator ;
 var TimeChartView = React.createClass({
   getInitialState: function(){
