@@ -63,7 +63,7 @@ export default class ptvios extends Component {
             AsyncStorage.getItem('password',(err,result)=>{
             // console.log(result);
               password=result;
-              var url = URLnetowrk+'instructorlogin.action';    
+              var url = URLnetowrk+'instructor/login.action';    
               url += '?email='+email+'&password='+password;
               console.log(url);
               fetch(url).then(function(response) {  
