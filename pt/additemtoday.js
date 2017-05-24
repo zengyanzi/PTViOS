@@ -166,12 +166,6 @@ var AdditemtodayView = React.createClass({
             <Text style={styles.text}>Save</Text>
             </TouchableOpacity>
           </View>
-          <View>
-            <TouchableOpacity style={styles.btn}
-            onPress={() => _navigator.push({title:'NewitemView',id:'newitem',params:{email:this.state.email}})}>
-              <Text style={styles.text}>Can't find item,click here</Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </ScrollView>
     );

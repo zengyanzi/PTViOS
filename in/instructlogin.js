@@ -66,6 +66,8 @@ var InstructloginView = React.createClass({
         AsyncStorage.setItem("surname",res["data"]["surname"]);
         var phone=res['data']['phone'].toString();
         AsyncStorage.setItem("phone",phone);
+        var instructorid=res['data']['id'].toString();
+        AsyncStorage.setItem('instructorid',instructorid);
         AsyncStorage.setItem("gender",res["data"]["gender"]);
         AsyncStorage.setItem("birthday",res["data"]["birthday"]);
         AsyncStorage.setItem("description",res["data"]["description"]);

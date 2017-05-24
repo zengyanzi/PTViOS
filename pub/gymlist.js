@@ -100,14 +100,7 @@ var GymlistView = React.createClass({
   renderRow(rowData: string, sectionID: number, rowID: number) {
     return (
 
-      <Swipeout
-        left={rowData.left}
-        rowID={rowID}
-        sectionID={sectionID}
-        autoClose={rowData.autoClose}
-        close={!rowData.active}
-        onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
-        scroll={event => this.allowScroll(event)}>
+
         <TouchableOpacity style={styles.btn}
                 onPress={() => _navigator.push({title:'DetailGymView',id:'detailgym',params:{data:rowData}})}>
           <View style={styles.li}>
@@ -115,7 +108,7 @@ var GymlistView = React.createClass({
               <Text style={styles.liText}>Slogan:{rowData.description}</Text>
           </View>
         </TouchableOpacity>
-      </Swipeout>
+
     );
   },
   render: function(){

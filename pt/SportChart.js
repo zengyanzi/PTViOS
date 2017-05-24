@@ -32,7 +32,7 @@ var SportChartView = React.createClass({
         "name": "grape"
       }]
     ],
-    sportselected:'',
+    sportselected:'Rower',
       sportname:['BB BENCH PRESS', 'DB FLYS', 'INCLINE DB BENCH','Rower','Treadmill']
   };
   return {

@@ -51,31 +51,31 @@ var Gymcreate = React.createClass({
     return {
     };
   },
- _save:function(){
-  var value = this.refs.form.getValue();
-  var name = value["name"];
-  var opendate=value["open"];
-  var slogan = value["slogan"];
-  var location = value["location"];
-  var contact =value["contact"];
-  var description=value["description"];
-  var url=URLnetowrk+'create_gym.action'; 
-  url += '?name='+name+'&location='+location+'&opendate='+opendate+'&description='+description+'&contact='+contact+'&slogan='+slogan;
-  console.log(url);
-  fetch(url).then(function(response) {  
-    return response.json();
-  }).then(function(res) {
-    if (res["data"]!=null) {
-    console.log(res);
-      _navigator.push({
-      title:'ThomeView',
-      id:'Thome',
-    })
-    }
-    else{
-       Alert.alert('Fail to display','Please check your data'); 
-    }
-  })          
+   _save:function(){
+    var value = this.refs.form.getValue();
+    var name = value["name"];
+    var opendate=value["open"];
+    var slogan = value["slogan"];
+    var location = value["location"];
+    var contact =value["contact"];
+    var description=value["description"];
+    var url=URLnetowrk+'create_gym.action'; 
+    url += '?name='+name+'&location='+location+'&opendate='+opendate+'&description='+description+'&contact='+contact+'&slogan='+slogan;
+    console.log(url);
+    fetch(url).then(function(response) {  
+      return response.json();
+    }).then(function(res) {
+      if (res["data"]!=null) {
+        console.log(res);
+          _navigator.push({
+          title:'ThomeView',
+          id:'Thome',
+        })
+      }
+      else{
+         Alert.alert('Fail to display','Please check your data'); 
+      }
+    })          
   },
   render: function(){
     return(
