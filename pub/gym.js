@@ -61,18 +61,7 @@ var GymView = React.createClass({
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps="never">
         <View style={[styles.Top,styles.Bottomline]}>
-          <TouchableOpacity 
-              onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
-            <Image source={require('../img/add_pressed.png') }/>
-          </TouchableOpacity> 
-          <View style={styles.Topbar}>
-          </View>
-          <View style={styles.right}>
-            <TouchableOpacity 
-                      onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
-              <Image source={require('../img/chart-pressed.png') }/>
-            </TouchableOpacity> 
-          </View>
+
         </View>
         <SearchBar
             round

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-   Image,
+  Image,
   View,
   Text,
   StyleSheet,
@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Picker,
+  Alert,
   ListView
 } from 'react-native';
 
@@ -34,7 +35,7 @@ var TraineeView = React.createClass({
   },   
 _search:function(text){
     var query=this.state.keyword;
-    var url = URLnetowrk+'search_gym.action'; // get the item data again
+    var url = URLnetowrk+''; // get the Trainee 
     url+= '?query='+query;
     console.log(url);
     fetch(url).then(function(response) {  
@@ -49,10 +50,10 @@ _search:function(text){
           params:{data:res["data"][0]}
         })
       }else{
-        _navigator.push({
-          title:'Gymcreate',
-          id:'gymcreate',
-        })
+        Alert.alert (
+          'Sorry',
+          'User not found'
+        )
       }
     });
   },
@@ -63,39 +64,13 @@ _search:function(text){
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps="never">
         <View style={[styles.Top,styles.Bottomline]}>
-          <TouchableOpacity 
-              onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
-            <Image source={require('../img/add_pressed.png') }/>
-          </TouchableOpacity> 
-          <View style={styles.Topbar}>
-          </View>
-          <View style={styles.right}>
-            <TouchableOpacity 
-                      onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
-              <Image source={require('../img/chart-pressed.png') }/>
-            </TouchableOpacity> 
-          </View>
         </View>
         <SearchBar
             round
             onSubmitEditing={() => this._search()}
             onChangeText={(text) => this.setState({keyword: text})}
-            placeholder='Find your Gym here' />                          
-        <ScrollableTabView           
-            initialPage={1}
-            renderTabBar={() => <ScrollableTabBar  />}
-          >
-            <ScrollView tabLabel="Add" style={styles.tabView}>
-              <View style={styles.card}>
-                <AddtraineeView {...this.props}/>
-              </View>
-            </ScrollView>
-            <ScrollView tabLabel="List" style={styles.tabView}>
-              <View style={styles.card}>
-                <TrainneelistView {...this.props}/>
-              </View>
-            </ScrollView>
-          </ScrollableTabView>    
+            placeholder='Add your Trainee here' />                          
+        <TrainneelistView {...this.props}/> 
       </ScrollView>
     );
   },

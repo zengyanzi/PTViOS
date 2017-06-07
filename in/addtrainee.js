@@ -23,13 +23,12 @@ import StarRating from 'react-native-star-rating';
 import t from 'tcomb-form-native';
 var screenW = Dimensions.get('window').width;
 var Form =t.form.Form;
-var Gym = t.struct({
+var Trainee = t.struct({
   name: t.String,              // a required string
-  slogan:t.String,
-  open:t.String,
-  contact:t.Number,
-  location:t.String,
-  description:t.String
+  surname:t.String,
+  password:t.String
+
+
   //rememberMe: t.Boolean        // a boolean
 });
 BackAndroid.addEventListener('hardwareBackPress', function() {
@@ -83,7 +82,7 @@ var AddtraineeView = React.createClass({
           <View>
           <Form 
               ref="form"
-              type={Gym}
+              type={Trainee}
           />
           </View> 
           <View>

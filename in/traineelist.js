@@ -19,6 +19,7 @@ import {
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
 import URLnetowrk from '../pub/network';
+import DetailTrainee from './detailtrainee';
 var screenW = Dimensions.get('window').width;
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
@@ -103,13 +104,11 @@ var TrainneelistView = React.createClass({
 
   renderRow(rowData: string, sectionID: number, rowID: number) {
     return (
-
-
-        <TouchableOpacity style={styles.btn}
-                onPress={() => _navigator.push({title:'DetailGymView',id:'detailgym',params:{data:rowData}})}>
+        <TouchableOpacity style={styles.btn}>
           <View style={styles.li}>
-            <View  style={styles.lidate}><Image  source={require('../img/gymicon.png') }/><Text>{rowData.name}</Text></View>
-              <Text style={styles.liText}>Slogan:{rowData.description}</Text>
+            <View  style={styles.lidate}><Image  source={require('../img/gymicon.png') }/><Text>Name:{rowData.surname} {rowData.name} </Text></View>
+              <Text style={styles.liText}>phone:{rowData.phone};Gender: {rowData.gender}; </Text>
+              <Text style={styles.liText}>Height: {rowData.height}m;Initial Weight: {rowData.initial_weight}kg;Target Weight: {rowData.target_weight}kg;BMI:{rowData.bmi}</Text>
           </View>
         </TouchableOpacity>
 
@@ -183,9 +182,6 @@ var styles = StyleSheet.create({
     height:120,
     paddingBottom: 16,
   },
-  liContainer: {
-    flex: 2,
-  },
   liText: {
     color: '#333',
     fontSize: 18,
@@ -195,5 +191,6 @@ var styles = StyleSheet.create({
     flexDirection:'row',
     alignItems: 'center',
   },
+
 });
 module.exports = TrainneelistView;
