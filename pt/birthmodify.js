@@ -52,41 +52,22 @@ var BirthModifyView = React.createClass({
   },
   render: function(){
     return(
-       <ScrollView 
-          contentContainerStyle={{flex:1}}
-          keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps='never'>
-          <View style={styles.maincontain}>
-            <View style={[styles.Top,styles.Bottomline]}>      
-              <View style={styles.Topbar}>
-              </View>
-              <View style={styles.right}>
-              </View>
-            </View>
-            <View>
-            <Text style={styles.text}>Please Choose the Date</Text>
-            <DatePicker
-              style={styles.datepicker}
-              date={this.state.date}
-              mode="date"
-              placeholder="Date"
-              format="YYYY-MM-DD"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              onDateChange={(date) => {this.setState({date: date});}}/>
-          </View>
-          <View>
-            <TouchableOpacity style={styles.btn}
-              onPress={this._save}>
-              <Text style={styles.text}>Save</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btn}
-             onPress={() =>_navigator.jumpBack()}>
-              <Text style={{color:"white",fontSize:18}}>Back</Text>
-            </TouchableOpacity>  
-          </View>   
-        </View>       
-      </ScrollView>
+      <View>
+        <Text style={{color:'#38bda0'}}>Please Choose the Date</Text>
+        <DatePicker
+          style={styles.datepicker}
+          date={this.state.date}
+          mode="date"
+          placeholder="Date"
+          format="YYYY-MM-DD"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          onDateChange={(date) => {this.setState({date: date});}}/>  
+        <TouchableOpacity style={styles.btn}
+          onPress={this._save}>
+          <Text style={{color:'#fff'}}>Save</Text>
+        </TouchableOpacity>
+      </View>   
     );
   },
 });
@@ -134,8 +115,8 @@ var styles = StyleSheet.create({
      alignItems: 'center',
      justifyContent: 'center',
      backgroundColor: '#2cb395',
-     marginTop:50,
-     height: 30,
+     marginTop:20,
+     height: 40,
      borderRadius: 5,
    },
    text:{

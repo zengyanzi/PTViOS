@@ -21,6 +21,9 @@ import Swipeout from 'react-native-swipeout';
 import Topview from './top.js';
 import URLnetowrk from './network';
 import StarRating from 'react-native-star-rating';
+import Modal from 'react-native-modalbox';
+
+
 var screenW = Dimensions.get('window').width;
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
@@ -61,10 +64,10 @@ var btnsDefault = [ { text: 'Button' } ];
            if (supported) {
                Linking.openURL(this.props.url);
            } else {
-              console.log('无法打开该URI: ' + this.props.url);
+              console.log('could not open URI: ' + this.props.url);
            }
         })}>
-        <Text style={styles.buttonText}>{this.props.text}</Text>
+        <Text style={{color:'#38bda0',fontSize:18}}>{this.props.text}</Text>
       </TouchableOpacity>
     );
   }
@@ -74,94 +77,53 @@ var DetailGymView = React.createClass({
   getInitialState: function(){
     _navigator = this.props.navigator;
     this.state = {
-      starCount: 3
+      starCount: 3,
+      isOpen: false,
+      isDisabled: false,
+      swipeToClose: true,
+      sliderValue: 0.3
     };
     return {
-       starCount:this.state.starCount
+      starCount:this.state.starCount,
+      isOpen: this.state.isOpen,
+      isDisabled: this.state.isDisabled,
+      swipeToClose: this.state.swipeToClose,
+      sliderValue: this.state.sliderValue
 
     };
   },
-  // componentWillMount() {
-  //   let _that=this;
-  //   AsyncStorage.getItem('userid',(err, result) => {
-  //     console.log(result);
-  //     var trainee_id=result;
-  //     var day=this.props.date;
-  //     var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-  //     var url = URLnetowrk+'detailplan.action';
-  //     // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-  //     url += '?trainee_id='+trainee_id+'&day='+day;
-  //     console.log(url);
-  //     fetch(url).then(function(response) {  
-  //       return response.json();
-  //     }).then(function(res) {
-  //       console.log(res); 
-  //       if (res["data"]!=null) {        
-  //         _that.setState({
-  //           dataSource: ds.cloneWithRows(res["data"]),
-  //           detailrows:res["data"]
-  //         })
-  //       }else{
-  //         Alert.alert('Fail to display','Please check your data'); 
-  //       }  
-  //     });       
-  //   });  
-  // },
-//  set scrolling to true/false
-  // allowScroll(scrollEnabled) {
-  //   this.setState({ scrollEnabled: scrollEnabled });
-  // },
-  // //  set active swipeout item
-  // handleSwipeout(sectionID,rowID) {
-  //   for (var i = 0; i < this.state.detailrows.length; i++) {
-      
-  //     if (i != rowID){
-  //       this.state.detailrows[i].active = false;
-  //     } 
-  //     else{
-  //       this.state.detailrows[i].active = true;
-  //     } 
-  //   }
-  //   this.updateDataSource(this.state.detailrows);
-  // },
-  // updateDataSource(data) {
-  //   this.setState({
-  //     dataSource: this.state.dataSource.cloneWithRows(data),
-  //   });
-  // },
+  componentWillMount() {
+    let _that=this;
+    var gym_id=this.props.data.id;
+    var url = URLnetowrk+'gym_score.action';
+    // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+    url += '?gym_id='+gym_id;
+    console.log(url);
+    fetch(url).then(function(response) {  
+      return response.json();
+    }).then(function(res) {
+      console.log(res); 
+      if (res["data"]!=null) { 
+      var star =res["data"];     
+        _that.setState({
+          starCount:star
+        })
+      }else{
+        Alert.alert('Fail to display','Please check your data'); 
+      }  
+    });       
+  },
+    onClose() {
+    console.log('Modal just closed');
+  },
 
-  // renderRow(rowData: string, sectionID: number, rowID: number) {
-  //   var btnsTypes = [
-  //     { text: 'Edit', onPress: function(){ _navigator.push({
-  //               title:'EditplanView',
-  //               id:'editplan',
-  //               params:{date:rowData.day,
-  //                 itemname:rowData.item_name,
-  //                 dayplan_id:rowData.id
-  //               }
-  //             })},type: 'primary',},
-  //       { text: 'Submit',onPress:  () => { this.submitrecord(rowData) },type:'secondary'},
-  //       { text: 'Delete',onPress: () => { this.delete(rowData) },type: 'delete'},
-  //   ];
-  //   return (
-  //     <Swipeout
-  //       left={rowData.left}
-  //       right={btnsTypes}
-  //       rowID={rowID}
-  //       sectionID={sectionID}
-  //       autoClose={rowData.autoClose}
-  //       backgroundColor={rowData.backgroundColor}
-  //       close={!rowData.active}
-  //       onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
-  //       scroll={event => this.allowScroll(event)}>
-  //       <View style={styles.li}>
-  //             <Text style={styles.liText}>Name:{rowData.Name}</Text>  
-  //             <Text style={styles.liText}>slogan: {rowData.slogan} </Text>
-  //             <Text style={styles.liText}>slogan: {rowData.slogan} </Text>           
-  //       </View>
-  //     </Swipeout>
-  //   );
-  // },
+  onOpen() {
+    console.log('Modal just openned');
+  },
+
+  onClosingState(state) {
+    console.log('the open/close of the swipeToClose just changed');
+  },
   _rating:function(){
     var type;
     var gym_id=this.props.data.id;
@@ -220,6 +182,9 @@ var DetailGymView = React.createClass({
  
 
   onStarRatingPress(rating) {
+    this.refs.modal1.open()
+  },
+  onStarRatingsubmit(rating) {
     this.setState({
       starCount: rating,
     });
@@ -249,10 +214,10 @@ var DetailGymView = React.createClass({
             </View>
             <View style={{flexDirection:'row'}}>  
               <Image source={require('../img/phone.png') }/>
+              <TouchableOpacity 
+                onPress={() =>this.refs.modal2.open()}>
               <Text style={styles.liText}>   Contact: {this.props.data.contact} </Text>
-            </View>
-            <View>
-              <CustomButton url={'tel:'+this.props.data.contact} text="Call the Gym right now"/>
+              </TouchableOpacity>
             </View>
             <View style={{flexDirection:'row'}}>  
               <Image source={require('../img/open.png') }/>
@@ -271,20 +236,45 @@ var DetailGymView = React.createClass({
               rating={this.state.starCount}
               selectedStar={(rating) => this.onStarRatingPress(rating)}
               />
-            </View>   
-            <View>
-              <TouchableOpacity style={styles.btn}
-                onPress={this._rating}>
-                <Text style={{color:"white",fontSize:18}}>Submit your rating</Text>
-              </TouchableOpacity> 
-            </View>           
+            </View>            
           </View>
           <View>
             <TouchableOpacity style={styles.btn}
              onPress={() =>_navigator.jumpBack()}>
               <Text style={{color:"white",fontSize:18}}>Back</Text>
             </TouchableOpacity> 
-          </View>     
+          </View>
+          <Modal style={[styles.modal, styles.modal3]} 
+          position={"center"} ref={"modal1"} 
+          isDisabled={this.state.isDisabled}>
+              <StarRating
+              disabled={false}
+              maxStars={5}
+              starColor={'#38bda0'}
+              rating={this.state.starCount}
+              selectedStar={(rating) => this.onStarRatingsubmit(rating)}
+              />
+               <TouchableOpacity style={{     
+                 alignItems: 'center',
+                 justifyContent: 'center',
+                 backgroundColor: '#2cb395',
+                 height: 30,
+                 width:180,
+                 borderRadius: 5,
+                 marginTop:10
+               }}
+                onPress={this._rating}>
+                <Text style={{color:"white",fontSize:18}}>Submit your rating</Text>
+              </TouchableOpacity> 
+          </Modal>
+          <Modal style={[styles.modal, styles.modal3]} 
+            position={"center"} ref={"modal2"} 
+            isDisabled={this.state.isDisabled}>
+            <View>
+              <CustomButton  url={'tel:'+this.props.data.contact} text="Call the Gym right now"/>
+            </View>
+                
+            </Modal>
         </View>
       </ScrollView>
     );
@@ -363,5 +353,18 @@ var styles = StyleSheet.create({
      height: 30,
      borderRadius: 5,
    },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modal3: {
+    height: 160,
+    width: 260,
+    borderRadius:25
+  },
+    text: {
+    color: "black",
+    fontSize: 22
+  }
 });
 module.exports = DetailGymView;

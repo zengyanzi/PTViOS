@@ -54,41 +54,23 @@ var HModifyView = React.createClass({
   },
   render: function(){
     return(
-       <ScrollView 
-          contentContainerStyle={{flex:1}}
-          keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps="never">
-          <View style={styles.maincontain}>
-            <View style={[styles.Top,styles.Bottomline]}>      
-              <View style={styles.Topbar}>
-              </View>
-              <View style={styles.right}>
-              </View>
-            </View>
-           <View style={styles.input}>
-              <TextInput
-                style={{height: 40, borderColor: '#2cb395', borderWidth: 2,width:180,color:'#FFF',fontWeight: 'bold',fontSize: 16,}}
-                onChangeText={(text) => this.setState({height:text})}
-                keyboardType={'numeric'}
-                 placeholder="Enter Height"
-                value={this.state.text}
-              />
-              <Text style={styles.text}> meter</Text> 
-          </View> 
-          <View style={{flex:1}}>
-            <TouchableOpacity style={styles.btn}
-              onPress={this._save}>
-              <Text style={styles.text}>Save</Text>
-            </TouchableOpacity>
-          </View>  
-          <View>
-            <TouchableOpacity style={styles.btn}
-             onPress={() =>_navigator.jumpBack()}>
-              <Text style={{color:"white",fontSize:18}}>Back</Text>
-            </TouchableOpacity> 
-          </View>    
-        </View>       
-      </ScrollView>
+      <View>
+        <View style={{flexDirection: 'row'}}>
+            <TextInput
+              style={{height: 40, borderColor: '#2cb395', borderWidth: 2,width:180,color:'#38bda0',fontWeight: 'bold',fontSize: 16,}}
+              onChangeText={(text) => this.setState({height:text})}
+              keyboardType={'numeric'}
+               placeholder="Enter Height"
+              value={this.state.text}
+            />
+            <Text style={styles.text}> meter</Text> 
+        </View>
+          <TouchableOpacity style={styles.btn}
+            onPress={this._save}>
+            <Text style={{color:'#fff'}}>Save</Text>
+          </TouchableOpacity>
+      </View>   
+
     );
   },
 });
@@ -143,7 +125,7 @@ var styles = StyleSheet.create({
    text:{
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#FFF'
+    color: '#38bda0'
   },
   input:{
 

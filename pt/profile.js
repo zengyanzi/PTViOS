@@ -10,13 +10,19 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Picker,
-  Modal,
   ListView
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
 import { List, ListItem } from 'react-native-elements';
 import URLnetowrk from '../pub/network';
+import Modal from 'react-native-modalbox';
+import GenderModifyView from './gendermodify';
+import BirthModifyView from './birthmodify';
+import HModifyView from './hmodify';
+import TwModifyView from './twmodify';
+import IwModifyView from './iwmodify';
+
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var ProfileView = React.createClass({
@@ -25,13 +31,29 @@ var ProfileView = React.createClass({
     _navigator = this.props.navigator;
     var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
     this.state = {
-       email:'jenny@gmail.com',
-       bmi:'16'
-    };
+      email:'jenny@gmail.com',
+      bmi:'16',
+      isOpen: false,
+      isDisabled: false,
+      swipeToClose: true    };
     return {      
       email:this.state.email,
-      bmi:this.state.bmi
+      bmi:this.state.bmi,
+      isOpen: false,
+      isDisabled: false,
+      swipeToClose: true,
     };
+  },
+  onClose() {
+    console.log('Modal just closed');
+  },
+
+  onOpen() {
+    console.log('Modal just openned');
+  },
+
+  onClosingState(state) {
+    console.log('the open/close of the swipeToClose just changed');
   },
   _logout: function(){
     _navigator.push({
@@ -69,7 +91,7 @@ var ProfileView = React.createClass({
      <ScrollView 
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
-        keyboardShouldPersistTaps="never">
+        keyboardShouldPersistTaps='never'>
         <View style={styles.maincontain}>
           <View style={[styles.Top,styles.Bottomline]}>
             <View style={styles.Topbar}>
@@ -93,35 +115,35 @@ var ProfileView = React.createClass({
               </List>
             </TouchableOpacity>
             <List>
-              <TouchableOpacity onPress={() => _navigator.push({title:'GenderModifyView',id:'gendermodify',params:{email:this.state.email}})}>
+              <TouchableOpacity  onPress={() =>this.refs.modal1.open()}>
                 <ListItem
                   roundAvatar
                   title='Gender'
                   avatar={require('../img/gender.png')}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => _navigator.push({title:'BirthModifyView',id:'birthmodify',params:{email:this.state.email}})}>
+              <TouchableOpacity  onPress={() =>this.refs.modal2.open()}>
                 <ListItem
                   roundAvatar
                   title='Birthday'
                   avatar={require('../img/plan_normal.png')}
                 /> 
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => _navigator.push({title:'HModifyView',id:'hmodify',params:{email:this.state.email}})}>
+              <TouchableOpacity  onPress={() =>this.refs.modal3.open()}>
                 <ListItem
                     roundAvatar
                     title='Height'
                     avatar={require('../img/height.png')}
                   />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => _navigator.push({title:'IwModifyView',id:'iwmodify',params:{email:this.state.email}})}>
+              <TouchableOpacity  onPress={() =>this.refs.modal4.open()}>
                 <ListItem
                     roundAvatar
                     title='Initial Weight'
                     avatar={require('../img/weight.png')}
                   />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => _navigator.push({title:'TwModifyView',id:'twmodify',params:{email:this.state.email}})}>
+              <TouchableOpacity onPress={() =>this.refs.modal5.open()}>
                 <ListItem
                     roundAvatar
                     title='Target Weight'
@@ -142,10 +164,35 @@ var ProfileView = React.createClass({
             <View>
               <TouchableOpacity style={styles.btn}
               onPress={this._logout}>
-                <Text style={styles.text}>Logout</Text>
+                <Text style={{color:'#fff'}}>Logout</Text>
               </TouchableOpacity>
-            </View>       
-          </View> 
+            </View>      
+          </View>
+          <Modal style={[styles.modal, styles.modal3]} 
+            position={"center"} ref={"modal1"} 
+            isDisabled={this.state.isDisabled}>
+            <GenderModifyView {...this.props}/>
+          </Modal> 
+          <Modal style={[styles.modal, styles.modal3]} 
+            position={"center"} ref={"modal2"} 
+            isDisabled={this.state.isDisabled}>
+            <BirthModifyView {...this.props}/>
+          </Modal>
+          <Modal style={[styles.modal, styles.modal3]} 
+            position={"center"} ref={"modal3"} 
+            isDisabled={this.state.isDisabled}>
+            <HModifyView {...this.props}/>
+          </Modal>
+          <Modal style={[styles.modal, styles.modal3]} 
+            position={"center"} ref={"modal4"} 
+            isDisabled={this.state.isDisabled}>
+            <IwModifyView {...this.props}/>
+          </Modal> 
+          <Modal style={[styles.modal, styles.modal3]} 
+            position={"center"} ref={"modal5"} 
+            isDisabled={this.state.isDisabled}>
+            <TwModifyView {...this.props}/>
+          </Modal>  
         </View>   
       </ScrollView>
     );
@@ -206,6 +253,18 @@ var styles = StyleSheet.create({
      backgroundColor: '#2cb395',
      height: 50,
      borderRadius: 5,
-   }
+   },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modal3: {
+    height: 160,
+    borderRadius:25
+  },
+    text: {
+    color: "black",
+    fontSize: 22
+  }
 });
 module.exports = ProfileView;
