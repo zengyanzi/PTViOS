@@ -35,8 +35,8 @@ var TraineeView = React.createClass({
   },   
 _search:function(text){
     var query=this.state.keyword;
-    var url = URLnetowrk+''; // get the Trainee 
-    url+= '?query='+query;
+    var url = URLnetowrk+'search.action'; // get the Trainee 
+    url+= '?name='+query +'&'+'?email='+query;
     console.log(url);
     fetch(url).then(function(response) {  
        return response.json();
@@ -45,9 +45,9 @@ _search:function(text){
       if (res["data"].length!=0) {
         console.log(res);
         _navigator.push({
-          title:'DetailGymView',
-          id:'detailgym',
-          params:{data:res["data"][0]}
+          title:'SearchTrainee',
+          id:'searchtrainee',
+          params:{data:res["data"]}
         })
       }else{
         Alert.alert (

@@ -45,6 +45,7 @@ import IGenderModifyView from './in/igendermodify';
 import IBirthModifyView from './in/ibirthmodify';
 import Description from './in/description';
 import IProfileModifyView from './in/iprofilemodify';
+import SearchTrainee from './in/searchtrainee';
 export default class ptvios extends Component {
   constructor(props) {
     super(props);
@@ -307,6 +308,11 @@ renderSceneAndroid(route,navigator){
     if(route.id === 'iwmodify'){
       return (
         <IwView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'searchtrainee'){
+      return (
+        <SearchTrainee {...route.params} navigator={navigator} route={route}/>
       );
     }
   }
