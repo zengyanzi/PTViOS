@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import {
   Image,
@@ -11,58 +10,66 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Picker,
+  Alert,
   ListView
 } from 'react-native';
+
 import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
-import { SearchBar } from 'react-native-elements';
+import ScrollableTabView , { ScrollableTabBar, }from'react-native-scrollable-tab-view';
+import { SearchBar } from 'react-native-elements'
 import Swiper from 'react-native-swiper';
+import TrainerlistView from './trainerlist';
 import URLnetowrk from '../pub/network';
+
 var width = Dimensions.get('window').width;
 var _navigator ;
 var TrainerView = React.createClass({
   getInitialState: function(){
-    _navigator = this.props.navigator;
-    this.state = {
+    _navigator = this.props.navigator; 
+    this.state = { 
     };
     return {
     };
-  },    
- render: function(){
-  return(
-     <ScrollView 
-        contentContainerStyle={{flex:1}}
-        keyboardDismissMode='on-drag'
-        keyboardShouldPersistTaps="always">
+  },   
+_search:function(text){
+    var name=this.state.keyword;
+    var url = URLnetowrk+'search.action'; // get the Trainee 
+    url+='?name='+name+'&'+'email='+name;
+    console.log(url);
+    fetch(url).then(function(response) {  
+       return response.json();
+    }).then(function(res) {
+      console.log(res);
+      if (res["data"].length!=0) {
+        console.log(res);
+        _navigator.push({
+          title:'SearchTrainer',
+          id:'searchtrainer',
+          params:{data:res["data"]}
+        })
+      }else{
+         Alert.alert (
+          'Sorry',
+          'User not found'
+        )
+      }
+    });
+  },
+  render: function(){
+    return(
+      <ScrollView 
+          contentContainerStyle={{flex:1}}
+          keyboardDismissMode='on-drag'
+          keyboardShouldPersistTaps="never">
         <View style={[styles.Top,styles.Bottomline]}>
-          <TouchableOpacity 
-            onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
-            <Image source={require('../img/add_pressed.png') }/>
-           </TouchableOpacity> 
-          <View style={styles.Topbar}>
-          </View>     
-          <View style={styles.right}>
-          <TouchableOpacity 
-              onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
-            <Image source={require('../img/chart-pressed.png') }/>
-          </TouchableOpacity> 
-          </View>
         </View>
-        <SearchBar placeholder='Find your tainer here' />
-        <Swiper style={styles.wrapper} showsButtons={true}>
-          <View style={styles.slide1}>
-            <Text style={styles.text}>Find a trainer</Text>
-             <Image resizeMode='stretch' style={styles.image} source={require('../img/tr1.jpg')} /> 
-          </View>
-          <View style={styles.slide2}>
-            <Text style={styles.text}>Happy</Text>
-              <Image resizeMode='stretch' style={styles.image} source={require('../img/tr2.jpg')} />
-          </View>
-          <View style={styles.slide3}>
-            <Text style={styles.text}>And Healthy</Text>
-             <Image resizeMode='stretch' style={styles.image} source={require('../img/tr3.jpg')} />
-          </View>
-        </Swiper>  
+        <SearchBar
+            round
+            onSubmitEditing={() => this._search()}
+            onChangeText={(text) => this.setState({keyword: text})}
+            placeholder='Add your Trainer here' />                          
+        <TrainerlistView {...this.props}/> 
       </ScrollView>
     );
   },
@@ -84,9 +91,11 @@ var styles = StyleSheet.create({
     borderBottomWidth:2,
     borderColor:'gray'
   },
+
   Topbar:{
     flex:2,
     flexDirection: 'row',
+
   },
    Left:{
     flex:1,
@@ -103,35 +112,27 @@ var styles = StyleSheet.create({
     backgroundColor: '#38bda0',
     flexDirection:'column',
   },
-    image: {
-    width,
-    flexGrow: 1
-  },
-     wrapper: {
-  },
-    slide1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#70f0d4',
-  },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#db84d4',
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#4368db',
-  },
   text: {
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold',
-  }
-  
+  },
+  tabView: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#38bda0',
+  },
+  card: {
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    borderColor: 'rgba(0,0,0,0.1)',
+    margin: 5,
+    height:400,
+    padding: 15,
+    shadowColor: '#ccc',
+    shadowOffset: { width: 2, height: 2, },
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
+  },
 });
 module.exports = TrainerView;

@@ -46,6 +46,8 @@ import IBirthModifyView from './in/ibirthmodify';
 import Description from './in/description';
 import IProfileModifyView from './in/iprofilemodify';
 import SearchTrainee from './in/searchtrainee';
+import SearchTrainer from './pt/searchtrainer';
+
 export default class ptvios extends Component {
   constructor(props) {
     super(props);
@@ -313,6 +315,11 @@ renderSceneAndroid(route,navigator){
     if(route.id === 'searchtrainee'){
       return (
         <SearchTrainee {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'searchtrainer'){
+      return (
+        <SearchTrainer {...route.params} navigator={navigator} route={route}/>
       );
     }
   }
