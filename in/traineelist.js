@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import {
   Image,
@@ -61,17 +60,17 @@ var TrainneelistView = React.createClass({
      AsyncStorage.getItem('instructorid',(err,result)=>{
       var instructor_id=result;
       var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-       var url = URLnetowrk+'instructor/mytrainees.action';// load gym list
-       url+= '?instructor_id='+instructor_id;
-       console.log(url);
-       fetch(url).then(function(response) {  
+      var url = URLnetowrk+'instructor/mytrainees.action';// load gym list
+      url+= '?instructor_id='+instructor_id;
+      console.log(url);
+      fetch(url).then(function(response) {  
          return response.json();
        }).then(function(res) {
          console.log(res);
          if (res["data"]!=null) {
            _that.setState({
              dataSource: ds.cloneWithRows(res["data"]),
-             rows:res["data"][0]
+             rows:res["data"]
            });
          }else{
            Alert.alert('Fail to display','Please check your data'); 

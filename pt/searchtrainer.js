@@ -113,7 +113,7 @@ var SearchTrainer = React.createClass({
         isDisabled={this.state.isDisabled}>
         <View>
           <TouchableOpacity onPress={this._request} >
-            <Text>Request {this.state.id}</Text>
+            <Text>Request</Text>
           </TouchableOpacity>
         </View>    
       </Modal>  

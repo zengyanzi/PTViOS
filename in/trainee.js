@@ -21,6 +21,7 @@ import { SearchBar } from 'react-native-elements'
 import Swiper from 'react-native-swiper';
 import AddtraineeView from './addtrainee';
 import TrainneelistView from './traineelist';
+import TraineenewView from './traineenew';
 import URLnetowrk from '../pub/network';
 
 var width = Dimensions.get('window').width;
@@ -34,9 +35,9 @@ var TraineeView = React.createClass({
     };
   },   
 _search:function(text){
-    var query=this.state.keyword;
-    var url = URLnetowrk+'search.action'; // get the Trainee 
-    url+= '?name='+query +'&'+'?email='+query;
+    var name=this.state.keyword;
+    var url = URLnetowrk+'instructor/search.action'; // get the Trainee 
+    url+='?name='+name+'&'+'email='+name;
     console.log(url);
     fetch(url).then(function(response) {  
        return response.json();
@@ -50,7 +51,7 @@ _search:function(text){
           params:{data:res["data"]}
         })
       }else{
-        Alert.alert (
+         Alert.alert (
           'Sorry',
           'User not found'
         )
@@ -69,8 +70,23 @@ _search:function(text){
             round
             onSubmitEditing={() => this._search()}
             onChangeText={(text) => this.setState({keyword: text})}
-            placeholder='Add your Trainee here' />                          
-        <TrainneelistView {...this.props}/> 
+            placeholder='Add your Trainee here' />
+        <ScrollableTabView           
+            initialPage={1}
+            renderTabBar={() => <ScrollableTabBar  />}
+          >
+            <ScrollView tabLabel="List" style={styles.tabView}>
+              <View style={styles.card}>
+                <TrainneelistView {...this.props}/> 
+              </View>
+            </ScrollView>
+            <ScrollView tabLabel="New" style={styles.tabView}>
+              <View style={styles.card}>
+                <TraineenewView {...this.props}/>
+              </View>
+            </ScrollView>
+          </ScrollableTabView>                              
+        
       </ScrollView>
     );
   },

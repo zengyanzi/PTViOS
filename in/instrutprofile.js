@@ -81,7 +81,6 @@ var InstructProfileView = React.createClass({
               <List>
                 <ListItem
                   roundAvatar
-                  title='Zeng Jenny'
                   subtitle={
                     <View style={styles.subtitleView}>
                       <Text style={styles.ratingText}>{this.state.email}</Text>

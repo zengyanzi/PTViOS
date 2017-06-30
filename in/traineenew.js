@@ -18,6 +18,7 @@ import {
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
 import URLnetowrk from '../pub/network';
+import DetailTrainee from './detailtrainee';
 var screenW = Dimensions.get('window').width;
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
@@ -41,7 +42,7 @@ var rows = [
   } 
 ];
 
-var TrainerlistView = React.createClass({
+var TraineenewView = React.createClass({
   getInitialState: function(){
     _navigator = this.props.navigator;
     var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
@@ -54,29 +55,29 @@ var TrainerlistView = React.createClass({
       scrollEnabled: true,
     };
   },
-  // componentWillMount() {
-   //  let _that=this;
-   //   AsyncStorage.getItem('userid',(err,result)=>{
-   //    var trainee_id=result;
-   //    var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-   //     var url = URLnetowrk+'';// load gym list
-   //     url+= '?trainee_id='+trainee_id;
-   //     console.log(url);
-   //     fetch(url).then(function(response) l{  
-   //       return response.json();
-   //     }).then(function(res) {
-   //       console.log(res);
-   //       if (res["data"]!=null) {
-   //         _that.setState({
-   //           dataSource: ds.cloneWithRows(res["data"]),
-   //           rows:res["data"][0]
-   //         });
-   //       }else{
-   //         Alert.alert('Fail to display','Please check your data'); 
-   //       }    
-   //     }); 
-   //    });
-   // },
+  componentWillMount() {
+    let _that=this;
+     AsyncStorage.getItem('instructorid',(err,result)=>{
+      var instructor_id=result;
+      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+      var urlmap =URLnetowrk+'instructor/find_mapping.action';//FIND TRAINEES MAPPING STATUS;
+      urlmap+= '?instructor_id='+instructor_id;
+      console.log(urlmap);
+      fetch(urlmap).then(function(response) {  
+         return response.json();
+       }).then(function(res) {
+         console.log(res);
+         if (res["data"]!=null) {
+           _that.setState({
+             dataSource: ds.cloneWithRows(res["data"]),
+             rows:res["data"]
+           });
+         }else{
+           Alert.alert('Fail to display','Please check your data'); 
+         }    
+       }); 
+      });
+   },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });
@@ -102,16 +103,39 @@ var TrainerlistView = React.createClass({
 
   renderRow(rowData: string, sectionID: number, rowID: number) {
     return (
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity style={styles.btn} onPress={()=>this._handlerequest(rowData)}>
           <View style={styles.li}>
-            <View  style={styles.lidate}><Image  source={require('../img/gymicon.png') }/><Text>Name:{rowData.surname} {rowData.name} </Text></View>
+            <View  style={styles.lidate}><Image  source={require('../img/gymicon.png') }/><Text>Name:{rowData.trainee_id} {rowData.name} </Text></View>
               <Text style={styles.liText}>phone:{rowData.phone};Gender: {rowData.gender}; </Text>
-              <Text style={styles.liText}>Height: {rowData.height}m;Initial Weight: {rowData.initial_weight}kg;Target Weight: {rowData.target_weight}kg;BMI:{rowData.bmi}</Text>
+              <Text style={styles.liText}>Status: Request</Text>
           </View>
         </TouchableOpacity>
 
     );
   },
+  _handlerequest:function(rowData){
+  var trainee_id=rowData.trainee_id;
+   AsyncStorage.getItem('instructorid',(err,result)=>{
+      var instructor_id=result;
+      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+      var url =URLnetowrk+'mapping.action';//FIND TRAINEES MAPPING STATUS;
+       url+='?trainee_id='+trainee_id+'&'+'instructor_id='+instructor_id+'&'+'status='+21;
+      console.log(url);
+      fetch(url).then(function(response) {  
+         return response.json();
+       }).then(function(res) {
+         console.log(res);
+         if (res["data"]!=null) {
+           _navigator.push({
+             title:'ThomeView',
+             id:'Thome',
+        })
+         }else{
+           Alert.alert('Fail to display','Please check your data'); 
+         }    
+       }); 
+      });
+ },
   render: function(){
     return(
        <ScrollView 
@@ -191,4 +215,4 @@ var styles = StyleSheet.create({
   },
 
 });
-module.exports = TrainerlistView;
+module.exports = TraineenewView;
