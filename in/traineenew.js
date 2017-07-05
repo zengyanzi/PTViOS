@@ -19,6 +19,8 @@ import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
 import URLnetowrk from '../pub/network';
 import DetailTrainee from './detailtrainee';
+import Modal from 'react-native-modalbox';
+
 var screenW = Dimensions.get('window').width;
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
@@ -35,11 +37,7 @@ var rows = [
   {
     Name:"YMCA",
     text: "Find a better you here",
-  },
-  {
-    Name:"Jetts",
-    text: "Enjoy you and your beauty",
-  } 
+  }
 ];
 
 var TraineenewView = React.createClass({
@@ -65,19 +63,26 @@ var TraineenewView = React.createClass({
       console.log(urlmap);
       fetch(urlmap).then(function(response) {  
          return response.json();
-       }).then(function(res) {
-         console.log(res);
-         if (res["data"]!=null) {
-           _that.setState({
-             dataSource: ds.cloneWithRows(res["data"]),
-             rows:res["data"]
-           });
-         }else{
-           Alert.alert('Fail to display','Please check your data'); 
-         }    
-       }); 
-      });
-   },
+      }).then(function(res) {
+        var arry=[];
+        var mapresult=res.data;
+        if (mapresult!=null) {
+          console.log(mapresult);
+          for (var i = 0; i < mapresult.length; i++) {
+            if (mapresult[i].status==11) {
+              arry.push(mapresult[i]);
+            };
+          };
+          _that.setState({
+            dataSource: ds.cloneWithRows(arry),
+            rows:arry
+          });
+       }else{
+         Alert.alert('Fail to display','Please check your data'); 
+       }    
+      }); 
+    });
+  },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });
@@ -103,7 +108,9 @@ var TraineenewView = React.createClass({
 
   renderRow(rowData: string, sectionID: number, rowID: number) {
     return (
-        <TouchableOpacity style={styles.btn} onPress={()=>this._handlerequest(rowData)}>
+        <TouchableOpacity style={styles.btn}  
+              onPressIn={() => this.setState({trainee_id: rowData.trainee_id})}
+              onPress={()=>this.refs.modal1.open()} >
           <View style={styles.li}>
             <View  style={styles.lidate}><Image  source={require('../img/gymicon.png') }/><Text>Name:{rowData.trainee_id} {rowData.name} </Text></View>
               <Text style={styles.liText}>phone:{rowData.phone};Gender: {rowData.gender}; </Text>
@@ -114,12 +121,12 @@ var TraineenewView = React.createClass({
     );
   },
   _handlerequest:function(rowData){
-  var trainee_id=rowData.trainee_id;
+  var trainee_id=this.state.trainee_id;
    AsyncStorage.getItem('instructorid',(err,result)=>{
       var instructor_id=result;
       var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
       var url =URLnetowrk+'mapping.action';//FIND TRAINEES MAPPING STATUS;
-       url+='?trainee_id='+trainee_id+'&'+'instructor_id='+instructor_id+'&'+'status='+21;
+       url+='?trainee_id='+trainee_id+'&'+'instructor_id='+instructor_id+'&'+'status='+22;
       console.log(url);
       fetch(url).then(function(response) {  
          return response.json();
@@ -127,8 +134,8 @@ var TraineenewView = React.createClass({
          console.log(res);
          if (res["data"]!=null) {
            _navigator.push({
-             title:'ThomeView',
-             id:'Thome',
+             title:'IhomeView',
+             id:'Ihome',
         })
          }else{
            Alert.alert('Fail to display','Please check your data'); 
@@ -148,6 +155,14 @@ var TraineenewView = React.createClass({
             renderRow={this.renderRow}
             enableEmptySections={true}
           />
+          <Modal style={[styles.modal, styles.modal3]} 
+            position={"center"} ref={"modal1"} 
+            isDisabled={this.state.isDisabled}>
+             <TouchableOpacity 
+              onPress={this._handlerequest}>
+              <Text style={{color:"#38bda0",fontSize:18}}>Confirm</Text>
+            </TouchableOpacity> 
+          </Modal>
       </ScrollView>
     );
   },
@@ -213,6 +228,14 @@ var styles = StyleSheet.create({
     flexDirection:'row',
     alignItems: 'center',
   },
-
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modal3: {
+    height: 160,
+    width: 260,
+    borderRadius:25
+  },
 });
 module.exports = TraineenewView;

@@ -39,9 +39,11 @@ var IhomeView = React.createClass({
     _navigator = this.props.navigator;
     this.state = {
       selectedTab: 'Plan',
+      notification:''
     };
     return {
        selectedTab:this.state.selectedTab,
+       notification:this.state.notification
     };
   },
   componentWillMount() {
@@ -56,11 +58,17 @@ var IhomeView = React.createClass({
       }).then(function(res) {
         console.log(res);
         if (res["data"]!=null) {
+          var j=0;
           for (var i = 0; i < res["data"].length; i++) {
-            if (res["data"][i]["status"]=true) {
+            if (res["data"][i]["status"]==11) {
+              j+=1;
               _that.setState({
-                notification:1
-              })
+                notification:j
+              });
+            }else{
+              _that.setState({
+                notification:''
+              });
             };
             
           };

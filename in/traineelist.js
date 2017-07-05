@@ -60,21 +60,29 @@ var TrainneelistView = React.createClass({
      AsyncStorage.getItem('instructorid',(err,result)=>{
       var instructor_id=result;
       var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-      var url = URLnetowrk+'instructor/mytrainees.action';// load gym list
+      var url = URLnetowrk+'instructor/find_mapping.action';// load gym list
       url+= '?instructor_id='+instructor_id;
       console.log(url);
       fetch(url).then(function(response) {  
          return response.json();
        }).then(function(res) {
          console.log(res);
-         if (res["data"]!=null) {
-           _that.setState({
-             dataSource: ds.cloneWithRows(res["data"]),
-             rows:res["data"]
-           });
-         }else{
-           Alert.alert('Fail to display','Please check your data'); 
-         }    
+          var arry=[];
+          var mapresult=res.data;
+          if (mapresult!=null) {
+            console.log(mapresult);
+            for (var i = 0; i < mapresult.length; i++) {
+              if (mapresult[i].status==22) {
+                arry.push(mapresult[i]);
+              };
+            };
+            _that.setState({
+              dataSource: ds.cloneWithRows(arry),
+              rows:arry
+            });
+           }else{
+            Alert.alert('Fail to display','Please check your data'); 
+           }    
        }); 
       });
    },
