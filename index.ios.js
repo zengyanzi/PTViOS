@@ -47,100 +47,128 @@ import Description from './in/description';
 import IProfileModifyView from './in/iprofilemodify';
 import SearchTrainee from './in/searchtrainee';
 import SearchTrainer from './pt/searchtrainer';
-
-export default class ptvios extends Component {
+import GuideView from './Guide';
+export default class ptvios extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {};
-    var type;
-    AsyncStorage.getItem('type',(err, result) => {
-      console.log(result);
-      type=result;
-      if (type!==null) {
-        if (type=="instructor") {
-          var email;
-          AsyncStorage.getItem('email',(err,result)=>{
+      super(props);
+      this.state = {};
+      // var type =  AsyncStorage.getItem('type');
+   AsyncStorage.getItem('isFirst',(error,result)=>{
+
+      if (result == 'false') {
+        console.log('not first');
+
+             var type;
+      AsyncStorage.getItem('type',(err, result) => {
+        console.log(result);
+        type=result;
+        if (type!==null) {
+          if (type=="instructor") {
+            var email;
+            AsyncStorage.getItem('email',(err,result)=>{
             // console.log(result);
-            email=result;
-            var password;
-            AsyncStorage.getItem('password',(err,result)=>{
-            // console.log(result);
-              password=result;
-              var url = URLnetowrk+'instructor/login.action';    
-              url += '?email='+email+'&password='+password;
-              console.log(url);
-              fetch(url).then(function(response) {  
-                return response.json();
-              }).then(function(res) {
+              email=result;
+              var password;
+              AsyncStorage.getItem('password',(err,result)=>{
+                  // console.log(result);
+                password=result;
+                // var url = 'http://192.168.20.17:8080/pt_server/instructorlogin.action';
+                  // var url = 'http://192.168.1.15:8080/pt_server/instructorlogin.action';
+                var url = URLnetowrk+'instructor/login.action';
+                url += '?email='+email+'&password='+password;
+                console.log(url);
+                fetch(url).then(function(response) {  
+                  return response.json();
+                }).then(function(res) {
                   console.log(res);
                   if (res["data"]!=null) {
                     _navigator.push({
-                      title:'IhomeView',
-                      id:'Ihome'
+                    title:'IhomeView',
+                    id:'Ihome'
                     });
                   }
+                });
               });
             });
-          });
-        }else{
-          var email;
-          AsyncStorage.getItem('email',(err,result)=>{
+          }else{
+            var email;
+            AsyncStorage.getItem('email',(err,result)=>{
             // console.log(result);
-            email=result;
-            var password;
-            AsyncStorage.getItem('password',(err,result)=>{
-            // console.log(result);
-              password=result;
-              var url = URLnetowrk+'traineelogin.action';
-              url += '?email='+email+'&password='+password;
-              console.log(url);
-              fetch(url).then(function(response) {  
-                return response.json();
-              }).then(function(res) {
-                console.log(res);
-                if (res["data"]!=null) {
-                  _navigator.push({
+              email=result;
+              var password;
+              AsyncStorage.getItem('password',(err,result)=>{
+                // console.log(result);
+                password=result;
+                  // var url = 'http://192.168.20.17:8080/pt_server/traineelogin.action';
+                var url = URLnetowrk+'traineelogin.action';
+                url += '?email='+email+'&password='+password;
+                console.log(url);
+                fetch(url).then(function(response) {  
+                  return response.json();
+                }).then(function(res) {
+                  console.log(res);
+                  if (res["data"]!=null) {
+                    _navigator.push({
                     title:'ThomeView',
                     id:'Thome'
-                   });
+                    });
                   }
+                });
               });
             });
+          }
+        };
+      }); 
+
+      } else  {
+
+          console.log('is first');
+
+          // 存储
+          AsyncStorage.setItem('isFirst','false',(error)=>{
+              if (error) {
+                  alert(error);
+              }
           });
-        }
-      };
-    });   
-  }
-configureScenceAndroid(){
+
+         _navigator.push({
+        title:'GuideView',
+        id:'Guide'
+        });
+      }
+    });
+  
+    }
+  configureScenceAndroid(){
     return Navigator.SceneConfigs.FadeAndroid;
   }
-renderSceneAndroid(route,navigator){
+
+  renderSceneAndroid(route,navigator){
     _navigator = navigator;
     if(route.id === 'main'){
       return (
         <ScrollView 
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
-        keyboardShouldPersistTaps="never"
-        >       
-         <View style={styles.container}>
-         </View>
-         <View style={styles.maincontain}>
-          <Image source={require('./img/ptv.png')} style={{width: 280, height: 140}}/>
-
-              <View style={styles.choose}>
-                <TouchableOpacity style={styles.btn}
+        keyboardShouldPersistTaps='never'
+        >  
+          <View style={styles.container}>
+          </View>
+          <View style={styles.maincontain}>
+            <Image source={require('./img/ptv.png')} style={{width: 280, height: 140}}/>
+            <View style={styles.choose}>
+              <TouchableOpacity style={styles.btn}
                 onPress={() => _navigator.push({title:'InstructwelcomeView',id:'instructwelcome'})}>
                 <Text style={styles.text}>I am Instructor</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btn}
-               onPress={() => _navigator.push({title:'TraineewelcomeView',id:'traineewelcome'})}>
+                  onPress={() => _navigator.push({title:'TraineewelcomeView',id:'traineewelcome'})}>
                 <Text style={styles.text}> I am trainee</Text>
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
-       );
+      );
     }
     if(route.id === 'instructwelcome'){
       return (
@@ -162,14 +190,19 @@ renderSceneAndroid(route,navigator){
         <TraineewelcomeView {...route.params} navigator={navigator} route={route}/>
       );
     }
+    if(route.id === 'traineeregister'){
+      return (
+        <TraineeregisterView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
     if(route.id === 'traineelogin'){
       return (
         <TraineeloginView {...route.params} navigator={navigator} route={route}/>
       );
     }
-    if(route.id === 'traineeregister'){
+    if(route.id === 'plan'){
       return (
-        <TraineeregisterView {...route.params} navigator={navigator} route={route}/>
+        <PlanView {...route.params} navigator={navigator} route={route}/>
       );
     }
     if(route.id === 'Thome'){
@@ -180,11 +213,6 @@ renderSceneAndroid(route,navigator){
     if(route.id === 'Ihome'){
       return (
         <IhomeView {...route.params} navigator={navigator} route={route}/>
-      );
-    }
-      if(route.id === 'plan'){
-      return (
-        <PlanView {...route.params} navigator={navigator} route={route}/>
       );
     }
     if(route.id === 'detailplan'){
@@ -227,19 +255,19 @@ renderSceneAndroid(route,navigator){
         <AdditemtodayView {...route.params} navigator={navigator} route={route}/>
       );
     }
-    if(route.id === 'addrecordtoday'){
+   if(route.id === 'addrecordtoday'){
       return (
         <AddrecordtodayView {...route.params} navigator={navigator} route={route}/>
       );
     }
-    if(route.id === 'newitem'){
-      return (
-        <NewitemView {...route.params} navigator={navigator} route={route}/>
-      );
-    }
-    if(route.id === 'profilemodify'){
+   if(route.id === 'profilemodify'){
       return (
         <ProfileModifyView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+   if(route.id === 'iprofilemodify'){
+      return (
+        <IProfileModifyView {...route.params} navigator={navigator} route={route}/>
       );
     }
     if(route.id === 'phonemodify'){
@@ -247,49 +275,19 @@ renderSceneAndroid(route,navigator){
         <PhoneModifyView {...route.params} navigator={navigator} route={route}/>
       );
     }  
+    if(route.id === 'iphonedmodify'){
+      return (
+        <IPhoneModifyView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
     if(route.id === 'passwordmodify'){
       return (
         <PasswordModifyView {...route.params} navigator={navigator} route={route}/>
       );
     }
-    if(route.id === 'birthmodify'){
+    if(route.id === 'ipasswordmodify'){
       return (
-        <BirthModifyView {...route.params} navigator={navigator} route={route}/>
-      );
-    }
-    if(route.id === 'gendermodify'){
-      return (
-        <GenderModifyView {...route.params} navigator={navigator} route={route}/>
-      );
-    }
-    if(route.id === 'hmodify'){
-      return (
-        <HModifyView {...route.params} navigator={navigator} route={route}/>
-      );
-    }
-    if(route.id === 'iwmodify'){
-      return (
-        <IwView {...route.params} navigator={navigator} route={route}/>
-      );
-    }
-    if(route.id === 'twmodify'){
-      return (
-        <TwView {...route.params} navigator={navigator} route={route}/>
-      );
-    }
-    if(route.id === 'bmimodify'){
-      return (
-        <BModifyView {...route.params} navigator={navigator} route={route}/>
-      );
-    }
-    if(route.id === 'detailgym'){
-      return (
-        <DetailGymView {...route.params} navigator={navigator} route={route}/>
-      );
-    }
-    if(route.id === 'gymcreate'){
-      return (
-        <Gymcreate {...route.params} navigator={navigator} route={route}/>
+        <IPasswordModifyView {...route.params} navigator={navigator} route={route}/>
       );
     }
     if(route.id === 'ibirthmodify'){
@@ -302,14 +300,35 @@ renderSceneAndroid(route,navigator){
         <IGenderModifyView {...route.params} navigator={navigator} route={route}/>
       );
     }
-    if(route.id === 'hmodify'){
+
+    if(route.id === 'bmimodify'){
       return (
-        <HModifyView {...route.params} navigator={navigator} route={route}/>
+        <BModifyView {...route.params} navigator={navigator} route={route}/>
       );
     }
-    if(route.id === 'iwmodify'){
+    if(route.id === 'newitem'){
       return (
-        <IwView {...route.params} navigator={navigator} route={route}/>
+        <NewitemView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'staticmap'){
+      return (
+        <StaticMap {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'description'){
+      return (
+        <Description {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'detailgym'){
+      return (
+        <DetailGymView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'gymcreate'){
+      return (
+        <Gymcreate {...route.params} navigator={navigator} route={route}/>
       );
     }
     if(route.id === 'searchtrainee'){
@@ -322,8 +341,14 @@ renderSceneAndroid(route,navigator){
         <SearchTrainer {...route.params} navigator={navigator} route={route}/>
       );
     }
+    if(route.id === 'Guide'){
+      return (
+        <GuideView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
   }
-  render(){
+
+ render(){
     var renderScene = this.renderSceneAndroid;
     var configureScence = this.configureScenceAndroid;
     return (
@@ -331,10 +356,12 @@ renderSceneAndroid(route,navigator){
         debugOverlay={false}
         initialRoute={{ title: 'Main', id:'main'}}
         configureScence={{ configureScence }}
-        renderScene={renderScene}
-      />
-    );
+      renderScene={renderScene}/>
+   );
   }
+ 
+
+
 }
 const styles = StyleSheet.create({
   container:{
