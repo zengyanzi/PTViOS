@@ -18,6 +18,7 @@ import {
 var Slider = require('react-native-slider');
 import Dimensions from 'Dimensions';
 import URLnetowrk from '../pub/network';
+import { Icon } from 'react-native-elements';
 var screenW = Dimensions.get('window').width;
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
@@ -96,21 +97,6 @@ var TEditPlanView = React.createClass({
       <View style={styles.maincontain}>
         <View>
             <View style={[styles.Top,styles.Bottomline]}>
-              <View style={[styles.Topbar,styles.Left]}>
-                <TouchableOpacity 
-                        onPress={() => _navigator.push({title:'TCreateplanView',id:'Tcreateplan',params:{trainee_id:this.props.trainee_id}})}>
-                  <Image source={require('../img/setting_normal.png') }/>
-                </TouchableOpacity> 
-              </View>
-              <View style={styles.Topbar}>
-                <Image source={require('../img/ptv_sized.png') }/>
-              </View>
-              <View style={[styles.Topbar,styles.Right]}>
-                <TouchableOpacity 
-                    onPress={() => _navigator.push({title:'TAdditemtoday',id:'Tadditemtoday',params:{trainee_id:this.props.trainee_id}})}>
-                  <Image source={require('../img/add_pressed.png') }/>
-                </TouchableOpacity> 
-              </View>
             </View>  
         </View>
         <View>
@@ -186,7 +172,7 @@ var styles = StyleSheet.create({
   },
   Left:{
     position: 'absolute', 
-    top: 5, 
+    top: 1, 
     left: 5
   },
   Right:{
