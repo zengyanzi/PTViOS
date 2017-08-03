@@ -4,8 +4,6 @@ import {
   View,
   Text,
   StyleSheet,
-  ViewPagerAndroid,
-  BackAndroid,
   ScrollView,
   Navigator,
   TextInput,
@@ -16,23 +14,12 @@ import {
 } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import Dimensions from 'Dimensions';
-import PlanView from './plan.js';
 import DatePicker from './date.js';
 import CheckBox from 'react-native-check-box';
 import keys from './keys.json';
 import PlanCreateView from './plancreate';
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 var screenW = Dimensions.get('window').width;
-BackAndroid.addEventListener('hardwareBackPress', function() {
-  if(_navigator == null){
-    return false;
-  }
-  if(_navigator.getCurrentRoutes().length === 1){
-    return false;
-  }
-  _navigator.pop();
-  return true;
-});
 var _navigator ;
 var radio_props = [
   {label: 'FUllbody', value: 1 },
@@ -42,12 +29,12 @@ var TCreateplanView = React.createClass({
   getInitialState: function(){
     _navigator = this.props.navigator;
     this.state = {
-    selectedTab: '',
-    dataArray: [],
-    scrollEnabled: true,
-    enddate:'',
-    startdate:'',
-    value: 1,
+      selectedTab: '',
+      dataArray: [],
+      scrollEnabled: true,
+      enddate:'',
+      startdate:'',
+      value: 1,
     };
     return {
       selectedTab:this.state.selectedTab,
@@ -59,9 +46,9 @@ var TCreateplanView = React.createClass({
   },
 //  set for the attendance
   loadData() {
-    this.setState({
-      dataArray: keys
-    })
+      this.setState({
+          dataArray: keys
+      })
   },
 //  set for the attendance
   onClick(data) {
@@ -74,11 +61,11 @@ var TCreateplanView = React.createClass({
     for (var i = 0, l = len - 2; i < l; i += 2) {
       views.push(
         <View key={i}>
-          <View style={styles.item}>
+            <View style={styles.item}>
               {this.renderCheckBox(this.state.dataArray[i])}
               {this.renderCheckBox(this.state.dataArray[i + 1])}
-          </View>
-          <View style={styles.line}/>
+            </View>
+            <View style={styles.line}/>
         </View>
       )
     }
@@ -98,21 +85,22 @@ var TCreateplanView = React.createClass({
     var value=data.value;
     return (
       <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={()=>this.onClick(data)}
-          rightTextStyle={{color:"#fff",fontSize:18}}
-          isChecked={data.checked}
-          rightText={rightText}
+        style={{flex: 1, padding: 10}}
+        onClick={()=>this.onClick(data)}
+        rightTextStyle={{color:"#fff",fontSize:18}}
+        isChecked={data.checked}
+        rightText={rightText}
       />
     );
   },
-  //set the submit function
+    //set the submit function
   _submit:function(){
     var start=this.state.startdate;
     var end=this.state.enddate; 
     let _that=this;     
-      AsyncStorage.getItem('userid',(err, result) => {
-        var traineeid=result;
+      AsyncStorage.getItem('instructorid',(err, result) => {
+        var instructor_id=result;
+        var traineeid=this.props.trainee_id;
         AsyncStorage.getItem('planid',(err, result) => {
         console.log(result);//check the planid
         var optionplanid=result;
@@ -129,7 +117,8 @@ var TCreateplanView = React.createClass({
           }
         } 
         var attendanceday=attendance.join();// join the addendance number
-        var url = URLnetowrk+'createplan.action';
+   
+        var url = URLnetowrk+'instructor/createplan.action';
       // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
         url += '?traineeid='+traineeid+'&start='+start+'&end='+end+'&attendance='+attendance+'&optionplanid='+optionplanid;
         fetch(url).then(function(response) {  
@@ -138,8 +127,8 @@ var TCreateplanView = React.createClass({
             console.log(res);
             if (res["data"]!=null) {
                _navigator.push({
-                  title:'ThomeView',
-                  id:'Thome',
+                  title:'IhomeView',
+                  id:'Ihome',
               })
             };
           })
@@ -151,21 +140,21 @@ var TCreateplanView = React.createClass({
       <ScrollView 
           contentContainerStyle={{flex:1}}
           keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps='never'>
-        <View style={styles.maincontain}>        
+          keyboardShouldPersistTaps="never">
+        <View style={styles.maincontain}>  
           <View style={[styles.Top,styles.Bottomline]}>
             <View style={[styles.Topbar,styles.Left]}>
-              <TouchableOpacity 
-                 onPress={() => _navigator.push({title:'ThomeView',id:'Thome'})}>
-                <Image source={require('../../img/back.png') }/>
-              </TouchableOpacity> 
+                <TouchableOpacity 
+                    onPress={() => _navigator.jumpBack()}>
+                  <Image source={require('../img/back.png') }/>
+                 </TouchableOpacity> 
             </View>
             <View style={styles.Topbar}>
-              <Image source={require('../../img/ptv_sized.png') }/>
+              <Image source={require('../img/ptv_sized.png') }/>
             </View>
-            <View style={[styles.Topbar,styles.Right]}>          
+            <View style={[styles.Topbar,styles.Right]}>   
             </View>
-          </View>       
+          </View>
           <View style={{flex:1,flexDirection:'row'}}>
             <View>
               <Text style={styles.text}>Start Date</Text>
@@ -192,20 +181,20 @@ var TCreateplanView = React.createClass({
                 onDateChange={(date) => {this.setState({enddate: date});}}/>
             </View>
           </View>
-          <View style={{flex:1}}>
+          <View style={{flex:2}}>
             <Text style={styles.text}>Please Choose attendance</Text>
             {this.renderView()}
           </View>
-          <View style={{height:120,flex:3}}>
+          <View style={{flexGrow:1,height:180}}>
             <Text style={styles.text}>Please Choose Your Plan</Text>
               <PlanCreateView {...this.props}/>
           </View>
           <View>
             <TouchableOpacity style={styles.btn}
             onPress={this._submit}>
-              <Text style={styles.text}>Submit</Text>
+            <Text style={styles.text}>Submit</Text>
             </TouchableOpacity>
-          </View>       
+          </View>     
         </View>
       </ScrollView>
     );
@@ -215,17 +204,13 @@ var TCreateplanView = React.createClass({
   },
 });
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
+   
   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-    justifyContent: 'center',
+     justifyContent: 'space-between',
   },
   Bottomline:{
     borderBottomWidth:2,
@@ -233,19 +218,15 @@ var styles = StyleSheet.create({
   },
 
   Topbar:{
-    flex:1,
-    alignItems: 'center',
+    flexDirection: 'row',
 
   },
-  Left:{
-    position: 'absolute', 
-    top: 5, 
-    left: 5
+   Left:{
+    flexDirection: 'row',
   },
   Right:{
-    position: 'absolute', 
-    top: 5, 
-    right: 5,
+    flexDirection: 'row',
+
   },
   maincontain:
   {
@@ -275,7 +256,7 @@ var styles = StyleSheet.create({
         flexDirection: 'row',
     },
   line: {
-        flex: 1,
+        flexDirection: 'row',
         height: 0.3,
         backgroundColor: '#fff',
     },

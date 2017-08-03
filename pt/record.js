@@ -88,6 +88,47 @@ var RecordView = React.createClass({
        });       
     }); 
   },
+delete:function(rowData){
+    let _that=this;
+    AsyncStorage.getItem('userid',(err, result) => {
+      console.log(result);
+      var trainee_id=result;
+      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+      var plan_id =rowData.id;
+      var url = URLnetowrk+'delplan.action';
+      // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+      url += '?trainee_id='+trainee_id+'&plan_id='+plan_id;
+      console.log(url);
+      fetch(url).then(function(response) {  
+          return response.json();
+      }).then(function(res) {
+        console.log(res);        
+        if (res["data"]==true) {
+          var day=_that.props.date;
+          console.log(day);
+          var url = URLnetowrk+'detailplan.action';
+          // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+          url += '?trainee_id='+trainee_id+'&day='+day;
+          console.log(url);
+          fetch(url).then(function(response) {  
+            return response.json();
+          }).then(function(res) {
+            console.log(res);
+            if (res["data"]!=null) {                 
+              _that.setState({
+                dataSource: ds.cloneWithRows(res["data"]),
+                detailrows:res["data"]
+              })
+            }else{
+              Alert.alert('Fail to display','Please check your data'); 
+            }
+           });   
+          }else{
+            Alert.alert('Fail to display','Please check your data'); 
+          }
+        });
+      }) 
+    },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });

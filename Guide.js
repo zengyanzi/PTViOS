@@ -59,7 +59,7 @@ class GuideView extends Component {
       title: 'Step 3',
       description: 'Submit your plan',
       img: require('./img/wel3.png'),
-      backgroundColor: '#a4b602',
+      backgroundColor: '#52cef5',
       imgStyle: {
          width: 150,
          height: 260,

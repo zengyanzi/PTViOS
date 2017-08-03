@@ -40,7 +40,7 @@ var rows = [
     text: "Row:5min;Treadmill:6min;Xtrainer:5min",
   },
 ];
-var PlanView = React.createClass({
+var TPlanView = React.createClass({
   getInitialState: function(){
     _navigator = this.props.navigator;
     var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
@@ -168,6 +168,47 @@ var PlanView = React.createClass({
       });
     })
   },
+  delete:function(rowData){
+    let _that=this;
+    AsyncStorage.getItem('userid',(err, result) => {
+      console.log(result);
+      var trainee_id=result;
+      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+      var plan_id =rowData.id;
+      var url = URLnetowrk+'delplan.action';
+      // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+      url += '?trainee_id='+trainee_id+'&plan_id='+plan_id;
+      console.log(url);
+      fetch(url).then(function(response) {  
+          return response.json();
+      }).then(function(res) {
+        console.log(res);        
+        if (res["data"]==true) {
+          var day=_that.props.date;
+          console.log(day);
+          var url = URLnetowrk+'detailplan.action';
+          // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+          url += '?trainee_id='+trainee_id+'&day='+day;
+          console.log(url);
+          fetch(url).then(function(response) {  
+            return response.json();
+          }).then(function(res) {
+            console.log(res);
+            if (res["data"]!=null) {                 
+              _that.setState({
+                dataSource: ds.cloneWithRows(res["data"]),
+                detailrows:res["data"]
+              })
+            }else{
+              Alert.alert('Fail to display','Please check your data'); 
+            }
+           });   
+          }else{
+            Alert.alert('Fail to display','Please check your data'); 
+          }
+        });
+      }) 
+    },
   renderRow(rowData: string, sectionID: number, rowID: number) {
       var btnsTypes = [
         { text: 'Submit',onPress: () => { this.submitrecord(rowData) },type:'secondary'}    
@@ -189,11 +230,13 @@ var PlanView = React.createClass({
         onClose={() => console.log('===close') }
         scroll={event => this.allowScroll(event)}>
         <TouchableOpacity style={styles.btn}
-                onPress={() => _navigator.push({title:'DetailPlanView',id:'detailplan',params:{date:rowData.day}})}>
+                onPress={() => _navigator.push({title:'TDetailPlanView',id:'Tdetailplan',params:{date:rowData.day,trainee_name:this.props.trainee_name}})}>
           <View style={styles.li}>
-            <View  style={styles.lidate}><Image  source={require('../img/plan_normal.png') }/><Text>{rowData.day}</Text></View>      
-              <Text style={styles.liText}>Sport:{rowData.text}</Text>            
+                <Text style={styles.liText}>{rowData.item_name}Date: {rowData.day} </Text>    
+                <Text style={styles.liText}>{rowData.item_name}Sportsize: {rowData.text} </Text>
+                <Text style={styles.liText}>{rowData.item_name}Energy: {rowData.energy} </Text>        
           </View>
+
         </TouchableOpacity>
       </Swipeout>
     );
@@ -208,7 +251,7 @@ var PlanView = React.createClass({
            <View style={[styles.Top,styles.Bottomline]}>
             <View style={[styles.Topbar,styles.Left]}>
                 <TouchableOpacity >
-                  <Icon   reverse  name='settings'   color='#38bda0' onPress={() => _navigator.push({title:'CreateplanView',id:'createplan'})} />
+                  <Icon   reverse  name='settings'   color='#38bda0' onPress={() => _navigator.push({title:'TCreateplanView',id:'Tcreateplan'})} />
                  </TouchableOpacity> 
             </View>
             <View style={styles.Topbar}>
@@ -221,12 +264,20 @@ var PlanView = React.createClass({
           </View>  
         </View>
         </View>
+        <View style={[styles.header,styles.Bottomline]}>
+            <Image  source={require('../img/plan_normal.png') }/>
+            <Text>{this.props.trainee_name} </Text>
+          </View>
         <ListView style={styles.listview}
           scrollEnabled={this.state.scrollEnabled}
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
           enableEmptySections={true}
         />    
+        <TouchableOpacity style={styles.bottom}
+             onPress={() => _navigator.jumpBack()}>
+          <Text style={styles.text}>Back</Text>
+        </TouchableOpacity>
       </ScrollView>
     );
   },
@@ -294,5 +345,24 @@ var styles = StyleSheet.create({
     flexDirection:'row',
     alignItems: 'center',
   },
+    header:{
+    flexDirection: 'row',
+    height:50,
+    alignItems: 'center',
+    backgroundColor:'#fff',
+    justifyContent: 'center',
+  },
+   text:{
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#FFF'
+  },
+    bottom:{
+     alignSelf: 'stretch',
+     alignItems: 'center',
+     justifyContent: 'center',
+     backgroundColor: '#2cb395',
+     height: 50,
+  },
 });
-module.exports = PlanView;
+module.exports = TPlanView;

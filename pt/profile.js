@@ -118,6 +118,11 @@ var ProfileView = React.createClass({
                 <ListItem
                   roundAvatar
                   title='Gender'
+                  subtitle={
+                    <View style={styles.subtitleView}>
+                      <Text style={styles.ratingText}>{this.state.description}</Text>
+                    </View>
+                  }
                   avatar={require('../img/gender.png')}
                 />
               </TouchableOpacity>

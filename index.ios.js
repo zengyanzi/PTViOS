@@ -1,50 +1,47 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,ScrollView,View,Text,Image,Navigator,TouchableOpacity,BackAndroid,StyleSheet,AsyncStorage
 } from 'react-native';
+
 var _navigator;
 import InstructwelcomeView from'./in/instructwelcome';
 import InstructregisterView from'./in/instructregister';
 import InstructloginView from'./in/instructlogin';
 import TraineewelcomeView from './pt/traineewelcome';
-import TraineeloginView from './pt/traineelogin';
-import TraineeregisterView from './pt/traineeregister';
+import TraineeloginView from'./pt/traineelogin';
+import TraineeregisterView from'./pt/traineeregister';
 import ThomeView from './pt/Thome';
 import IhomeView from './in/Ihome';
 import DetailPlanView from './pt/detailplan';
+import TDetailPlanView from './in/Tdetailplan';
 import EditPlanView from './pt/editplan';
+import TEditPlanView from './in/Teditplan';
+import TPlanView from './in/Tplan';
+import TRecordView from './in/Trecord';
+import TCreateplanView from './in/Tcreateplan';
 import CreateplanView from './pt/createplan';
 import PlanInfoView from './pt/planinfo';
 import EditRecordView from './pt/editrecord';
 import DetailRecordView from './pt/detailrecord';
 import ChartView from './pt/chart';
 import AdditemtodayView from'./pt/additemtoday';
+import TAdditemtodayView from'./in/Tadditemtoday';
 import AddrecordtodayView from'./pt/addrecordtoday';
-import URLnetowrk from './pub/network';
-import NewitemView from './pt/newitem';
 import ProfileModifyView from './pt/profilemodify';
+import IProfileModifyView from './in/iprofilemodify';
 import EmailModifyView from './pt/emailmodify';
+import URLnetowrk from './pub/network';
 import PhoneModifyView from './pt/phonemodify';
 import PasswordModifyView from './pt/passwordmodify';
-import GenderModifyView from './pt/gendermodify';
-import HModifyView from './pt/hmodify';
-import BirthModifyView from './pt/birthmodify';
-import IwView from './pt/iwmodify';
-import TwView from './pt/twmodify';
-import DetailGymView from './pub/detailgym';
-import Gymcreate from './pub/gymcreate.js';
 import IPhoneModifyView from './in/iphonemodify';
 import IPasswordModifyView from './in/ipasswordmodify';
 import IGenderModifyView from './in/igendermodify';
 import IBirthModifyView from './in/ibirthmodify';
+import IwView from './in/iwmodify';
+import NewitemView from './pt/newitem';
 import Description from './in/description';
-import IProfileModifyView from './in/iprofilemodify';
+import DetailGymView from './pub/detailgym';
+import Gymcreate from './pub/gymcreate';
 import SearchTrainee from './in/searchtrainee';
 import SearchTrainer from './pt/searchtrainer';
 import GuideView from './Guide';
@@ -205,6 +202,16 @@ export default class ptvios extends React.Component {
         <PlanView {...route.params} navigator={navigator} route={route}/>
       );
     }
+    if(route.id === 'Tplan'){
+      return (
+        <TPlanView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'Trecord'){
+      return (
+        <TRecordView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
     if(route.id === 'Thome'){
       return (
         <ThomeView {...route.params} navigator={navigator} route={route}/>
@@ -220,14 +227,29 @@ export default class ptvios extends React.Component {
         <DetailPlanView {...route.params} navigator={navigator} route={route}/>
       );
     }
+    if(route.id === 'Tdetailplan'){
+      return (
+        <TDetailPlanView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
     if(route.id === 'editplan'){
       return (
         <EditPlanView {...route.params} navigator={navigator} route={route}/>
       );
     }
+    if(route.id === 'Teditplan'){
+      return (
+        <TEditPlanView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
     if(route.id === 'createplan'){
       return (
         <CreateplanView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'Tcreateplan'){
+      return (
+        <TCreateplanView {...route.params} navigator={navigator} route={route}/>
       );
     }
     if(route.id === 'planinfo'){
@@ -253,6 +275,11 @@ export default class ptvios extends React.Component {
     if(route.id === 'additemtoday'){
       return (
         <AdditemtodayView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'Tadditemtoday'){
+      return (
+        <TAdditemtodayView {...route.params} navigator={navigator} route={route}/>
       );
     }
    if(route.id === 'addrecordtoday'){
@@ -347,7 +374,6 @@ export default class ptvios extends React.Component {
       );
     }
   }
-
  render(){
     var renderScene = this.renderSceneAndroid;
     var configureScence = this.configureScenceAndroid;

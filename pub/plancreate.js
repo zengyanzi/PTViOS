@@ -4,6 +4,8 @@ import {
   View,
   Text,
   StyleSheet,
+  ViewPagerAndroid,
+  BackAndroid,
   ScrollView,
   Navigator,
   TextInput,
@@ -14,38 +16,39 @@ import {
   Alert,
 } from 'react-native';
 import Dimensions from 'Dimensions';
-import URLnetowrk from '../pub/network';
 import Swipeout from 'react-native-swipeout';
+import URLnetowrk from './network';
 var screenW = Dimensions.get('window').width;
+BackAndroid.addEventListener('hardwareBackPress', function() {
+  if(_navigator == null){
+    return false;
+  }
+  if(_navigator.getCurrentRoutes().length === 1){
+    return false;
+  }
+  _navigator.pop();
+  return true;
+});
+
 var _navigator ;
-var btnsDefault = [ { text: 'Button' } ];
-  var detailrows = [
-  {
-    rowID:'1',
-    Calories :"957",
-    text: "Full Body Workout",
-    autoClose: true,
-  }, {
-    rowID:'2',
-    Calories :"1457",
-    text: "Strength,Shape,Tone",
-    autoClose: true,
-  }, {
-    rowID:'3',
-    Calories :"1657",
-    text: "Mixed Cadio",
-    autoClose: true,
-  }, {
-    rowID:'4',
-    Calories :"1257",
-    text: "Tone Shape",
-  },
-   {
-    rowID:'5',
-    Calories :"1257",
-    text: "Tone Shape",
-  },
-];
+var detailrows = [
+    {
+      rowID:'1',
+      Calories :"957",
+      text: "Full Body Workout",
+      autoClose: true,
+    }, {
+      rowID:'2',
+      Calories :"1457",
+      text: "Strength,Shape,Tone",
+      autoClose: true,
+    }, {
+      rowID:'3',
+      Calories :"1657",
+      text: "Mixed Cadio",
+      autoClose: true,
+    }
+  ];
 var PlanCreateView = React.createClass({
   getInitialState: function(){
     _navigator = this.props.navigator;
@@ -63,7 +66,7 @@ var PlanCreateView = React.createClass({
       planid:this.state.planid
     };
   },
-//get the option 
+  //get the option 
   componentWillMount() {
     let _that=this;
     var url = URLnetowrk+'optionplan.action';
@@ -73,7 +76,7 @@ var PlanCreateView = React.createClass({
     }).then(function(res) { 
       console.log(res["data"])
       if (res["data"]!=null) {
-       //get the sport item name from the database
+        //get the sport item name from the database
         _that.setState({
           dataSource: ds.cloneWithRows(res["data"]),
           detailrows:res["data"]
@@ -81,21 +84,22 @@ var PlanCreateView = React.createClass({
       }else{
         Alert.alert('Fail to display','Please check your data'); 
       } 
-    });
+   });
   },
-// set scrolling to true/false
+//  set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });
   },
   //  set active swipeout item
   handleSwipeout(sectionID,rowID) {
-    for (var i = 0; i < this.state.detailrows.length; i++) {     
+    for (var i = 0; i < this.state.detailrows.length; i++) {
+      
       if (i != rowID) {
         this.state.detailrows[i].active = false;
       }
       else {
         this.state.detailrows[i].active = true;
-      }
+      } 
     }
     this.updateDataSource(this.state.detailrows);
   },
@@ -104,16 +108,22 @@ var PlanCreateView = React.createClass({
       dataSource: this.state.dataSource.cloneWithRows(data),
     });
   },
-
+  updateDataSource(data) {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(data),
+    });
+  },
   renderRow(rowData: string, sectionID: number, rowID: number,) {
-    var btnsTypes = [
-      { text: 'Detail', onPress: function(){ _navigator.push({
-                title:'PlanInfoView',
-                id:'planinfo',
-                params:{plantitle:rowData.title,
-                  planid:rowData.id
-                }
-              })},type: 'primary',},          
+      var btnsTypes = [
+        { text: 'Detail', onPress: function(){ 
+          _navigator.push({
+            title:'PlanInfoView',
+            id:'planinfo',
+            params:{
+              plantitle:rowData.title,
+              planid:rowData.id
+            }
+          })},type: 'primary',},      
       ];
     return (
       <Swipeout
@@ -123,33 +133,34 @@ var PlanCreateView = React.createClass({
         sectionID={sectionID}
         autoClose={rowData.autoClose}
         backgroundColor='transparent'
-        close={!rowData.active}
+        onClose={() => console.log('===close') }
         onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
         scroll={event => this.allowScroll(event)}>
-         <TouchableHighlight style={styles.li} activeOpacity={0.5} underlayColor = '#2cb395'  onPress={() =>this.setState({planid:rowData.id})}>      
-            <Text style={styles.liText}>Plan NO: {rowData.id} {rowData.title}</Text>             
-        </TouchableHighlight >
+          <TouchableHighlight style={styles.li} activeOpacity={0.5} underlayColor = '#2cb395'  onPress={() =>this.setState({planid:rowData.id})}>
+            <Text style={styles.liText}>Plan NO: {rowData.id} {rowData.title}</Text>        
+          </TouchableHighlight >
       </Swipeout>
     );
   },
-render: function(){
-  return(
-     <ScrollView 
-        contentContainerStyle={{flex:1}}
-        keyboardDismissMode='on-drag'
-        keyboardShouldPersistTaps="never">
-      <View style={styles.maincontain}>
-        <Text style={styles.text}>Your Plan is NO: {this.state.planid}</Text>
-        <ListView style={styles.listview}
-          scrollEnabled={this.state.scrollEnabled}
-          dataSource={this.state.dataSource}
-          initialListSize={6}
-          renderRow={this.renderRow}
+
+  render: function(){
+    return(
+      <ScrollView 
+          contentContainerStyle={{flex:1}}
+          keyboardDismissMode='on-drag'
+          keyboardShouldPersistTaps='never'>
+        <View style={styles.maincontain}>
+          <Text style={styles.text}>Your Plan is NO: {this.state.planid}</Text>
+          <ListView style={styles.listview}
+            scrollEnabled={this.state.scrollEnabled}
+            dataSource={this.state.dataSource}
+            initialListSize={6}
+            renderRow={this.renderRow}
           />
-      </View>
-    </ScrollView>
-  );
-}, 
+        </View>
+      </ScrollView>
+    );
+  },
   componentDidUpdate() {
     var planid=this.state.planid.toString();
     AsyncStorage.setItem("planid",planid);
@@ -172,11 +183,9 @@ var styles = StyleSheet.create({
     borderBottomWidth:2,
     borderColor:'gray'
   },
-
   Topbar:{
     flex:1,
     alignItems: 'center',
-
   },
   Left:{
     position: 'absolute', 
@@ -193,18 +202,14 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#38bda0',
     flexDirection:'column',
-
   },
   header:{
-
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#fff',
     justifyContent: 'center',
-
   },
-
   listview: {
     flex: 1,
   },

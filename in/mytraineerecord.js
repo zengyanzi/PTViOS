@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import {
   Image,
@@ -69,39 +68,37 @@ var MyTraineeRecordView = React.createClass({
       scrollEnabled: true,
     };
   },
-  // componentWillMount() {
-  //   let _that=this;
-  //   AsyncStorage.getItem('userid',(err, result) => {
-  //     console.log(result);
-  //     function format (d) {
-  //       return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-  //     }
-  //     var today =new Date();
-  //     var end = format(today);
-  //     var day1=new Date(today.getTime() - (1000* 60 * 60 * 24)*6);
-  //     var start=format(day1);
-  //     var trainee_id=result;
-  //     var day=this.props.date;
-  //     var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-  //     var url = URLnetowrk+'myrecord.action';
-  //     // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-  //     url += '?trainee_id='+trainee_id+'&start='+start+'&end='+end;
-  //     console.log(url);
-  //     fetch(url).then(function(response) {  
-  //       return response.json();
-  //     }).then(function(res) {
-  //       console.log(res);        
-  //       if (res["data"]!=null) { 
-  //         _that.setState({
-  //         dataSource: ds.cloneWithRows(res["data"]),
-  //         rows:res["data"]
-  //       })
-  //       }else{
-  //         Alert.alert('Fail to display','Please check your data'); 
-  //       }
-  //    });      
-  //   });  
-  // },
+  componentWillMount() {
+    let _that=this;
+     AsyncStorage.getItem('instructorid',(err,result)=>{
+      var instructor_id=result;
+      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+      var url = URLnetowrk+'instructor/find_mapping.action';// load gym list
+      url+= '?instructor_id='+instructor_id;
+      console.log(url);
+      fetch(url).then(function(response) {  
+         return response.json();
+       }).then(function(res) {
+         console.log(res);
+          var arry=[];
+          var mapresult=res.data;
+          if (mapresult!=null) {
+            console.log(mapresult);
+            for (var i = 0; i < mapresult.length; i++) {
+              if (mapresult[i].status==22) {
+                arry.push(mapresult[i]);
+              };
+            };
+            _that.setState({
+              dataSource: ds.cloneWithRows(arry),
+              rows:arry
+            });
+           }else{
+            Alert.alert('Fail to display','Please check your data'); 
+           }    
+       }); 
+      });
+   },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });
@@ -139,13 +136,13 @@ var MyTraineeRecordView = React.createClass({
         onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
         scroll={event => this.allowScroll(event)}>
         <TouchableOpacity style={styles.btn}
-                onPress={() => _navigator.push({title:'DetailRecordView',id:'detailrecord',params:{date:rowData.day}})}>
+                onPress={() => _navigator.push({title:'TRecordView',id:'Trecord',params:{trainee_id:rowData.trainee_id,trainee_name:rowData.name}})}>
           <View style={styles.li}>
             <View  style={styles.lidate}>
               <Image  source={require('../img/profile_normal.png') }/>
               <Text>{rowData.day}   {rowData.name}</Text>
             </View>            
-            <Text style={styles.liText}>Sports: {rowData.text}</Text>           
+            <Text style={styles.liText}>Click to check the record</Text>           
           </View>
         </TouchableOpacity>
       </Swipeout>
@@ -158,21 +155,7 @@ var MyTraineeRecordView = React.createClass({
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps='never'>
         <View style={[styles.Top,styles.Bottomline]}>
-          <View style={[styles.Topbar,styles.Left]}>
-              <TouchableOpacity 
-                  onPress={() => _navigator.push({title:'AddrecordtodayView',id:'addrecordtoday'})}>
-                <Image source={require('../img/add_pressed.png') }/>
-               </TouchableOpacity> 
-          </View>
-          <View style={styles.Topbar}>
-            <Image source={require('../img/ptv_sized.png') }/>
-          </View>
-          <View style={[styles.Topbar,styles.Right]}>
-          <TouchableOpacity 
-                  onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
-            <Image source={require('../img/chart-pressed.png') }/>
-          </TouchableOpacity> 
-          </View>             
+          
         </View>
         <ListView style={styles.listview}
           scrollEnabled={this.state.scrollEnabled}

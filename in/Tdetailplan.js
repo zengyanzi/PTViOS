@@ -16,10 +16,9 @@ import {
   Alert
 } from 'react-native';
 import Dimensions from 'Dimensions';
+import { Icon } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
-import Topview from './top.js';
-import BottomView from './bottom.js'
-import URLnetowrk from './network';
+import URLnetowrk from '../pub/network';
 var screenW = Dimensions.get('window').width;
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
@@ -95,18 +94,18 @@ var TDetailPlanView = React.createClass({
     this.setState({ scrollEnabled: scrollEnabled });
   },
   //  set active swipeout item
-  handleSwipeout(sectionID,rowID) {
-    for (var i = 0; i < this.state.detailrows.length; i++) {
+  // handleSwipeout(sectionID,rowID) {
+  //   for (var i = 0; i < this.state.detailrows.length; i++) {
       
-      if (i != rowID){
-        this.state.detailrows[i].active = false;
-      } 
-      else{
-        this.state.detailrows[i].active = true;
-      } 
-    }
-    this.updateDataSource(this.state.detailrows);
-  },
+  //     if (i != rowID){
+  //       this.state.detailrows[i].active = false;
+  //     } 
+  //     else{
+  //       this.state.detailrows[i].active = true;
+  //     } 
+  //   }
+  //   this.updateDataSource(this.state.detailrows);
+  // },
   updateDataSource(data) {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(data),
@@ -178,8 +177,8 @@ var TDetailPlanView = React.createClass({
   renderRow(rowData: string, sectionID: number, rowID: number) {
     var btnsTypes = [
       { text: 'Edit', onPress: function(){ _navigator.push({
-                title:'EditplanView',
-                id:'editplan',
+                title:'TEditplanView',
+                id:'Teditplan',
                 params:{date:rowData.day,
                   itemname:rowData.item_name,
                   dayplan_id:rowData.id
@@ -196,8 +195,13 @@ var TDetailPlanView = React.createClass({
         sectionID={sectionID}
         autoClose={rowData.autoClose}
         backgroundColor={rowData.backgroundColor}
-        close={!rowData.active}
-        onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
+        onOpen={(sectionID, rowID) => {
+          this.setState({
+            sectionID,
+            rowID,
+          })
+        }}
+        onClose={() => console.log('===close') }
         scroll={event => this.allowScroll(event)}>
         <View style={styles.li}>
               <Text style={styles.liText}>{rowData.item_name}Sportsize: {rowData.sportsize} </Text>        
@@ -212,12 +216,25 @@ var TDetailPlanView = React.createClass({
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps='never'>
         <View style={styles.maincontain}>
-          <View>
-            <Topview {...this.props}/>
-          </View>
+            <View style={[styles.Top,styles.Bottomline]}>
+              <View style={[styles.Topbar,styles.Left]}>
+                <TouchableOpacity >
+                  <Icon   reverse  name='settings'   color='#38bda0' onPress={() => _navigator.push({title:'TCreateplanView',id:'Tcreateplan',params:{trainee_id:this.props.trainee_id}})} />
+                </TouchableOpacity> 
+              </View>
+              <View style={styles.Topbar}>
+                <Image source={require('../img/ptv_sized.png') }/>
+              </View>
+              <View style={[styles.Topbar,styles.Right]}>
+                <TouchableOpacity 
+                    onPress={() => _navigator.push({title:'TAdditemtoday',id:'Tadditemtoday',params:{trainee_id:this.props.trainee_id}})}>
+                  <Image source={require('../img/add_pressed.png') }/>
+                </TouchableOpacity> 
+              </View>
+            </View>  
           <View style={[styles.header,styles.Bottomline]}>
-            <Image  source={require('../../img/plan_normal.png') }/>
-            <Text>{this.state.day} </Text>
+            <Image  source={require('../img/plan_normal.png') }/>
+            <Text>{this.props.trainee_name}   {this.state.day} </Text>
           </View>
           <ListView style={styles.listview}
             scrollEnabled={this.state.scrollEnabled}
@@ -225,9 +242,11 @@ var TDetailPlanView = React.createClass({
             enableEmptySections={true}
             renderRow={this.renderRow}
             />
-          <View>
-            <BottomView {...this.props}/>
-          </View>     
+        <TouchableOpacity style={styles.bottom}
+             onPress={() => _navigator.jumpBack()}>
+          <Text style={styles.text}>Back</Text>
+        </TouchableOpacity>
+
         </View>
       </ScrollView>
     );
@@ -240,12 +259,12 @@ var styles = StyleSheet.create({
     backgroundColor: '#38bda0',
     justifyContent: 'center',
   },
-  Top:{
+   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-    justifyContent: 'center',
+     justifyContent: 'space-between',
   },
   Bottomline:{
     borderBottomWidth:2,
@@ -253,16 +272,15 @@ var styles = StyleSheet.create({
   },
 
   Topbar:{
-    flex:1,
-    alignItems: 'center',
+    flex:2,
+    flexDirection: 'row',
+
   },
-  Left:{
-    position: 'absolute', 
-    top: 5, 
-    left: 5
+   Left:{
+    flexDirection: 'row',
   },
   Right:{
-    position: 'absolute', 
+ position: 'absolute', 
     top: 5, 
     right: 5,
   },
@@ -271,13 +289,7 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#38bda0',
     flexDirection:'column',
-  },
-  header:{
-    flexDirection: 'row',
-    height:50,
-    alignItems: 'center',
-    backgroundColor:'#fff',
-    justifyContent: 'center',
+
   },
   listview: {
     flex: 1,
@@ -289,6 +301,7 @@ var styles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 16,
     paddingTop: 14,
+    height:120,
     paddingBottom: 16,
   },
   liContainer: {
@@ -296,8 +309,31 @@ var styles = StyleSheet.create({
   },
   liText: {
     color: '#333',
-    fontSize: 16,
+    fontSize: 18,
+  },
+  lidate:{
+    flex: 1,
+    flexDirection:'row',
+    alignItems: 'center',
+  },
+    header:{
+    flexDirection: 'row',
     height:50,
+    alignItems: 'center',
+    backgroundColor:'#fff',
+    justifyContent: 'center',
+  },
+   text:{
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#FFF'
+  },
+    bottom:{
+     alignSelf: 'stretch',
+     alignItems: 'center',
+     justifyContent: 'center',
+     backgroundColor: '#2cb395',
+     height: 50,
   },
 });
 module.exports = TDetailPlanView;

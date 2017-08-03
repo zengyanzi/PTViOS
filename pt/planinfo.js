@@ -139,12 +139,6 @@ var PlanInfoView = React.createClass({
       </Swipeout>
     );
   },
-  _editplan:function(){
-     _navigator.push({
-      title:'TraineeloinView',
-      id:'traineelogin'
-    })
-   },
   render: function(){
     return(
       <ScrollView 

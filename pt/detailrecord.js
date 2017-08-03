@@ -110,7 +110,6 @@ var DetailRecordView = React.createClass({
             itemname:rowData.itemname
           }
         })},type: 'primary',},
-        { text: 'Delete',onPress: () => { this.delete(rowData) },type: 'delete'},
        ];
     return (
       <Swipeout
@@ -129,12 +128,6 @@ var DetailRecordView = React.createClass({
       </Swipeout>
     );
   },
-_editplan:function(){
-     _navigator.push({
-      title:'TraineeloinView',
-      id:'traineelogin'
-    })
-   },
   render: function(){
     return(
       <ScrollView 
