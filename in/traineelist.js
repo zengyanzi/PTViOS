@@ -126,7 +126,7 @@ var TrainneelistView = React.createClass({
        <ScrollView 
           contentContainerStyle={{flex:1}}
           keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps="never">
+          keyboardShouldPersistTaps="always">
           <ListView style={styles.listview}
             scrollEnabled={this.state.scrollEnabled}
             dataSource={this.state.dataSource}

@@ -66,7 +66,7 @@ var TraineeloginView = React.createClass({
       <ScrollView 
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
-        keyboardShouldPersistTaps="never"
+        keyboardShouldPersistTaps="always"
       >  
         <View style={styles.container}>
           <View style={styles.Top}>

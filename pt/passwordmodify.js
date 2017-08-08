@@ -99,7 +99,7 @@ var PasswordModifyView = React.createClass({
        <ScrollView 
           contentContainerStyle={{flex:1}}
           keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps="never">
+          keyboardShouldPersistTaps="always">
           <View style={styles.maincontain}>
             <View style={[styles.Top,styles.Bottomline]}>      
               <View style={styles.Topbar}>

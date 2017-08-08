@@ -152,7 +152,7 @@ var MytraineePlanView = React.createClass({
        <ScrollView 
           contentContainerStyle={{flex:1}}
           keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps='never'>
+          keyboardShouldPersistTaps='always'>
           <View style={[styles.Top,styles.Bottomline]}>
           </View>            
           <ListView style={styles.listview}

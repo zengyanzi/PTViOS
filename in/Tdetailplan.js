@@ -148,7 +148,6 @@ var TDetailPlanView = React.createClass({
     },
   submitrecord:function(rowData){
     let _that=this;
-    console.log(result);
     var trainee_id=this.props.trainee_id;
     var day =rowData.day;
     var item_id=rowData.item_id;
@@ -206,7 +205,7 @@ var TDetailPlanView = React.createClass({
        <ScrollView 
           contentContainerStyle={{flex:1}}
           keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps='never'>
+          keyboardShouldPersistTaps="always">
         <View style={styles.maincontain}>
             <View style={[styles.Top,styles.Bottomline]}>
               <View style={[styles.Topbar,styles.Left]}>
