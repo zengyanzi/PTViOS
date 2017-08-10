@@ -50,7 +50,7 @@ var TwView = React.createClass({
     var weight=this.state.weight;
     console.log(this.state.weight);
     var url = URLnetowrk+'modifytarget.action'; // modify the height
-    url+= '?weight='+weight;
+    url+= '?target='+weight;
     console.log(url);
     fetch(url).then(function(response) {  
       return response.json();
