@@ -33,12 +33,20 @@ var ProfileView = React.createClass({
     this.state = {
       email:'jenny@gmail.com',
       bmi:'16',
+      gender:'',
+      birthday:'',
+      height:'',
+      target_weight:'',
       isOpen: false,
       isDisabled: false,
       swipeToClose: true    };
     return {      
       email:this.state.email,
       bmi:this.state.bmi,
+      gender:this.state.gender,
+      height:this.state.height,
+      birthday:this.state.birthday,
+      target_weight:this.state.target_weight,
       isOpen: false,
       isDisabled: false,
       swipeToClose: true,
@@ -70,7 +78,7 @@ var ProfileView = React.createClass({
       console.log(result);   
     });
   },
-  componentWillMount() {
+  componentDidMount() {
     let _that=this;
     AsyncStorage.getItem('email',(err,result)=>{
        email=result;
@@ -83,6 +91,30 @@ var ProfileView = React.createClass({
        console.log(bmi);
        _that.setState({
           bmi:bmi
+       })
+    })
+    AsyncStorage.getItem('gender',(err,result)=>{
+      gender=result;
+      _that.setState({
+        gender:gender
+      })
+    })
+    AsyncStorage.getItem('birthday',(err,result)=>{
+      birthday=result;
+      _that.setState({
+        birthday:birthday
+      })
+    })
+    AsyncStorage.getItem('height',(err,result)=>{
+      height=result;
+      _that.setState({
+        height:height
+      })
+    })
+    AsyncStorage.getItem('target_weight',(err,result)=>{
+      target_weight=parseFloat(result).toFixed(2);
+             _that.setState({
+          target_weight:target_weight
        })
     })
   },
@@ -118,9 +150,9 @@ var ProfileView = React.createClass({
                 <ListItem
                   roundAvatar
                   title='Gender'
-                  subtitle={
+                   subtitle={
                     <View style={styles.subtitleView}>
-                      <Text style={styles.ratingText}>{this.state.description}</Text>
+                      <Text style={styles.ratingText}>{this.state.gender}</Text>
                     </View>
                   }
                   avatar={require('../img/gender.png')}
@@ -130,6 +162,11 @@ var ProfileView = React.createClass({
                 <ListItem
                   roundAvatar
                   title='Birthday'
+                   subtitle={
+                    <View style={styles.subtitleView}>
+                      <Text style={styles.ratingText}>{this.state.birthday}</Text>
+                    </View>
+                  }
                   avatar={require('../img/plan_normal.png')}
                 /> 
               </TouchableOpacity>
@@ -137,6 +174,11 @@ var ProfileView = React.createClass({
                 <ListItem
                     roundAvatar
                     title='Height'
+                   subtitle={
+                    <View style={styles.subtitleView}>
+                      <Text style={styles.ratingText}>{this.state.height}</Text>
+                    </View>
+                  }
                     avatar={require('../img/height.png')}
                   />
               </TouchableOpacity>
@@ -144,6 +186,7 @@ var ProfileView = React.createClass({
                 <ListItem
                     roundAvatar
                     title='Initial Weight'
+
                     avatar={require('../img/weight.png')}
                   />
               </TouchableOpacity>
@@ -151,6 +194,11 @@ var ProfileView = React.createClass({
                 <ListItem
                     roundAvatar
                     title='Target Weight'
+                   subtitle={
+                    <View style={styles.subtitleView}>
+                      <Text style={styles.ratingText}>{this.state.target_weight}</Text>
+                    </View>
+                  }
                     avatar={require('../img/target.png')}
                   />
               </TouchableOpacity>
@@ -165,6 +213,7 @@ var ProfileView = React.createClass({
                     avatar={require('../img/Heart.png')}
                   />
               </List>         
+        
             <View>
               <TouchableOpacity style={styles.btn}
               onPress={this._logout}>

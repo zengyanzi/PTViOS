@@ -57,6 +57,7 @@ var TwView = React.createClass({
     }).then(function(res) {
       if (res["data"]!=null) {
         console.log(res);
+          AsyncStorage.setItem("target_weight",weight); 
         _navigator.push({
           title:'ThomeView',
           id:'Thome',

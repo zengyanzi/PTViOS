@@ -49,8 +49,22 @@ var TraineeloginView = React.createClass({
         if (res["data"]!=null) {
           AsyncStorage.setItem("email",email);
           AsyncStorage.setItem("password",password);
+          AsyncStorage.setItem("name",res["data"]["name"]);
+          AsyncStorage.setItem("surname",res["data"]["surname"]);
+          var phone=res['data']['phone'].toString();
+          AsyncStorage.setItem("phone",phone);
+          AsyncStorage.setItem("gender",res["data"]["gender"]);
+          AsyncStorage.setItem("birthday",res["data"]["birthday"]);
+          var height=res['data']['height'].toString();
+          AsyncStorage.setItem("height",height);
+          var initial_weight=res['data']['initial_weight'].toString();
+          AsyncStorage.setItem("initial_weight",initial_weight); 
+          var target_weight=res['data']['target_weight'].toString();
+          AsyncStorage.setItem("target_weight",target_weight);             
           var userid=res['data']['id'].toString();
           AsyncStorage.setItem('userid',userid);
+          var bmi=res['data']['bmi'].toString();
+          AsyncStorage.setItem('bmi',bmi);
           console.log(userid);
           _navigator.push({
             title:'ThomeView',

@@ -42,6 +42,7 @@ var GenderModifyView = React.createClass({
     }).then(function(res) {
       if (res["data"]!=null) {
           console.log(res);
+          AsyncStorage.setItem("gender",gender);
           _navigator.push({
             title:'ThomeView',
             id:'Thome',
