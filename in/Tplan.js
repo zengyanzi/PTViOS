@@ -57,157 +57,101 @@ var TPlanView = React.createClass({
   },
   componentWillMount() {
     let _that=this;
-    var trainee_id=this.props.trainee_id;
-    var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-    function format (d) {
-      return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-    }
-    var today =new Date();
-    var start = format(today);
-    var day1=new Date(today.getTime() + (1000* 60 * 60 * 24)*6);
-    var end=format(day1);
-    var day=this.props.date;
-    var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-    var url = URLnetowrk+'myplan.action';
-    // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-    url += '?trainee_id='+trainee_id+'&start='+start+'&end='+end;
-    console.log(url);
-    fetch(url).then(function(response) {  
-      return response.json();
-    }).then(function(res) {
-      console.log(res); 
-      if (res["data"]!=null) {        
-        _that.setState({
-          dataSource: ds.cloneWithRows(res["data"]),
-          detailrows:res["data"]
-        })
-      }else{
-        Alert.alert('Fail to display','Please check your data'); 
-      }  
-    });       
+      var trainee_id=this.props.trainee_id;
+      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+      function format (d) {
+        return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+      }
+      var today =new Date();
+      var start = format(today);
+      var day1=new Date(today.getTime() + (1000* 60 * 60 * 24)*6);
+      var end=format(day1);
+      var day=this.props.date;
+      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+      var url = URLnetowrk+'myplan.action';
+      // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+      url += '?trainee_id='+trainee_id+'&start='+start+'&end='+end;
+      console.log(url);
+      fetch(url).then(function(response) {  
+        return response.json();
+      }).then(function(res) {
+        console.log(res); 
+        if (res["data"]!=null) {        
+          _that.setState({
+            dataSource: ds.cloneWithRows(res["data"]),
+            detailrows:res["data"]
+          })
+        }else{
+          Alert.alert('Fail to display','Please check your data'); 
+        }  
+      });       
+
   },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });
   },
-   // //  set active swipeout item
+  //  set active swipeout item
   // handleSwipeout(sectionID,rowID) {
-  //   for (var i = 0; i < this.state.rows.length; i++) {
+  //   for (var i = 0; i < this.state.detailrows.length; i++) {
+      
   //     if (i != rowID){
-  //       this.state.rows[i].active = false;
+  //       this.state.detailrows[i].active = false;
   //     } 
   //     else{
-  //       this.state.rows[i].active = true;
+  //       this.state.detailrows[i].active = true;
   //     } 
   //   }
-  //   this.updateDataSource(this.state.rows);
+  //   this.updateDataSource(this.state.detailrows);
   // },
   updateDataSource(data) {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(data),
     });
   },
-  submitrecord:function(rowData){
-    let _that=this;
-    var trainee_id=this.props.trainee_id;
-    var day =rowData.day;
-    var item_id=rowData.item_id;
-    var sportsize=rowData.sportsize;
-    var url = URLnetowrk+'submitday.action';
-    url += '?trainee_id='+trainee_id+'&day='+day;
-    console.log(url);
-    fetch(url).then(function(response) {  
-      return response.json();
-    }).then(function(res) {
-      console.log(res);
-      if (res["data"]==true) {
-        Alert.alert('Submit','Successfully!'); 
-        function format (d) {
-          return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-        }
-        var today =new Date();
-        var start = format(today);
-        var day1=new Date(today.getTime() + (1000* 60 * 60 * 24)*6);
-        var end=format(day1);
-        var day=_that.props.date;
-        var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-        var urlrefresh = URLnetowrk+'myplan.action';
-        // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-        urlrefresh += '?trainee_id='+trainee_id+'&start='+start+'&end='+end;
-        console.log(urlrefresh);
-        console.log(rowData.day);
-        fetch(urlrefresh).then(function(response) {  
-          return response.json();
-        }).then(function(res) {
-          var key;
-          if (res["data"]!=null) {
-            for (var i = 0; i < res["data"].length; i++) {
-              for (var j in res["data"][i]) {
-                if (rowData.day == res["data"][i]["day"]) {
-                   key=i
-                };
-              };
-            };
-           console.log(key);
-           res["data"].splice(key,1);
-           console.log(res["data"])
-            _that.setState({
-              dataSource: ds.cloneWithRows(res["data"]),
-              rows:res["data"]
-          });
-          }else{
-            Alert.alert('Fail to display','Please check your data'); 
-          }     
-        })
-      }
-    });
-  },
-  delete:function(rowData){
-    let _that=this;
-    var trainee_id=this.props.trainee_id;
-    var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-    var plan_id =rowData.id;
-    var url = URLnetowrk+'delplan.action';
-    // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-    url += '?trainee_id='+trainee_id+'&plan_id='+plan_id;
-    console.log(url);
-    fetch(url).then(function(response) {  
-        return response.json();
-    }).then(function(res) {
-      console.log(res);        
-      if (res["data"]==true) {
-        var day=_that.props.date;
-        console.log(day);
-        var url = URLnetowrk+'detailplan.action';
-        // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-        url += '?trainee_id='+trainee_id+'&day='+day;
-        console.log(url);
-        fetch(url).then(function(response) {  
-          return response.json();
-        }).then(function(res) {
-          console.log(res);
-          if (res["data"]!=null) {                 
-            _that.setState({
-              dataSource: ds.cloneWithRows(res["data"]),
-              detailrows:res["data"]
-            })
-          }else{
-            Alert.alert('Fail to display','Please check your data'); 
-          }
-         });   
-        }else{
-          Alert.alert('Fail to display','Please check your data'); 
-        }
-      });
-    },
+  // delete:function(rowData){
+  //   let _that=this;
+  //   var trainee_id=this.props.trainee_id;
+  //   var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+  //   var plan_id =rowData.id;
+  //   var url = URLnetowrk+'delplan.action';
+  //   // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+  //   url += '?trainee_id='+trainee_id+'&plan_id='+plan_id;
+  //   console.log(url);
+  //   fetch(url).then(function(response) {  
+  //       return response.json();
+  //   }).then(function(res) {
+  //     console.log(res);        
+  //     if (res["data"]==true) {
+  //       var day=_that.props.date;
+  //       console.log(day);
+  //       var url = URLnetowrk+'detailplan.action';
+  //       // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+  //       url += '?trainee_id='+trainee_id+'&day='+day;
+  //       console.log(url);
+  //       fetch(url).then(function(response) {  
+  //         return response.json();
+  //       }).then(function(res) {
+  //         console.log(res);
+  //         if (res["data"]!=null) {                 
+  //           _that.setState({
+  //             dataSource: ds.cloneWithRows(res["data"]),
+  //             detailrows:res["data"]
+  //           })
+  //         }else{
+  //           Alert.alert('Fail to display','Please check your data'); 
+  //         }
+  //        });   
+  //       }else{
+  //         Alert.alert('Fail to display','Please check your data'); 
+  //       }
+  //     });
+  //   },
+
   renderRow(rowData: string, sectionID: number, rowID: number) {
-      var btnsTypes = [
-        { text: 'Submit',onPress: () => { this.submitrecord(rowData) },type:'secondary'}    
-      ];
     return (
       <Swipeout
         left={rowData.left}
-        right={btnsTypes}
         rowID={rowID}
         sectionID={sectionID}
         autoClose={rowData.autoClose}
@@ -227,7 +171,6 @@ var TPlanView = React.createClass({
                 <Text style={styles.liText}>{rowData.item_name}Sportsize: {rowData.text} </Text>
                 <Text style={styles.liText}>{rowData.item_name}Energy: {rowData.energy} </Text>        
           </View>
-
         </TouchableOpacity>
       </Swipeout>
     );
@@ -242,14 +185,14 @@ var TPlanView = React.createClass({
            <View style={[styles.Top,styles.Bottomline]}>
             <View style={[styles.Topbar,styles.Left]}>
                 <TouchableOpacity >
-                  <Icon   reverse  name='settings'   color='#38bda0' onPress={() => _navigator.push({title:'TCreateplanView',id:'Tcreateplan'})} />
+                  <Icon   reverse  name='settings'   color='#38bda0' onPress={() => _navigator.push({title:'TCreateplanView',id:'Tcreateplan',params:{trainee_id:this.props.trainee_id}})} />
                  </TouchableOpacity> 
             </View>
             <View style={styles.Topbar}>
           </View>    
           <View style={[styles.Topbar,styles.Right]}>
             <TouchableOpacity 
-                    onPress={() => _navigator.push({title:'AdditemtodayView',id:'additemtoday'})}>
+                    onPress={() => _navigator.push({title:'TAdditemtodayView',id:'Tadditemtoday',params:{trainee_id:this.props.trainee_id}})}>
               <Image source={require('../img/add_pressed.png') }/>
             </TouchableOpacity> 
           </View>  

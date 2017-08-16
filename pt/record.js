@@ -162,8 +162,13 @@ delete:function(rowData){
         sectionID={sectionID}
         autoClose={rowData.autoClose}
         backgroundColor={rowData.backgroundColor}
-        close={!rowData.active}
-        onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
+        onOpen={(sectionID, rowID) => {
+          this.setState({
+            sectionID,
+            rowID,
+          })
+        }}
+        onClose={() => console.log('===close') }
         scroll={event => this.allowScroll(event)}>
         <TouchableOpacity style={styles.btn}
                 onPress={() => _navigator.push({title:'DetailRecordView',id:'detailrecord',params:{date:rowData.day}})}>

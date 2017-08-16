@@ -36,40 +36,40 @@ var TAdditemtodayView = React.createClass({
        sportselected:this.state.sportselected,
     };
   },
-  componentWillMount() {
+componentWillMount() {
     let _that=this;
-    AsyncStorage.getItem('userid',(err, result) => {
-      console.log(result);
-      var url = URLnetowrk+'item.action';  
-      fetch(url).then(function(response) {  
-        return response.json();
-      }).then(function(res) {            
-        if (res["data"]!=null) {
+    var url = URLnetowrk+'item.action';  
+    fetch(url).then(function(response) {  
+      return response.json();
+    }).then(function(res) { 
+      console.log(res["data"]);
+      if (res["data"]!=null) {
          //get the sport item name from the database
-          var sportobj=res["data"];
-          var arr=[];
-          for(i in sportobj){  
-            arr.push(sportobj[i]["name"]);
-          }
-          _that.setState({
-            sportname:arr,
-          })
-        }else{
-           Alert.alert('Fail to display','Please check your data'); 
-        }             
-       });       
-    });  
+        var sportobj=res["data"];
+        var arr=new Array();
+        for(i in sportobj){   
+          arr.push(sportobj[i]["name"]);
+        }
+        console.log(arr);
+        _that.setState({
+            sportname:arr
+        })
+      }else{
+        Alert.alert('Fail to display','Please check your data'); 
+      }          
+     });  
   },
-  _submit:function(){
+_submit:function(){
     console.log(this.state.sportselected);
     var itemname=this.state.sportselected;
     var item_id;
     var sportsize=this.state.value;
     var day=this.state.date;
+    var trainee_id=this.props.trainee_id;
+    console.log(trainee_id);
     AsyncStorage.getItem('instructorid',(err, result) => {
       console.log(result);
       var instructor_id=result;
-      var trainee_id=this.props.trainee_id;
       var url = URLnetowrk+'item.action'; // get the item data again 
       fetch(url).then(function(response) {  
          return response.json();
@@ -114,7 +114,8 @@ var TAdditemtodayView = React.createClass({
                   <Image source={require('../img/back.png') }/>
                  </TouchableOpacity> 
             </View>
-            <View style={styles.Topbar}>              
+            <View style={styles.Topbar}>
+              <Image source={require('../img/ptv_sized.png') }/>
             </View>
             <View style={[styles.Topbar,styles.Right]}>             
             </View>

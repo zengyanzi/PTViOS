@@ -209,18 +209,8 @@ var TDetailPlanView = React.createClass({
         <View style={styles.maincontain}>
             <View style={[styles.Top,styles.Bottomline]}>
               <View style={[styles.Topbar,styles.Left]}>
-                <TouchableOpacity >
-                  <Icon   reverse  name='settings'   color='#38bda0' onPress={() => _navigator.push({title:'TCreateplanView',id:'Tcreateplan',params:{trainee_id:this.props.trainee_id}})} />
-                </TouchableOpacity> 
-              </View>
-              <View style={styles.Topbar}>
-                <Image source={require('../img/ptv_sized.png') }/>
               </View>
               <View style={[styles.Topbar,styles.Right]}>
-                <TouchableOpacity 
-                    onPress={() => _navigator.push({title:'TAdditemtoday',id:'Tadditemtoday',params:{trainee_id:this.props.trainee_id}})}>
-                  <Image source={require('../img/add_pressed.png') }/>
-                </TouchableOpacity> 
               </View>
             </View>  
           <View style={[styles.header,styles.Bottomline]}>

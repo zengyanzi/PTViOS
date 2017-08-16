@@ -47,7 +47,7 @@ var TEditPlanView = React.createClass({
      sportdate:this.state.sportdate,
     };
   }, 
-  //save the modify item to database
+   //save the modify item to database
   _save:function(){
     console.log(this.state.sportselected);
     var itemname=this.state.sportselected;
@@ -55,9 +55,6 @@ var TEditPlanView = React.createClass({
     var sportsize=this.state.value;
     var day=this.props.date;
     var dayplan_id=this.props.dayplan_id;
-    AsyncStorage.getItem('userid',(err, result) => {
-      console.log(result);
-    var trainee_id=result;
     var url = URLnetowrk+'item.action'; // get the item data again 
     fetch(url).then(function(response) {  
       return response.json();
@@ -86,7 +83,6 @@ var TEditPlanView = React.createClass({
         Alert.alert('Fail to display','Please check your data'); 
       }         
     });
-  });
  },
  render: function(){
   return(
