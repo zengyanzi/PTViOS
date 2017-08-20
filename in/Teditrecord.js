@@ -30,7 +30,7 @@ BackAndroid.addEventListener('hardwareBackPress', function() {
   return true;
 });
 var _navigator ;
-var EditRecordView = React.createClass({
+var TEditRecordView = React.createClass({
   getInitialState: function(){
     _navigator = this.props.navigator;
     function floor (d) {
@@ -46,31 +46,29 @@ var EditRecordView = React.createClass({
     };
   },
   //get the item 
-  componentWillMount() {
+/*  componentWillMount() {
     let _that=this;
-    AsyncStorage.getItem('userid',(err, result) => {
-      console.log(result);
-      var url = URLnetowrk+'item.action';  
-      fetch(url).then(function(response) {  
-        return response.json();
-      }).then(function(res) {          
-        if (res["data"]!=null) {
-          //get the sport item name from the database
-          var sportobj=res["data"];
-          var arr=[];
-          for(i in sportobj){               
-              arr.push(sportobj[i]["name"]);
-          }
-          console.log(arr);
-          _that.setState({
-            sportname:arr
-          })
-        }else{
-          Alert.alert('Fail to display','Please check your data'); 
-        }             
-      });      
-    });  
-  },
+    console.log(result);
+    var url = URLnetowrk+'item.action';  
+    fetch(url).then(function(response) {  
+      return response.json();
+    }).then(function(res) {          
+      if (res["data"]!=null) {
+        //get the sport item name from the database
+        var sportobj=res["data"];
+        var arr=[];
+        for(i in sportobj){               
+            arr.push(sportobj[i]["name"]);
+        }
+        console.log(arr);
+        _that.setState({
+          sportname:arr
+        })
+      }else{
+        Alert.alert('Fail to display','Please check your data'); 
+      }             
+    });      
+  },*/
   //save the modify item to database
   _save:function(){
     console.log(this.props.itemname);
@@ -78,38 +76,36 @@ var EditRecordView = React.createClass({
     var item_id;
     var sportsize=this.state.value;
     var day=this.props.date;
-    AsyncStorage.getItem('userid',(err, result) => {
-        console.log(result);
-      var trainee_id=result;
-      var url = URLnetowrk+'item.action'; // get the item data again 
-      fetch(url).then(function(response) {  
-        return response.json();
-      }).then(function(res) {
-        if (res["data"]!=null) {
-        //find the id of selected item
-          for(i in res["data"]){
-            if(itemname==res["data"][i]["name"]){
-               item_id=res["data"][i]["id"];
-            }                 
-          }
-          console.log(item_id);
-          var urlsave=URLnetowrk+'addrecord2day.action'; 
-          urlsave += '?trainee_id='+trainee_id+'&day='+day+'&item_id='+item_id+'&sportsize='+sportsize;
-          console.log(urlsave);
-          fetch(urlsave).then(function(response) {  
-            return response.json();
-          }).then(function(res) {
-            console.log(res);
-            _navigator.push({
-              title:'ThomeView',
-              id:'Thome',                  
-            })
-          });
-       }else{
-         Alert.alert('Fail to display','Please check your data'); 
-       }     
-    });
+    var trainee_id=this.props.trainee_id;
+    var url = URLnetowrk+'item.action'; // get the item data again 
+    fetch(url).then(function(response) {  
+      return response.json();
+    }).then(function(res) {
+      if (res["data"]!=null) {
+      //find the id of selected item
+        for(i in res["data"]){
+          if(itemname==res["data"][i]["name"]){
+             item_id=res["data"][i]["id"];
+          }                 
+        }
+        console.log(item_id);
+        var urlsave=URLnetowrk+'addrecord2day.action'; 
+        urlsave += '?trainee_id='+trainee_id+'&day='+day+'&item_id='+item_id+'&sportsize='+sportsize;
+        console.log(urlsave);
+        fetch(urlsave).then(function(response) {  
+          return response.json();
+        }).then(function(res) {
+          console.log(res);
+          _navigator.push({
+            title:'IhomeView',
+            id:'Ihome',                  
+          })
+        });
+     }else{
+       Alert.alert('Fail to display','Please check your data'); 
+     }     
   });
+
  },
  render: function(){
   return(
@@ -118,22 +114,7 @@ var EditRecordView = React.createClass({
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps='never'>
       <View style={styles.maincontain}>
-        <View style={[styles.Top,styles.Bottomline]}>
-          <View style={[styles.Topbar,styles.Left]}>
-              <TouchableOpacity 
-                  onPress={() => _navigator.push({title:'CreateplanView',id:'createplan'})}>
-                <Image source={require('../../img/setting_normal.png') }/>
-               </TouchableOpacity> 
-          </View>
-          <View style={styles.Topbar}>
-            <Image source={require('../../img/ptv_sized.png') }/>
-          </View>
-          <View style={[styles.Topbar,styles.Right]}>
-            <TouchableOpacity 
-                    onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
-              <Image source={require('../../img/chart-pressed.png') }/>
-            </TouchableOpacity> 
-          </View>         
+        <View style={[styles.Top,styles.Bottomline]}>       
         </View>
         <View>
            <Text style={styles.text}>Sport Date {this.props.date}</Text>
@@ -155,10 +136,14 @@ var EditRecordView = React.createClass({
           <Text style={styles.text}>Value:{this.state.value} </Text>
         </View>
         <View>
-          <TouchableOpacity style={styles.btn}
+          <TouchableOpacity style={styles.bottom}
           onPress={this._save}>
-            <Text style={styles.text}>Save</Text>
+          <Text style={styles.text}>Save</Text>
           </TouchableOpacity>
+        <TouchableOpacity style={styles.bottom}
+             onPress={() => _navigator.jumpBack()}>
+          <Text style={styles.text}>Back</Text>
+        </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -256,6 +241,17 @@ var styles = StyleSheet.create({
      marginTop: 50,
      marginLeft:80,
   },
-
+     text:{
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#FFF'
+  },
+    bottom:{
+     alignSelf: 'stretch',
+     alignItems: 'center',
+     justifyContent: 'center',
+     backgroundColor: '#2cb395',
+     height: 50,
+  },
 });
-module.exports = EditRecordView;
+module.exports = TEditRecordView;

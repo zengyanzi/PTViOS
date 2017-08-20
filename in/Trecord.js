@@ -66,78 +66,71 @@ var TRecordView = React.createClass({
   },
   componentWillMount() {
     let _that=this;
-    AsyncStorage.getItem('userid',(err, result) => {
-      console.log(result);
-      function format (d) {
-        return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+    var trainee_id=this.props.trainee_id;
+    function format (d) {
+      return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+    }
+    var today =new Date();
+    var end = format(today);
+    var day1=new Date(today.getTime() - (1000* 60 * 60 * 24)*6);
+    var start=format(day1);
+    var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+    var url = URLnetowrk+'myrecord.action';
+    // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+    url += '?trainee_id='+trainee_id+'&start='+start+'&end='+end;
+    console.log(url);
+    fetch(url).then(function(response) {  
+      return response.json();
+    }).then(function(res) {
+      console.log(res);        
+      if (res["data"]!=null) { 
+        _that.setState({
+        dataSource: ds.cloneWithRows(res["data"]),
+        rows:res["data"]
+      })
+      }else{
+        Alert.alert('Fail to display','Please check your data'); 
       }
-      var today =new Date();
-      var end = format(today);
-      var day1=new Date(today.getTime() - (1000* 60 * 60 * 24)*6);
-      var start=format(day1);
-      var trainee_id=result;
-      var day=this.props.date;
-      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-      var url = URLnetowrk+'myrecord.action';
-      // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-      url += '?trainee_id='+trainee_id+'&start='+start+'&end='+end;
-      console.log(url);
-      fetch(url).then(function(response) {  
-        return response.json();
-      }).then(function(res) {
-        console.log(res);        
-        if (res["data"]!=null) { 
-          _that.setState({
-          dataSource: ds.cloneWithRows(res["data"]),
-          rows:res["data"]
-        })
-        }else{
-          Alert.alert('Fail to display','Please check your data'); 
-        }
-     });      
-    });  
+   });      
   },
-  delete:function(rowData){
+/*  delete:function(rowData){
     let _that=this;
-    AsyncStorage.getItem('userid',(err, result) => {
-      console.log(result);
-      var trainee_id=result;
-      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-      var plan_id =rowData.id;
-      var url = URLnetowrk+'delplan.action';
-      // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-      url += '?trainee_id='+trainee_id+'&plan_id='+plan_id;
-      console.log(url);
-      fetch(url).then(function(response) {  
+    var trainee_id=this.props.trainee_id;
+    var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+    var plan_id =rowData.id;
+    var url = URLnetowrk+'delplan.action';
+    // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+    url += '?trainee_id='+trainee_id+'&plan_id='+plan_id;
+    console.log(url);
+    fetch(url).then(function(response) {  
+        return response.json();
+    }).then(function(res) {
+      console.log(res);        
+      if (res["data"]==true) {
+        var day=rowData.day;
+        console.log(day);
+        var url = URLnetowrk+'detailplan.action';
+        // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+        url += '?trainee_id='+trainee_id+'&day='+day;
+        console.log(url);
+        fetch(url).then(function(response) {  
           return response.json();
-      }).then(function(res) {
-        console.log(res);        
-        if (res["data"]==true) {
-          var day=_that.props.date;
-          console.log(day);
-          var url = URLnetowrk+'detailplan.action';
-          // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-          url += '?trainee_id='+trainee_id+'&day='+day;
-          console.log(url);
-          fetch(url).then(function(response) {  
-            return response.json();
-          }).then(function(res) {
-            console.log(res);
-            if (res["data"]!=null) {                 
-              _that.setState({
-                dataSource: ds.cloneWithRows(res["data"]),
-                detailrows:res["data"]
-              })
-            }else{
-              Alert.alert('Fail to display','Please check your data'); 
-            }
-           });   
+        }).then(function(res) {
+          console.log(res);
+          if (res["data"]!=null) {                 
+            _that.setState({
+              dataSource: ds.cloneWithRows(res["data"]),
+              detailrows:res["data"]
+            })
           }else{
             Alert.alert('Fail to display','Please check your data'); 
           }
-        });
-      }) 
-    },
+         });   
+        }else{
+          Alert.alert('Fail to display','Please check your data'); 
+        }
+      });
+    },*/
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });
@@ -160,13 +153,12 @@ var TRecordView = React.createClass({
     });
   },
   renderRow(rowData: string, sectionID: number, rowID: number) {
-    var btnsTypes = [
+ /*   var btnsTypes = [
         { text: 'Delete',onPress: () => { this.delete(rowData) },type: 'delete'},
-      ];
+      ];*/
     return (
       <Swipeout
         left={rowData.left}
-        right={btnsTypes}
         rowID={rowID}
         sectionID={sectionID}
         autoClose={rowData.autoClose}
@@ -180,7 +172,7 @@ var TRecordView = React.createClass({
         onClose={() => console.log('===close') }
         scroll={event => this.allowScroll(event)}>
         <TouchableOpacity style={styles.btn}
-                onPress={() => _navigator.push({title:'DetailRecordView',id:'detailrecord',params:{date:rowData.day}})}>
+                onPress={() => _navigator.push({title:'TDetailRecordView',id:'Tdetailrecord',params:{date:rowData.day,trainee_id:this.props.trainee_id,trainee_name:this.props.trainee_name}})}>
           <View style={styles.li}>
             <View  style={styles.lidate}>
               <Image  source={require('../img/plan_normal.png') }/>
@@ -199,28 +191,22 @@ var TRecordView = React.createClass({
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps='never'>
         <View style={[styles.Top,styles.Bottomline]}>
-          <View style={[styles.Topbar,styles.Left]}>
-              <TouchableOpacity 
-                  onPress={() => _navigator.push({title:'AddrecordtodayView',id:'addrecordtoday'})}>
-                <Image source={require('../img/add_pressed.png') }/>
-               </TouchableOpacity> 
-          </View>
-          <View style={styles.Topbar}>
-            <Image source={require('../img/ptv_sized.png') }/>
-          </View>
-          <View style={[styles.Topbar,styles.Right]}>
-          <TouchableOpacity 
-                  onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
-            <Image source={require('../img/chart-pressed.png') }/>
-          </TouchableOpacity> 
-          </View>             
+       
+        </View>
+        <View style={[styles.header,styles.Bottomline]}>
+          <Image  source={require('../img/plan_normal.png') }/>
+          <Text>{this.props.trainee_name}   {this.state.day} </Text>
         </View>
         <ListView style={styles.listview}
           scrollEnabled={this.state.scrollEnabled}
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
           enableEmptySections={true}
-        />       
+        />     
+        <TouchableOpacity style={styles.bottom}
+             onPress={() => _navigator.jumpBack()}>
+          <Text style={styles.text}>Back</Text>
+        </TouchableOpacity>  
     </ScrollView>
     );
   },
@@ -286,6 +272,25 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection:'row',
     alignItems: 'center',
+  },
+   text:{
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#FFF'
+  },
+    bottom:{
+     alignSelf: 'stretch',
+     alignItems: 'center',
+     justifyContent: 'center',
+     backgroundColor: '#2cb395',
+     height: 50,
+  },
+    header:{
+    flexDirection: 'row',
+    height:50,
+    alignItems: 'center',
+    backgroundColor:'#fff',
+    justifyContent: 'center',
   },
 });
 module.exports = TRecordView;

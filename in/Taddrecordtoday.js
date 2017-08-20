@@ -31,7 +31,7 @@ BackAndroid.addEventListener('hardwareBackPress', function() {
   return true;
 });
 var _navigator ;
-var AddrecordtodayView = React.createClass({
+var TAddrecordtodayView = React.createClass({
   getInitialState: function(){
     _navigator = this.props.navigator;
     function floor (d) {
@@ -126,11 +126,11 @@ _submit:function(){
             <View style={[styles.Topbar,styles.Left]}>
               <TouchableOpacity 
                       onPress={() => _navigator.push({title:'ThomeView',id:'Thome'})}>
-                <Image source={require('../../img/back.png') }/>
+                <Image source={require('../img/back.png') }/>
               </TouchableOpacity> 
             </View>
             <View style={styles.Topbar}>
-              <Image source={require('../../img/ptv_sized.png') }/>
+              <Image source={require('../img/ptv_sized.png') }/>
             </View>
             <View style={[styles.Topbar,styles.Right]}>
             </View>
@@ -281,4 +281,4 @@ var styles = StyleSheet.create({
   },
 
 });
-module.exports = AddrecordtodayView;
+module.exports = TAddrecordtodayView;

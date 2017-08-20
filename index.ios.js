@@ -22,11 +22,15 @@ import TCreateplanView from './in/Tcreateplan';
 import CreateplanView from './pt/createplan';
 import PlanInfoView from './pt/planinfo';
 import EditRecordView from './pt/editrecord';
+import TEditRecordView from './in/Teditrecord';
 import DetailRecordView from './pt/detailrecord';
+import TDetailRecordView from './in/Tdetailrecord';
 import ChartView from './pt/chart';
+import TChartView from './in/Tchart';
 import AdditemtodayView from'./pt/additemtoday';
 import TAdditemtodayView from'./in/Tadditemtoday';
 import AddrecordtodayView from'./pt/addrecordtoday';
+import TAddrecordtodayView from'./in/Taddrecordtoday';
 import ProfileModifyView from './pt/profilemodify';
 import IProfileModifyView from './in/iprofilemodify';
 import EmailModifyView from './pt/emailmodify';
@@ -262,14 +266,29 @@ export default class ptvios extends React.Component {
         <EditRecordView {...route.params} navigator={navigator} route={route}/>
       );
     }
+    if(route.id === 'Teditrecord'){
+      return (
+        <TEditRecordView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
     if(route.id === 'detailrecord'){
       return (
         <DetailRecordView {...route.params} navigator={navigator} route={route}/>
       );
     }
+    if(route.id === 'Tdetailrecord'){
+      return (
+        <TDetailRecordView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
     if(route.id === 'chart'){
       return (
         <ChartView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+    if(route.id === 'Tchart'){
+      return (
+        <TChartView {...route.params} navigator={navigator} route={route}/>
       );
     }
     if(route.id === 'additemtoday'){
@@ -285,6 +304,11 @@ export default class ptvios extends React.Component {
    if(route.id === 'addrecordtoday'){
       return (
         <AddrecordtodayView {...route.params} navigator={navigator} route={route}/>
+      );
+    }
+   if(route.id === 'Taddrecordtoday'){
+      return (
+        <TAddrecordtodayView {...route.params} navigator={navigator} route={route}/>
       );
     }
    if(route.id === 'profilemodify'){

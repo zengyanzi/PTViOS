@@ -16,8 +16,6 @@ import {
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import Swipeout from 'react-native-swipeout';
-import Topview from './top.js';
-import BottomView from './bottom.js'
 import URLnetowrk from '../pub/network';
 var screenW = Dimensions.get('window').width;
 BackAndroid.addEventListener('hardwareBackPress', function() {
@@ -51,14 +49,13 @@ var btnsDefault = [ { text: 'Button' } ];
       text: "Bike Fast  3min  Moderate  15  60Sec",
     },
   ];
-var DetailRecordView = React.createClass({
+var TDetailRecordView = React.createClass({
   getInitialState: function(){
     _navigator = this.props.navigator;
     var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
     this.state = {
       dataSource: ds.cloneWithRows(detailrows),
       scrollEnabled: true,
-      day:this.props.date,
     };
     return {
       dataSource: this.state.dataSource,
@@ -67,29 +64,26 @@ var DetailRecordView = React.createClass({
   },
   componentWillMount() {
     let _that=this;
-    AsyncStorage.getItem('userid',(err, result) => {
-      console.log(result);
-      var trainee_id=result;
-      var day=this.props.date;
-      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-      var url = URLnetowrk+'detailrecord.action';
-              // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-      url += '?trainee_id='+trainee_id+'&day='+day;
-      console.log(url);
-      fetch(url).then(function(response) {  
-        return response.json();
-      }).then(function(res) {
-        console.log(res);
-        if (res["data"]!=null) {      
-          _that.setState({
-           dataSource: ds.cloneWithRows(res["data"]),
-           detailrows:res["data"]
-          })
-        }else{
-          Alert.alert('Fail to display','Please check your data'); 
-        }
-      });
-    });   
+    var trainee_id=this.props.trainee_id;
+    var day=this.props.date;
+    var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+    var url = URLnetowrk+'detailrecord.action';
+            // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+    url += '?trainee_id='+trainee_id+'&day='+day;
+    console.log(url);
+    fetch(url).then(function(response) {  
+      return response.json();
+    }).then(function(res) {
+      console.log(res);
+      if (res["data"]!=null) {      
+        _that.setState({
+         dataSource: ds.cloneWithRows(res["data"]),
+         detailrows:res["data"]
+        })
+      }else{
+        Alert.alert('Fail to display','Please check your data'); 
+      }
+    });  
   },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
@@ -115,10 +109,11 @@ var DetailRecordView = React.createClass({
   renderRow(rowData: string, sectionID: number, rowID: number) {
       var btnsTypes = [
         { text: 'Edit', onPress: function(){ _navigator.push({
-                  title:'EditrecordView',
-                  id:'editrecord',
+                  title:'TEditrecordView',
+                  id:'Teditrecord',
                   params:{date:rowData.day,
-                    itemname:rowData.itemname
+                    itemname:rowData.itemname,
+                    trainee_id:rowData.trainee_id
                   }
                 })},type: 'primary',},
           { text: 'Delete',onPress: () => { this.delete(rowData) },type: 'delete'},
@@ -131,8 +126,13 @@ var DetailRecordView = React.createClass({
         sectionID={sectionID}
         autoClose={rowData.autoClose}
         backgroundColor={rowData.backgroundColor}
-        close={!rowData.active}
-        onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
+        onOpen={(sectionID, rowID) => {
+          this.setState({
+            sectionID,
+            rowID,
+          })
+        }}
+        onClose={() => console.log('===close') }
         scroll={event => this.allowScroll(event)}>
         <View style={styles.li}>
               <Text style={styles.liText}>{rowData.itemname}Sportsize: {rowData.sportsize} </Text>        
@@ -156,33 +156,35 @@ _editplan:function(){
           <View style={[styles.Top,styles.Bottomline]}>
             <View style={[styles.Topbar,styles.Left]}>
                 <TouchableOpacity 
-                    onPress={() => _navigator.push({title:'AddrecordtodayView',id:'addrecordtoday'})}>
-                  <Image source={require('../../img/add_pressed.png') }/>
+                    onPress={() => _navigator.push({title:'AddrecordtodayView',id:'addrecordtoday',params:{trainee_id:this.props.trainee_id,trainee_name:this.props.trainee_name}})}>
+                  <Image source={require('../img/add_pressed.png') }/>
                 </TouchableOpacity> 
             </View>
             <View style={styles.Topbar}>
-              <Image source={require('../../img/ptv_sized.png') }/>
+              <Image source={require('../img/ptv_sized.png') }/>
             </View>          
             <View style={[styles.Topbar,styles.Right]}>
               <TouchableOpacity 
-                      onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
-                <Image source={require('../../img/chart-pressed.png') }/>
+                      onPress={() => _navigator.push({title:'ChartView',id:'chart',params:{trainee_id:this.props.trainee_id,trainee_name:this.props.trainee_name}})}>
+                <Image source={require('../img/chart-pressed.png') }/>
               </TouchableOpacity> 
             </View>         
           </View>
           <View style={[styles.header,styles.Bottomline]}>
-              <Image  source={require('../../img/plan_normal.png') }/>
-              <Text style={{fontSize:20}}>{this.props.date}</Text>
+              <Image  source={require('../img/plan_normal.png') }/>
+              <Text style={{fontSize:20}}>{this.props.date}{this.props.trainee_name}</Text>
           </View>
+
           <ListView style={styles.listview}
             scrollEnabled={this.state.scrollEnabled}
             dataSource={this.state.dataSource}
             enableEmptySections={true}
             renderRow={this.renderRow}
           />
-          <View>
-            <BottomView {...this.props}/>
-          </View>     
+        <TouchableOpacity style={styles.bottom}
+             onPress={() => _navigator.jumpBack()}>
+          <Text style={styles.text}>Back</Text>
+        </TouchableOpacity>  
         </View>
       </ScrollView>
     );
@@ -258,5 +260,17 @@ var styles = StyleSheet.create({
     fontSize: 16,
     height:50,
   },
+   text:{
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#FFF'
+  },
+    bottom:{
+     alignSelf: 'stretch',
+     alignItems: 'center',
+     justifyContent: 'center',
+     backgroundColor: '#2cb395',
+     height: 50,
+  },
 });
-module.exports = DetailRecordView;
+module.exports = TDetailRecordView;
