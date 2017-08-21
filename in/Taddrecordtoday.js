@@ -52,28 +52,25 @@ var TAddrecordtodayView = React.createClass({
   },
   componentWillMount() {
     let _that=this;
-    AsyncStorage.getItem('userid',(err, result) => {
-      console.log(result);
-      var url = URLnetowrk+'item.action';  
-      fetch(url).then(function(response) {  
-        return response.json();
-      }).then(function(res) {             
-        if (res["data"]!=null) {
-        //get the sport item name from the database
-          var sportobj=res["data"];
-          var arr=[];
-          for(i in sportobj){ 
-            arr.push(sportobj[i]["name"]);
-          }
-          console.log(arr);
-          _that.setState({
-            sportname:arr
-          })
-      }else{
-        Alert.alert('Fail to display','Please check your data'); 
-     } 
-    });    
-  });  
+    var url = URLnetowrk+'item.action';  
+    fetch(url).then(function(response) {  
+      return response.json();
+    }).then(function(res) {             
+      if (res["data"]!=null) {
+      //get the sport item name from the database
+        var sportobj=res["data"];
+        var arr=[];
+        for(i in sportobj){ 
+          arr.push(sportobj[i]["name"]);
+        }
+        console.log(arr);
+        _that.setState({
+          sportname:arr
+        })
+    }else{
+      Alert.alert('Fail to display','Please check your data'); 
+   } 
+  });    
 },
 _submit:function(){
   console.log(this.state.sportselected);
@@ -81,38 +78,35 @@ _submit:function(){
   var item_id;
   var sportsize=this.state.value;
   var day=this.state.date;
-  AsyncStorage.getItem('userid',(err, result) => {
-    console.log(result);
-    var trainee_id=result;
-    var url = URLnetowrk+'item.action'; // get the item data again 
-    fetch(url).then(function(response) {  
-      return response.json();
-    }).then(function(res) {
-      if (res["data"]!=null) {
-       //find the id of selected item
-        for(i in res["data"]){
-          if(itemname==res["data"][i]["name"]){
-            item_id=res["data"][i]["id"];
-          }        
-        }
-        console.log(item_id);
-        var urlsave = URLnetowrk+'addrecord2day.action';
-        // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-        urlsave += '?trainee_id='+trainee_id+'&day='+day+'&item_id='+item_id+'&sportsize='+sportsize;
-        console.log(urlsave);
-        fetch(urlsave).then(function(response) {  
-          return response.json();
-        }).then(function(res) {
-          console.log(res);
-          _navigator.push({
-            title:'ThomeView',
-            id:'Thome',
-          })
-        });
-      }else{
-        Alert.alert('Fail to display','Please check your data'); 
-      }   
-    });
+  var trainee_id=this.props.trainee_id;
+  var url = URLnetowrk+'item.action'; // get the item data again 
+  fetch(url).then(function(response) {  
+    return response.json();
+  }).then(function(res) {
+    if (res["data"]!=null) {
+     //find the id of selected item
+      for(i in res["data"]){
+        if(itemname==res["data"][i]["name"]){
+          item_id=res["data"][i]["id"];
+        }        
+      }
+      console.log(item_id);
+      var urlsave = URLnetowrk+'addrecord2day.action';
+      // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+      urlsave += '?trainee_id='+trainee_id+'&day='+day+'&item_id='+item_id+'&sportsize='+sportsize;
+      console.log(urlsave);
+      fetch(urlsave).then(function(response) {  
+        return response.json();
+      }).then(function(res) {
+        console.log(res);
+        _navigator.push({
+          title:'ThomeView',
+          id:'Thome',
+        })
+      });
+    }else{
+      Alert.alert('Fail to display','Please check your data'); 
+    }   
   });
 },
   render: function(){
@@ -125,7 +119,7 @@ _submit:function(){
           <View style={[styles.Top,styles.Bottomline]}>
             <View style={[styles.Topbar,styles.Left]}>
               <TouchableOpacity 
-                      onPress={() => _navigator.push({title:'ThomeView',id:'Thome'})}>
+                      onPress={() => _navigator.jumpBack()}>
                 <Image source={require('../img/back.png') }/>
               </TouchableOpacity> 
             </View>

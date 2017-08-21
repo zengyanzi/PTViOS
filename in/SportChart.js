@@ -65,50 +65,47 @@ componentWillMount() {
       Alert.alert('Fail to display','Please check your data'); 
     }         
   });
-  AsyncStorage.getItem('userid',(err, result) => {
-    console.log(result); 
-    function format (d) {
-      return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+  function format (d) {
+    return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+  }
+  var today =new Date();
+  var end = format(today);
+  var day1=new Date(today.getTime() - (1000* 60 * 60 * 24)*6);
+  var startday=format(day1);
+  var trainee_id=this.props.trainee_id;
+  console.log(trainee_id);
+  console.log(startday);
+  console.log(end);
+  var url = URLnetowrk+'stat.action';
+    // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
+  url += '?trainee_id='+trainee_id+'&start='+startday+'&end='+end;
+  console.log(url);
+  fetch(url).then(function(response) { 
+    return response.json();
+  }).then(function(res) {
+    console.log(res);
+    if (res["data"]!=null) {
+      var arr=[]
+      for (var i = 0; i < res["data"].length; i++) {
+        var obj={}
+        obj.v =res["data"][i]["energy"];
+        obj.name=res["data"][i]["day"];
+        arr.push(obj)
+      };
+      console.log(arr);   
+      var chartdata=[];
+      for (var i = 0; i < arr.length; i++) {
+        var arrt=[];
+        arrt.push(arr[i]);
+        chartdata.push(arrt);  
+      };
+      _that.setState({
+        data:chartdata
+      })
+      console.log(chartdata);     
+    }else{
+      Alert.alert('Fail to display','Please check your data'); 
     }
-    var today =new Date();
-    var end = format(today);
-    var day1=new Date(today.getTime() - (1000* 60 * 60 * 24)*6);
-    var startday=format(day1);
-    var trainee_id=result;
-    console.log(trainee_id);
-    console.log(startday);
-    console.log(end);
-    var url = URLnetowrk+'stat.action';
-      // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
-    url += '?trainee_id='+trainee_id+'&start='+startday+'&end='+end;
-    console.log(url);
-    fetch(url).then(function(response) { 
-      return response.json();
-    }).then(function(res) {
-      console.log(res);
-      if (res["data"]!=null) {
-        var arr=[]
-        for (var i = 0; i < res["data"].length; i++) {
-          var obj={}
-          obj.v =res["data"][i]["energy"];
-          obj.name=res["data"][i]["day"];
-          arr.push(obj)
-        };
-        console.log(arr);   
-        var chartdata=[];
-        for (var i = 0; i < arr.length; i++) {
-          var arrt=[];
-          arrt.push(arr[i]);
-          chartdata.push(arrt);  
-        };
-        _that.setState({
-          data:chartdata
-        })
-        console.log(chartdata);     
-      }else{
-        Alert.alert('Fail to display','Please check your data'); 
-      }
-    });
   });
 },
     //UPDATE the CHART 
@@ -125,9 +122,7 @@ componentWillMount() {
     console.log(this.state.sportselected);
     var itemname=this.state.sportselected;
     var item_id;
-    AsyncStorage.getItem('userid',(err, result) => {
-    console.log(result);
-    var trainee_id=result;
+    var trainee_id=this.props.trainee_id;
     var url = URLnetowrk+'item.action'; // get the item data again 
     fetch(url).then(function(response) {  
       return response.json();
@@ -139,40 +134,39 @@ componentWillMount() {
              item_id=res["data"][i]["id"];
           }  
         }
-        console.log(item_id);
-        var urlupdate = URLnetowrk+'statsport.action';
-        urlupdate += '?trainee_id='+trainee_id+'&start='+startday+'&end='+end+'&item_id='+item_id;
-        console.log(urlupdate);
-        fetch(urlupdate).then(function(response) {  
-            return response.json();
-        }).then(function(res) {
-          console.log(res);
-            if (res["data"]!=null) {
-              var arr=[]
-              for (var i = 0; i < res["data"].length; i++) {
-                var obj={}
-                obj.v =res["data"][i]["energy"];
-                obj.name=res["data"][i]["day"];
-                arr.push(obj)
-              };
-              console.log(arr);
-              var chartdata=[];
-              for (var i = 0; i < arr.length; i++) {
-                var arrt=[];
-                arrt.push(arr[i]);
-                chartdata.push(arrt); 
-              };
-              _that.setState({
-                data:chartdata
-              })
-            }else{
-              Alert.alert('Fail to display','Please check your data'); 
-            }
-          });          
-        }else{
-          Alert.alert('Fail to display','Please check your data'); 
-        }
-      });
+      console.log(item_id);
+      var urlupdate = URLnetowrk+'statsport.action';
+      urlupdate += '?trainee_id='+trainee_id+'&start='+startday+'&end='+end+'&item_id='+item_id;
+      console.log(urlupdate);
+      fetch(urlupdate).then(function(response) {  
+          return response.json();
+      }).then(function(res) {
+        console.log(res);
+          if (res["data"]!=null) {
+            var arr=[]
+            for (var i = 0; i < res["data"].length; i++) {
+              var obj={}
+              obj.v =res["data"][i]["energy"];
+              obj.name=res["data"][i]["day"];
+              arr.push(obj)
+            };
+            console.log(arr);
+            var chartdata=[];
+            for (var i = 0; i < arr.length; i++) {
+              var arrt=[];
+              arrt.push(arr[i]);
+              chartdata.push(arrt); 
+            };
+            _that.setState({
+              data:chartdata
+            })
+          }else{
+            Alert.alert('Fail to display','Please check your data'); 
+          }
+        });          
+      }else{
+        Alert.alert('Fail to display','Please check your data'); 
+      }
     });
  },
   render: function(){ 

@@ -156,7 +156,7 @@ _editplan:function(){
           <View style={[styles.Top,styles.Bottomline]}>
             <View style={[styles.Topbar,styles.Left]}>
                 <TouchableOpacity 
-                    onPress={() => _navigator.push({title:'AddrecordtodayView',id:'addrecordtoday',params:{trainee_id:this.props.trainee_id,trainee_name:this.props.trainee_name}})}>
+                    onPress={() => _navigator.push({title:'TAddrecordtodayView',id:'Taddrecordtoday',params:{trainee_id:this.props.trainee_id,trainee_name:this.props.trainee_name}})}>
                   <Image source={require('../img/add_pressed.png') }/>
                 </TouchableOpacity> 
             </View>
@@ -165,7 +165,7 @@ _editplan:function(){
             </View>          
             <View style={[styles.Topbar,styles.Right]}>
               <TouchableOpacity 
-                      onPress={() => _navigator.push({title:'ChartView',id:'chart',params:{trainee_id:this.props.trainee_id,trainee_name:this.props.trainee_name}})}>
+                      onPress={() => _navigator.push({title:'TChartView',id:'Tchart',params:{trainee_id:this.props.trainee_id,trainee_name:this.props.trainee_name}})}>
                 <Image source={require('../img/chart-pressed.png') }/>
               </TouchableOpacity> 
             </View>         
@@ -211,6 +211,7 @@ var styles = StyleSheet.create({
 
   Topbar:{
     flex:1,
+    marginTop:5,
     alignItems: 'center',
 
   },

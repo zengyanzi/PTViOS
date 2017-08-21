@@ -58,25 +58,19 @@ var TChartView = React.createClass({
         keyboardShouldPersistTaps='never'>
         <View style={styles.maincontain}>
           <View style={[styles.Top,styles.Bottomline]}>
-            <View style={[styles.Topbar,styles.Left]}>
-                <TouchableOpacity 
-                    onPress={() => _navigator.push({title:'CreateplanView',id:'createplan'})}>
-                  <Image source={require('../img/setting_normal.png') }/>
-                </TouchableOpacity> 
-            </View>
+              <TouchableOpacity 
+                      onPress={() => _navigator.jumpBack()}>
+                <Image source={require('../img/back.png') }/>
+              </TouchableOpacity> 
             <View style={styles.Topbar}>
               <Image source={require('../img/ptv_sized.png') }/>
             </View>
             <View style={[styles.Topbar,styles.Right]}>
-            <TouchableOpacity 
-               onPress={() => _navigator.push({title:'AddrecordtodayView',id:'addrecordtoday'})}>
-              <Image source={require('../img/add_pressed.png') }/>
-              </TouchableOpacity> 
             </View>
           </View>
           <ScrollableTabView           
             initialPage={1}
-            renderTabBar={() => <ScrollableTabBar  />}
+            renderTabBar={() => <ScrollableTabBar someProp={{trainee_id:this.props.trainee_id}} />}
           >
             <ScrollView tabLabel="ChartBySport" style={styles.tabView}>
               <View style={styles.card}>
@@ -150,7 +144,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderColor: 'rgba(0,0,0,0.1)',
     margin: 5,
-    height:500,
+    height:300,
     padding: 15,
     shadowColor: '#ccc',
     shadowOffset: { width: 2, height: 2, },

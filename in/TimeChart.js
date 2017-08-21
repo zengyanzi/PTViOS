@@ -63,8 +63,6 @@ componentWillMount() {
       Alert.alert('Fail to display','Please check your data'); 
     }  
   });
-  AsyncStorage.getItem('userid',(err, result) => {
-    console.log(result); 
     function format (d) {
       return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
     }
@@ -72,7 +70,7 @@ componentWillMount() {
     var end = format(today);
     var day1=new Date(today.getTime() - (1000* 60 * 60 * 24)*6);
     var startday=format(day1);
-    var trainee_id=result;
+    var trainee_id=this.props.trainee_id;
     console.log(trainee_id);
     console.log(startday);
     console.log(end);
@@ -107,7 +105,7 @@ componentWillMount() {
         Alert.alert('Fail to display','Please check your data'); 
       }
     });
-  });
+
 }, 
   render: function(){  
     let data=this.state.data;

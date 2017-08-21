@@ -54,29 +54,29 @@ var TrainerlistView = React.createClass({
       scrollEnabled: true,
     };
   },
-  // componentWillMount() {
-   //  let _that=this;
-   //   AsyncStorage.getItem('userid',(err,result)=>{
-   //    var trainee_id=result;
-   //    var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-   //     var url = URLnetowrk+'';// load gym list
-   //     url+= '?trainee_id='+trainee_id;
-   //     console.log(url);
-   //     fetch(url).then(function(response) l{  
-   //       return response.json();
-   //     }).then(function(res) {
-   //       console.log(res);
-   //       if (res["data"]!=null) {
-   //         _that.setState({
-   //           dataSource: ds.cloneWithRows(res["data"]),
-   //           rows:res["data"][0]
-   //         });
-   //       }else{
-   //         Alert.alert('Fail to display','Please check your data'); 
-   //       }    
-   //     }); 
-   //    });
-   // },
+  componentWillMount() {
+    let _that=this;
+     AsyncStorage.getItem('userid',(err,result)=>{
+      var trainee_id=result;
+      var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
+      var url = URLnetowrk+'myinstructor.action';// load gym list
+       url+= '?trainee_id='+trainee_id;
+       console.log(url);
+       fetch(url).then(function(response){  
+         return response.json();
+       }).then(function(res) {
+         console.log(res);
+         if (res["data"]!=null) {
+           _that.setState({
+             dataSource: ds.cloneWithRows(res["data"]),
+             rows:res["data"][0]
+           });
+         }else{
+           Alert.alert('Fail to display','Please check your data'); 
+         }    
+       }); 
+      });
+   },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
     this.setState({ scrollEnabled: scrollEnabled });
@@ -105,8 +105,9 @@ var TrainerlistView = React.createClass({
         <TouchableOpacity style={styles.btn}>
           <View style={styles.li}>
             <View  style={styles.lidate}><Image  source={require('../img/gymicon.png') }/><Text>Name:{rowData.surname} {rowData.name} </Text></View>
-              <Text style={styles.liText}>phone:{rowData.phone};Gender: {rowData.gender}; </Text>
-              <Text style={styles.liText}>Height: {rowData.height}m;Initial Weight: {rowData.initial_weight}kg;Target Weight: {rowData.target_weight}kg;BMI:{rowData.bmi}</Text>
+              <Text style={styles.liText}>phone:{rowData.phone}</Text>
+              <Text style={styles.liText}>Email: {rowData.email}</Text>
+              <Text style={styles.liText}>Description: {rowData.description}</Text>
           </View>
         </TouchableOpacity>
 
