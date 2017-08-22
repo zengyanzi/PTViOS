@@ -154,12 +154,10 @@ _editplan:function(){
           keyboardShouldPersistTaps='never'>
         <View style={styles.maincontain}>
           <View style={[styles.Top,styles.Bottomline]}>
-            <View style={[styles.Topbar,styles.Left]}>
-                <TouchableOpacity 
-                    onPress={() => _navigator.push({title:'TAddrecordtodayView',id:'Taddrecordtoday',params:{trainee_id:this.props.trainee_id,trainee_name:this.props.trainee_name}})}>
-                  <Image source={require('../img/add_pressed.png') }/>
-                </TouchableOpacity> 
-            </View>
+            <TouchableOpacity 
+              onPress={() => _navigator.push({title:'TAddrecordtoday',id:'Taddrecordtoday',params:{trainee_id:this.props.trainee_id,trainee_name:this.props.trainee_name}})}>
+              <Image source={require('../img/add_pressed.png') }/>
+            </TouchableOpacity> 
             <View style={styles.Topbar}>
               <Image source={require('../img/ptv_sized.png') }/>
             </View>          
