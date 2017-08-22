@@ -47,38 +47,42 @@ var InstructloginView = React.createClass({
     return {
     };
   },
-  _login:function(){
+ _login:function(){
     var value = this.refs.form.getValue();
-    var email = value["email"];
-    var password=value["password"];
-    var url = URLnetowrk+'instructor/login.action';
-    // var url = 'http://192.168.1.15:8080/pt_server/instructorlogin.action';
-    // var url = 'http://192.168.20.17:8080/pt_server/instructorlogin.action';
-    url += '?email='+email+'&password='+password;
-    fetch(url).then(function(response) {  
-      return response.json();
-    }).then(function(res) {
-      console.log(res);
-      if (res["data"]!=null) {
-        AsyncStorage.setItem("email",email);
-        AsyncStorage.setItem("password",password);
-        AsyncStorage.setItem("name",res["data"]["name"]);
-        AsyncStorage.setItem("surname",res["data"]["surname"]);
-        var phone=res['data']['phone'].toString();
-        AsyncStorage.setItem("phone",phone);
-        var instructorid=res['data']['id'].toString();
-        AsyncStorage.setItem('instructorid',instructorid);
-        AsyncStorage.setItem("gender",res["data"]["gender"]);
-        AsyncStorage.setItem("birthday",res["data"]["birthday"]);
-        AsyncStorage.setItem("description",res["data"]["description"]);
-        _navigator.push({
-          title:'IhomeView',
-          id:'Ihome'
-        });
-      }else{
-      Alert.alert('Fail to login','Please check your password');  
-      }
-    });
+    if (value!=null) {
+      var email = value["email"];
+      var password=value["password"];
+      var url = URLnetowrk+'instructor/login.action';
+      // var url = 'http://192.168.1.15:8080/pt_server/instructorlogin.action';
+      // var url = 'http://192.168.20.17:8080/pt_server/instructorlogin.action';
+      url += '?email='+email+'&password='+password;
+      fetch(url).then(function(response) {  
+        return response.json();
+      }).then(function(res) {
+        console.log(res);
+        if (res["data"]!=null) {
+          AsyncStorage.setItem("email",email);
+          AsyncStorage.setItem("password",password);
+          AsyncStorage.setItem("name",res["data"]["name"]);
+          AsyncStorage.setItem("surname",res["data"]["surname"]);
+          var phone=res['data']['phone'].toString();
+          var instructorid=res['data']['id'].toString();
+          AsyncStorage.setItem('instructorid',instructorid);
+          AsyncStorage.setItem("phone",phone);
+          AsyncStorage.setItem("gender",res["data"]["gender"]);
+          AsyncStorage.setItem("birthday",res["data"]["birthday"]);
+          AsyncStorage.setItem("description",res["data"]["description"]);
+          _navigator.push({
+            title:'IhomeView',
+            id:'Ihome'
+          });
+        }else{
+        Alert.alert('Fail to login','Please check your password');  
+        }
+      });
+    }else{
+      Alert.alert('Sorry','Please input your information '); 
+    }
   },
 
   render: function(){

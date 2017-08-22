@@ -35,8 +35,9 @@ var TraineeloginView = React.createClass({
     return {
     };
   },
-   _login:function(){
-      var value = this.refs.form.getValue();
+  _login:function(){
+    var value = this.refs.form.getValue();
+    if (value!=null) {
       var email = value["email"];
       var password=value["password"];
       var url = URLnetowrk+'traineelogin.action';
@@ -44,7 +45,7 @@ var TraineeloginView = React.createClass({
       url += '?email='+email+'&password='+password;
       fetch(url).then(function(response) {  
         return response.json();
-      }).then(function(res) {
+      }).then(function(res){
         console.log(res);
         if (res["data"]!=null) {
           AsyncStorage.setItem("email",email);
@@ -73,8 +74,11 @@ var TraineeloginView = React.createClass({
         }else{
           Alert.alert('Fail to login','Please check your password');  
         }
-      });
-    },
+      });        
+    }else{
+      Alert.alert('Sorry','Please input your information '); 
+    }
+  },
  render: function(){
    return (
       <ScrollView 

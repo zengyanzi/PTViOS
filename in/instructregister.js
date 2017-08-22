@@ -10,7 +10,8 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   DatePickerAndroid,
-  navigator
+  navigator,
+  Alert
 } from 'react-native';
 import t from 'tcomb-form-native';
 import DatePicker from './date.js';
@@ -53,32 +54,35 @@ var InstructregisterView = React.createClass({
     return {
     };
   },
-   _register: function () {
+  _register: function () {
     var value = this.refs.form.getValue();
-    var name = value["name"];
-    var surname = value["surname"];
-    var email = value["email"];
-    var phone = value["phone"];
-    // var birthday = this.state.date;
-    var password = value["password"];   
-    var url = URLnetowrk+'instructorregister.action';
-    url += '?name='+name+'&surname='+surname+'&email='+email+'&phone='+phone+'&password='+password;
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    }).then(function(res){
-      console.log(res);
-
-    }).catch((error)=>{
-      console.log(error);
-    });
-    _navigator.push({
-      title:'InstructloginView',
-      id:'instructlogin'
-    })
+    if (value!=null) {
+      var name = value["name"];
+      var surname = value["surname"];
+      var email = value["email"];
+      var phone = value["phone"];
+      // var birthday = this.state.date;
+      var password = value["password"];
+      var url = URLnetowrk+'instructor/register.action';
+      url += '?name='+name+'&surname='+surname+'&email='+email+'&phone='+phone+'&password='+password;
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }).then(function(res){
+        console.log(res);
+      }).catch((error)=>{
+        console.log(error);
+      });
+      _navigator.push({
+        title:'InstructloginView',
+        id:'instructlogin'
+      })
+    }else{
+      Alert.alert('Sorry','Please input your information '); 
+    }
   },
  render: function(){
     return (
