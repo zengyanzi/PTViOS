@@ -76,7 +76,7 @@ var MytraineePlanView = React.createClass({
      AsyncStorage.getItem('instructorid',(err,result)=>{
       var instructor_id=result;
       var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
-      var url = URLnetowrk+'instructor/find_mapping.action';// load gym list
+      var url = URLnetowrk+'instructor/find_mapping.action';// load mapping list
       url+= '?instructor_id='+instructor_id;
       console.log(url);
       fetch(url).then(function(response) {  
@@ -141,6 +141,7 @@ var MytraineePlanView = React.createClass({
                 onPress={() => _navigator.push({title:'TPlanView',id:'Tplan',params:{trainee_id:rowData.trainee_id,trainee_name:rowData.name}})}>
           <View style={styles.li}>
             <View  style={styles.lidate}><Image  source={require('../img/profile_normal.png') }/><Text>{rowData.name}</Text></View>
+              <Text style={styles.liText}>Last work out  {rowData.last_sport_datetime}</Text>
               <Text style={styles.liText}>Click to check the plan</Text>
           </View>
         </TouchableOpacity>
