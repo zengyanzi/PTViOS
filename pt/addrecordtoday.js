@@ -17,6 +17,7 @@ import Dimensions from 'Dimensions';
 import DatePicker from './date.js';
 import Topview from './top.js';
 import URLnetowrk from '../pub/network';
+import { Icon } from 'react-native-elements';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var AddrecordtodayView = React.createClass({
@@ -116,8 +117,11 @@ _submit:function(){
           </View>
           <View style={styles.Topbar}>          
           </View>
-          <View style={[styles.Topbar,styles.Right]}>          
-          </View>
+          <View style={[styles.Topbar,styles.Right]}>
+              <TouchableOpacity>       
+                      <Icon     name='save'   color='#fff' onPress={this._submit} />
+              </TouchableOpacity> 
+          </View>   
         </View>
         <View>
           <Text style={styles.text}>Please Choose the Date</Text>
@@ -159,12 +163,6 @@ _submit:function(){
             minimumTrackTintColor='#2cb395'
             onValueChange={(value) => Math.floor(this.setState({value}))} />
           <Text style={styles.text}>Value:{this.state.value} </Text>
-        </View>
-        <View>
-          <TouchableOpacity style={styles.btn}
-          onPress={this._submit}>
-          <Text style={styles.text}>Add Record</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -214,8 +212,9 @@ var styles = StyleSheet.create({
     left: 5
   },
   Right:{
-    position: 'absolute', 
-    top: 5, 
+    position: 'absolute',
+    marginTop:5, 
+    top: 12, 
     right: 5,
   },
   maincontain:
