@@ -38,7 +38,7 @@ var rows = [
     Pdate:"21-01-2017",
     Calories :"457",
     text: "Row:5min;Treadmill:6min;Xtrainer:5min",
-  },  
+  },
 ];
 var RecordView = React.createClass({
   getInitialState: function(){
@@ -73,20 +73,20 @@ var RecordView = React.createClass({
         // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
         url += '?trainee_id='+trainee_id+'&start='+start+'&end='+end;
         console.log(url);
-        fetch(url).then(function(response) {  
+        fetch(url).then(function(response) {
           return response.json();
         }).then(function(res) {
-          console.log(res);       
-          if (res["data"]!=null) {   
+          console.log(res);
+          if (res["data"]!=null) {
             _that.setState({
-             dataSource: ds.cloneWithRows(res["data"]),         
+             dataSource: ds.cloneWithRows(res["data"]),
              rows:res["data"]
             })
           }else{
-            Alert.alert('Fail to display','Please check your data'); 
-          }              
-       });       
-    }); 
+            Alert.alert('Fail to display','Please check your data');
+          }
+       });
+    });
   },
 delete:function(rowData){
     let _that=this;
@@ -99,10 +99,10 @@ delete:function(rowData){
       // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
       url += '?trainee_id='+trainee_id+'&plan_id='+plan_id;
       console.log(url);
-      fetch(url).then(function(response) {  
+      fetch(url).then(function(response) {
           return response.json();
       }).then(function(res) {
-        console.log(res);        
+        console.log(res);
         if (res["data"]==true) {
           var day=_that.props.date;
           console.log(day);
@@ -110,24 +110,24 @@ delete:function(rowData){
           // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
           url += '?trainee_id='+trainee_id+'&day='+day;
           console.log(url);
-          fetch(url).then(function(response) {  
+          fetch(url).then(function(response) {
             return response.json();
           }).then(function(res) {
             console.log(res);
-            if (res["data"]!=null) {                 
+            if (res["data"]!=null) {
               _that.setState({
                 dataSource: ds.cloneWithRows(res["data"]),
                 detailrows:res["data"]
               })
             }else{
-              Alert.alert('Fail to display','Please check your data'); 
+              Alert.alert('Fail to display','Please check your data');
             }
-           });   
+           });
           }else{
-            Alert.alert('Fail to display','Please check your data'); 
+            Alert.alert('Fail to display','Please check your data');
           }
         });
-      }) 
+      })
     },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
@@ -173,8 +173,8 @@ delete:function(rowData){
         <TouchableOpacity style={styles.btn}
                 onPress={() => _navigator.push({title:'DetailRecordView',id:'detailrecord',params:{date:rowData.day}})}>
           <View style={styles.li}>
-            <View  style={styles.lidate}><Image  source={require('../img/plan_normal.png') }/><Text>{rowData.day}</Text></View>           
-              <Text style={styles.liText}>Sports: {rowData.text}</Text>          
+            <View  style={styles.lidate}><Image  source={require('../img/plan_normal.png') }/><Text>{rowData.day}</Text></View>
+              <Text style={styles.liText}>Sports: {rowData.text}</Text>
           </View>
         </TouchableOpacity>
       </Swipeout>
@@ -182,75 +182,56 @@ delete:function(rowData){
   },
  render: function(){
   return(
-     <ScrollView 
+     <ScrollView
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps="always">
         <View style={[styles.Top,styles.Bottomline]}>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => _navigator.push({title:'Addrecordtoday',id:'addrecordtoday'})}>
             <Image source={require('../img/add_pressed.png') }/>
-          </TouchableOpacity> 
+          </TouchableOpacity>
           <View style={styles.Topbar}>
-          </View>          
+          </View>
           <View style={styles.right}>
-          <TouchableOpacity 
+          <TouchableOpacity
                   onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
             <Image source={require('../img/chart-pressed.png') }/>
-          </TouchableOpacity> 
-          </View>         
+          </TouchableOpacity>
+          </View>
         </View>
         <ListView style={styles.listview}
           scrollEnabled={this.state.scrollEnabled}
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
           enableEmptySections={true}
-        />     
+        />
       </ScrollView>
     );
   },
 });
 
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-     justifyContent: 'space-between',
+    justifyContent: 'space-between',
+    marginTop:20,
+    marginBottom:0
   },
   Bottomline:{
     borderBottomWidth:2,
     borderColor:'gray'
   },
-
   Topbar:{
     flex:2,
-    flexDirection: 'row',
-
-   
-
-  },
-   Left:{
-    flex:1,
     flexDirection: 'row',
   },
   Right:{
   flex:1,
   flexDirection: 'row',
-
-  },
-  maincontain:
-  {
-    flex: 1,
-    backgroundColor: '#38bda0',
-    flexDirection:'column',
-
   },
   listview: {
     flex: 1,

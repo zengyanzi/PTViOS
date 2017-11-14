@@ -97,8 +97,8 @@ var CreateplanView = React.createClass({
     //set the submit function
   _submit:function(){
     var start=this.state.startdate;
-    var end=this.state.enddate; 
-    let _that=this;     
+    var end=this.state.enddate;
+    let _that=this;
     AsyncStorage.getItem('userid',(err, result) => {
       var traineeid=result;
       AsyncStorage.getItem('planid',(err, result) => {
@@ -120,7 +120,7 @@ var CreateplanView = React.createClass({
       var url = URLnetowrk+'createplan.action';
         // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
       url += '?traineeid='+traineeid+'&start='+start+'&end='+end+'&attendance='+attendance+'&optionplanid='+optionplanid;
-      fetch(url).then(function(response) {  
+      fetch(url).then(function(response) {
         return response.json();
       }).then(function(res) {
         console.log(res);
@@ -129,27 +129,27 @@ var CreateplanView = React.createClass({
           id:'Thome',
         })
       })
-    });    
+    });
   });
 },
   render: function(){
     return (
-      <ScrollView 
+      <ScrollView
           contentContainerStyle={{flex:1}}
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps="always">
-        <View style={styles.maincontain}>  
+        <View style={styles.maincontain}>
           <View style={[styles.Top,styles.Bottomline]}>
             <View style={[styles.Topbar,styles.Left]}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     onPress={() => _navigator.jumpBack()}>
                   <Image source={require('../img/back.png') }/>
-                 </TouchableOpacity> 
+                 </TouchableOpacity>
             </View>
             <View style={styles.Topbar}>
               <Image source={require('../img/ptv_sized.png') }/>
             </View>
-            <View style={[styles.Topbar,styles.Right]}>   
+            <View style={[styles.Topbar,styles.Right]}>
             </View>
           </View>
           <View style={{flex:1,flexDirection:'row'}}>
@@ -191,7 +191,7 @@ var CreateplanView = React.createClass({
             onPress={this._submit}>
             <Text style={styles.text}>Submit</Text>
             </TouchableOpacity>
-          </View>     
+          </View>
         </View>
       </ScrollView>
     );
@@ -201,19 +201,19 @@ var CreateplanView = React.createClass({
   },
 });
 var styles = StyleSheet.create({
-   
   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-     justifyContent: 'space-between',
+    justifyContent: 'space-between',
+    marginTop:20,
+    marginBottom:0
   },
   Bottomline:{
     borderBottomWidth:2,
     borderColor:'gray'
   },
-
   Topbar:{
     flexDirection: 'row',
 
@@ -223,14 +223,12 @@ var styles = StyleSheet.create({
   },
   Right:{
     flexDirection: 'row',
-
   },
   maincontain:
   {
     flex: 1,
     backgroundColor: '#38bda0',
     flexDirection:'column',
-
   },
    text:{
     fontSize:18,
@@ -239,19 +237,17 @@ var styles = StyleSheet.create({
   datepicker:{
     width:200,
   },
-    btn:{
+  btn:{
      alignSelf: 'stretch',
      alignItems: 'center',
      justifyContent: 'center',
      backgroundColor: '#2cb395',
      height: 50,
      borderRadius: 5,
-
-
   },
   item: {
-        flexDirection: 'row',
-    },
+    flexDirection: 'row',
+  },
   line: {
         flexDirection: 'row',
         height: 0.3,

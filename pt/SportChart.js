@@ -22,14 +22,6 @@ var SportChartView = React.createClass({
       [{
         "v": 49,
         "name": "apple"
-      }],
-      [{
-        "v": 69,
-        "name": "banana"
-      }],
-      [{
-        "v": 15,
-        "name": "grape"
       }]
     ],
     sportselected:'Rower',
@@ -45,11 +37,11 @@ var SportChartView = React.createClass({
   },
   //set the item and data
 componentWillMount() {
-  let _that=this;   
-  var urlitem = URLnetowrk+'item.action';  
-  fetch(urlitem).then(function(response) {  
+  let _that=this;
+  var urlitem = URLnetowrk+'item.action';
+  fetch(urlitem).then(function(response) {
     return response.json();
-  }).then(function(res) {           
+  }).then(function(res) {
     if (res["data"]!=null) {
    //get the sport item name from the database
       var sportobj=res["data"];
@@ -62,11 +54,11 @@ componentWillMount() {
           sportname:arr
         })
     }else{
-      Alert.alert('Fail to display','Please check your data'); 
-    }         
+      Alert.alert('Fail to display','Please check your data');
+    }
   });
   AsyncStorage.getItem('userid',(err, result) => {
-    console.log(result); 
+    console.log(result);
     function format (d) {
       return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
     }
@@ -82,7 +74,7 @@ componentWillMount() {
       // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
     url += '?trainee_id='+trainee_id+'&start='+startday+'&end='+end;
     console.log(url);
-    fetch(url).then(function(response) { 
+    fetch(url).then(function(response) {
       return response.json();
     }).then(function(res) {
       console.log(res);
@@ -94,26 +86,26 @@ componentWillMount() {
           obj.name=res["data"][i]["day"];
           arr.push(obj)
         };
-        console.log(arr);   
+        console.log(arr);
         var chartdata=[];
         for (var i = 0; i < arr.length; i++) {
           var arrt=[];
           arrt.push(arr[i]);
-          chartdata.push(arrt);  
+          chartdata.push(arrt);
         };
         _that.setState({
           data:chartdata
         })
-        console.log(chartdata);     
+        console.log(chartdata);
       }else{
-        Alert.alert('Fail to display','Please check your data'); 
+        Alert.alert('Fail to display','Please check your data');
       }
     });
   });
 },
-    //UPDATE the CHART 
+    //UPDATE the CHART
   UPDATE:function() {
-    let _that=this; 
+    let _that=this;
     function format (d) {
       return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
     }
@@ -128,22 +120,22 @@ componentWillMount() {
     AsyncStorage.getItem('userid',(err, result) => {
     console.log(result);
     var trainee_id=result;
-    var url = URLnetowrk+'item.action'; // get the item data again 
-    fetch(url).then(function(response) {  
+    var url = URLnetowrk+'item.action'; // get the item data again
+    fetch(url).then(function(response) {
       return response.json();
     }).then(function(res) {
       if (res["data"]!=null) {
-       //find the id of selected item  
+       //find the id of selected item
         for(i in res["data"]){
           if(itemname==res["data"][i]["name"]){
              item_id=res["data"][i]["id"];
-          }  
+          }
         }
         console.log(item_id);
         var urlupdate = URLnetowrk+'statsport.action';
         urlupdate += '?trainee_id='+trainee_id+'&start='+startday+'&end='+end+'&item_id='+item_id;
         console.log(urlupdate);
-        fetch(urlupdate).then(function(response) {  
+        fetch(urlupdate).then(function(response) {
             return response.json();
         }).then(function(res) {
           console.log(res);
@@ -160,22 +152,22 @@ componentWillMount() {
               for (var i = 0; i < arr.length; i++) {
                 var arrt=[];
                 arrt.push(arr[i]);
-                chartdata.push(arrt); 
+                chartdata.push(arrt);
               };
               _that.setState({
                 data:chartdata
               })
             }else{
-              Alert.alert('Fail to display','Please check your data'); 
+              Alert.alert('Fail to display','Please check your data');
             }
-          });          
+          });
         }else{
-          Alert.alert('Fail to display','Please check your data'); 
+          Alert.alert('Fail to display','Please check your data');
         }
       });
     });
  },
-  render: function(){ 
+  render: function(){
     let data=this.state.data;
     let options = {
       width: 200,
@@ -230,7 +222,7 @@ componentWillMount() {
             onPress={this.UPDATE}>
             <Text style={styles.text}>UPDATE</Text>
           </TouchableOpacity>
-        </View> 
+        </View>
         <Picker
           prompt="Please choose sportclass"
           style={{width:300}}
@@ -252,14 +244,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
-         alignItems: 'center',
-
-
-  },
-    sportact:{
-    flexGrow:1,
-    height:50,
-    width:200,
+    alignItems: 'center',
   },
   btn:{
      alignItems: 'center',
@@ -269,10 +254,9 @@ const styles = StyleSheet.create({
      borderRadius: 5,
      width:400,
   },
-    text:{
+  text:{
     fontSize:18,
     color:'#fff',
   },
-   
 });
 export default SportChartView;

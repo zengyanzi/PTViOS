@@ -20,14 +20,6 @@ var TimeChartView = React.createClass({
       [{
         "v": 49,
         "name": "apple"
-      }],
-      [{
-        "v": 69,
-        "name": "banana"
-      }],
-      [{
-        "v": 15,
-        "name": "grape"
       }]
     ],
     sportselected:'',
@@ -43,11 +35,11 @@ var TimeChartView = React.createClass({
   },
   //set the item and data
 componentWillMount() {
-  let _that=this; 
-  var urlitem = URLnetowrk+'item.action';  
-  fetch(urlitem).then(function(response) {  
+  let _that=this;
+  var urlitem = URLnetowrk+'item.action';
+  fetch(urlitem).then(function(response) {
     return response.json();
-  }).then(function(res) {       
+  }).then(function(res) {
    if (res["data"]!=null) {
    //get the sport item name from the database
      var sportobj=res["data"];
@@ -60,11 +52,11 @@ componentWillMount() {
         sportname:arr
       })
     }else{
-      Alert.alert('Fail to display','Please check your data'); 
-    }  
+      Alert.alert('Fail to display','Please check your data');
+    }
   });
   AsyncStorage.getItem('userid',(err, result) => {
-    console.log(result); 
+    console.log(result);
     function format (d) {
       return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
     }
@@ -80,7 +72,7 @@ componentWillMount() {
     // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
     url += '?trainee_id='+trainee_id+'&start='+startday+'&end='+end;
     console.log(url);
-    fetch(url).then(function(response) { 
+    fetch(url).then(function(response) {
       return response.json();
     }).then(function(res) {
       console.log(res);
@@ -97,19 +89,19 @@ componentWillMount() {
         for (var i = 0; i < arr.length; i++) {
           var arrt=[];
           arrt.push(arr[i]);
-          chartdata.push(arrt);  
+          chartdata.push(arrt);
         };
         _that.setState({
           data:chartdata
         })
-        console.log(chartdata);      
+        console.log(chartdata);
       }else{
-        Alert.alert('Fail to display','Please check your data'); 
+        Alert.alert('Fail to display','Please check your data');
       }
     });
   });
-}, 
-  render: function(){  
+},
+  render: function(){
     let data=this.state.data;
     let options = {
       width: 200,
@@ -157,8 +149,8 @@ componentWillMount() {
       }
     }
     return (
-      <View style={styles.container}> 
-        <Bar data={data} options={options} accessorKey='v'/>        
+      <View style={styles.container}>
+        <Bar data={data} options={options} accessorKey='v'/>
       </View>
     )
   }
@@ -167,27 +159,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
-         alignItems: 'center',
+    alignItems: 'center',
+  },
 
-
-  },
-    sportact:{
-    flexGrow:1,
-    height:50,
-    width:200,
-  },
-  btn:{
-     alignItems: 'center',
-     justifyContent: 'center',
-     backgroundColor: '#2cb395',
-     height: 30,
-     borderRadius: 5,
-     width:400,
-  },
-    text:{
-    fontSize:18,
-    color:'#fff',
-  },
-   
 });
 export default TimeChartView;

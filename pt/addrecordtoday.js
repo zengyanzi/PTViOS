@@ -41,25 +41,25 @@ componentWillMount() {
     let _that=this;
     AsyncStorage.getItem('userid',(err, result) => {
       console.log(result);
-      var url = URLnetowrk+'item.action';  
-      fetch(url).then(function(response) {  
+      var url = URLnetowrk+'item.action';
+      fetch(url).then(function(response) {
         return response.json();
-      }).then(function(res) {            
+      }).then(function(res) {
         if (res["data"]!=null) {
        //get the sport item name from the database
           var sportobj=res["data"];
           var arr=[];
-          for(i in sportobj){       
+          for(i in sportobj){
             arr.push(sportobj[i]["name"]);
           }
           _that.setState({
             sportname:arr,
           })
         }else{
-          Alert.alert('Fail to display','Please check your data'); 
+          Alert.alert('Fail to display','Please check your data');
         }
-     });       
-    });  
+     });
+    });
   },
 _submit:function(){
   console.log(this.state.sportselected);
@@ -70,8 +70,8 @@ _submit:function(){
   AsyncStorage.getItem('userid',(err, result) => {
     console.log(result);
     var trainee_id=result;
-    var url = URLnetowrk+'item.action'; // get the item data again 
-    fetch(url).then(function(response) {  
+    var url = URLnetowrk+'item.action'; // get the item data again
+    fetch(url).then(function(response) {
       return response.json();
     }).then(function(res) {
       if (res["data"]!=null) {
@@ -80,48 +80,48 @@ _submit:function(){
         for(i in res["data"]){
           if(itemname==res["data"][i]["name"]){
            item_id=res["data"][i]["id"];
-          }                
-        }  
+          }
+        }
         console.log(item_id);
-        var urlsave=URLnetowrk+'addrecord2day.action'; 
+        var urlsave=URLnetowrk+'addrecord2day.action';
         urlsave += '?trainee_id='+trainee_id+'&day='+day+'&item_id='+item_id+'&sportsize='+sportsize;
         console.log(urlsave);
-        fetch(urlsave).then(function(response) {  
+        fetch(urlsave).then(function(response) {
           return response.json();
         }).then(function(res) {
            console.log(res);
           _navigator.push({
             title:'ThomeView',
-            id:'Thome', 
+            id:'Thome',
           })
         });
       }else{
-        Alert.alert('Fail to display','Please check your data'); 
-      }          
+        Alert.alert('Fail to display','Please check your data');
+      }
     });
   });
  },
  render: function(){
   return(
-    <ScrollView 
+    <ScrollView
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps="always">
       <View style={styles.maincontain}>
        <View style={[styles.Top,styles.Bottomline]}>
           <View style={[styles.Topbar,styles.Left]}>
-              <TouchableOpacity 
+              <TouchableOpacity
                   onPress={() => _navigator.jumpBack()}>
                 <Image source={require('../img/back.png') }/>
-               </TouchableOpacity> 
+               </TouchableOpacity>
           </View>
-          <View style={styles.Topbar}>          
+          <View style={styles.Topbar}>
           </View>
           <View style={[styles.Topbar,styles.Right]}>
-              <TouchableOpacity>       
+              <TouchableOpacity>
                       <Icon     name='save'   color='#fff' onPress={this._submit} />
-              </TouchableOpacity> 
-          </View>   
+              </TouchableOpacity>
+          </View>
         </View>
         <View>
           <Text style={styles.text}>Please Choose the Date</Text>
@@ -137,23 +137,23 @@ _submit:function(){
         </View>
         <View>
             <Text style={styles.text}>Please Choose the sport item</Text>
-            <Picker 
+            <Picker
               prompt="Please choose sportclass"
               style={{width:300}}
               itemStyle={{color:'white'}}
               selectedValue={this.state.sportselected}
-              onValueChange={(value) => this.setState({sportselected: value})}>            
+              onValueChange={(value) => this.setState({sportselected: value})}>
                 { this.state.sportname.map((s, i) => {
                     return <Picker.Item
                              key={i}
                              value={s}
                              label={s} />
-                 }) }         
+                 }) }
           </Picker>
         </View>
         <View style={styles.slider}>
           <Text style={styles.text}>Please Choose the sport size</Text>
-          <Slider 
+          <Slider
             value={this.state.value}
             maximumValue={100}
             step={0.5}
@@ -184,37 +184,32 @@ var customStyles2 = StyleSheet.create({
   }
 });
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
     justifyContent: 'center',
+    marginTop:20,
+    marginBottom:0
   },
   Bottomline:{
     borderBottomWidth:2,
     borderColor:'gray'
   },
-
   Topbar:{
     flex:1,
     alignItems: 'center',
-
   },
   Left:{
-    position: 'absolute', 
-    top: 5, 
+    position: 'absolute',
+    top: 5,
     left: 5
   },
   Right:{
     position: 'absolute',
-    marginTop:5, 
-    top: 12, 
+    marginTop:5,
+    top: 12,
     right: 5,
   },
   maincontain:
@@ -222,26 +217,6 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#38bda0',
     flexDirection:'column',
-
-  },
-  listview: {
-    flex: 1,
-  },
-  li: {
-    backgroundColor: '#fff',
-    borderBottomColor: '#38bda0',
-    borderColor: 'transparent',
-    borderWidth: 1,
-    paddingLeft: 16,
-    paddingTop: 14,
-    paddingBottom: 16,
-  },
-  liContainer: {
-    flex: 2,
-  },
-  liText: {
-    color: '#333',
-    fontSize: 16,
   },
   text:{
     fontSize:18,
@@ -249,17 +224,6 @@ var styles = StyleSheet.create({
   },
   datepicker:{
     width:200,
-  },
-    btn:{
-     alignSelf: 'stretch',
-     alignItems: 'center',
-     justifyContent: 'center',
-     backgroundColor: '#2cb395',
-     height: 50,
-     borderRadius: 5,
-     width:320,
-     marginTop: 50,
-
   },
 
 });

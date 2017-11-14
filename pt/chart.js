@@ -31,32 +31,32 @@ var ChartView = React.createClass({
   componentWillMount() {
     AsyncStorage.getItem('userid',(err, result) => {
       console.log(result);
-    });   
+    });
   },
   render: function(){
   return(
-    <ScrollView 
+    <ScrollView
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps="always">
       <View style={styles.maincontain}>
         <View style={[styles.Top,styles.Bottomline]}>
          <View style={[styles.Topbar,styles.Left]}>
-              <TouchableOpacity 
+              <TouchableOpacity
                   onPress={() => _navigator.jumpBack()}>
                 <Image source={require('../img/back.png') }/>
-               </TouchableOpacity> 
+               </TouchableOpacity>
           </View>
           <View style={styles.Topbar}>
           </View>
           <View style={[styles.Topbar,styles.Right]}>
-            <TouchableOpacity 
+            <TouchableOpacity
             onPress={() => _navigator.push({title:'Addrecordtoday',id:'addrecordtoday'})}>
               <Image source={require('../img/add_pressed.png') }/>
-            </TouchableOpacity> 
+            </TouchableOpacity>
           </View>
         </View>
-        <ScrollableTabView   
+        <ScrollableTabView
           initialPage={1}
           renderTabBar={() => <ScrollableTabBar  />}
         >
@@ -70,7 +70,7 @@ var ChartView = React.createClass({
               <TimeChartView {...this.props}/>
             </View>
           </ScrollView>
-        </ScrollableTabView>  
+        </ScrollableTabView>
       </View>
      </ScrollView>
     );
@@ -78,35 +78,29 @@ var ChartView = React.createClass({
 });
 
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
     justifyContent: 'center',
+    marginTop:20,
+    marginBottom:0
   },
   Bottomline:{
     borderBottomWidth:2,
     borderColor:'gray'
   },
-
   Topbar:{
     flex:1,
     alignItems: 'center',
-
   },
    Left:{
     flexDirection: 'row',
-
   },
   Right:{
-    position: 'absolute', 
-    top: 5, 
+    position: 'absolute',
+    top: 5,
     right: 5,
   },
   maincontain:
@@ -114,22 +108,11 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#38bda0',
     flexDirection:'column',
-
-  },
-  header:{
-
-    flexDirection: 'row',
-    height:50,
-    alignItems: 'center',
-    backgroundColor:'#fff',
-    justifyContent: 'center',
-
   },
   tabView: {
     flex: 1,
     padding: 10,
     backgroundColor: '#38bda0',
-
   },
   card: {
     borderWidth: 1,
