@@ -36,7 +36,7 @@ var detailrows = [
   }, {
     Calories :"457",
     text: "Bike Fast  3min  Moderate  15  60Sec",
-  }, 
+  },
 ];
 var DetailPlanView = React.createClass({
   getInitialState: function(){
@@ -64,20 +64,20 @@ var DetailPlanView = React.createClass({
         // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
         url += '?trainee_id='+trainee_id+'&day='+day;
         console.log(url);
-        fetch(url).then(function(response) {  
+        fetch(url).then(function(response) {
           return response.json();
         }).then(function(res) {
-          console.log(res);     
-          if (res["data"]!=null) {    
+          console.log(res);
+          if (res["data"]!=null) {
             _that.setState({
              dataSource: ds.cloneWithRows(res["data"]),
              detailrows:res["data"]
             })
           }else{
-            Alert.alert('Fail to display','Please check your data'); 
+            Alert.alert('Fail to display','Please check your data');
           }
-       });    
-    });  
+       });
+    });
   },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
@@ -85,7 +85,7 @@ var DetailPlanView = React.createClass({
   },
   //  set active swipeout item
   handleSwipeout(sectionID,rowID) {
-    for (var i = 0; i < this.state.detailrows.length; i++) {     
+    for (var i = 0; i < this.state.detailrows.length; i++) {
       if (i != rowID) {
         this.state.detailrows[i].active = false;
       }
@@ -111,7 +111,7 @@ var DetailPlanView = React.createClass({
       // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
       url += '?trainee_id='+trainee_id+'&plan_id='+plan_id;
       console.log(url);
-      fetch(url).then(function(response) {  
+      fetch(url).then(function(response) {
         return response.json();
       }).then(function(res) {
         console.log(res);
@@ -122,21 +122,21 @@ var DetailPlanView = React.createClass({
           // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
           url += '?trainee_id='+trainee_id+'&day='+day;
           console.log(url);
-          fetch(url).then(function(response) {  
+          fetch(url).then(function(response) {
             return response.json();
           }).then(function(res) {
             console.log(res);
-            if (res["data"]!=null) {  
+            if (res["data"]!=null) {
               _that.setState({
                 dataSource: ds.cloneWithRows(res["data"]),
                 detailrows:res["data"]
               })
             }else{
-              Alert.alert('Fail to display','Please check your data'); 
+              Alert.alert('Fail to display','Please check your data');
             }
-           });   
+           });
         }else{
-          Alert.alert('Fail to display','Please check your data'); 
+          Alert.alert('Fail to display','Please check your data');
         }
      });
     })
@@ -153,12 +153,12 @@ var DetailPlanView = React.createClass({
       // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
       url += '?trainee_id='+trainee_id+'&day='+day+'&item_id='+item_id+'&sportsize='+sportsize;
       console.log(url);
-      fetch(url).then(function(response) {  
+      fetch(url).then(function(response) {
         return response.json();
       }).then(function(res) {
         console.log(res);
         if (res["data"]==true) {
-          Alert.alert('Submit','Successfully!'); 
+          Alert.alert('Submit','Successfully!');
         }
        });
     })
@@ -193,7 +193,7 @@ var DetailPlanView = React.createClass({
         onClose={() => console.log('===close') }
         scroll={event => this.allowScroll(event)}>
         <View style={styles.li}>
-              <Text style={styles.liText}>{rowData.item_name}Sportsize: {rowData.sportsize}</Text>               
+              <Text style={styles.liText}>{rowData.item_name}Sportsize: {rowData.sportsize}</Text>
         </View>
       </Swipeout>
     );
@@ -206,21 +206,21 @@ var DetailPlanView = React.createClass({
    },
   render: function(){
     return(
-      <ScrollView 
+      <ScrollView
           contentContainerStyle={{flex:1}}
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps="always">
         <View style={styles.maincontain}>
          <View style={[styles.Top,styles.Bottomline]}>
             <View style={[styles.Topbar,styles.Left]}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     onPress={() => _navigator.jumpBack()}>
                   <Image source={require('../img/back.png') }/>
-                 </TouchableOpacity> 
+                 </TouchableOpacity>
             </View>
-            <View style={styles.Topbar}>      
+            <View style={styles.Topbar}>
             </View>
-            <View style={[styles.Topbar,styles.Right]}>    
+            <View style={[styles.Topbar,styles.Right]}>
             </View>
           </View>
           <View style={[styles.header,styles.Bottomline]}>
@@ -235,43 +235,39 @@ var DetailPlanView = React.createClass({
           />
           <View>
             <BottomView {...this.props}/>
-          </View>     
+          </View>
           </View>
       </ScrollView>
     );
   },
 });
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
     justifyContent: 'center',
+    marginTop:20,
+    marginBottom:0
   },
   Bottomline:{
     borderBottomWidth:2,
     borderColor:'gray'
   },
-
   Topbar:{
     flex:1,
     alignItems: 'center',
 
   },
   Left:{
-    position: 'absolute', 
-    top: 5, 
+    position: 'absolute',
+    top: 5,
     left: 5
   },
   Right:{
-    position: 'absolute', 
-    top: 5, 
+    position: 'absolute',
+    top: 5,
     right: 5,
   },
   maincontain:
@@ -279,16 +275,13 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#38bda0',
     flexDirection:'column',
-
   },
   header:{
-
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#fff',
     justifyContent: 'center',
-
   },
   listview: {
     flex: 1,
@@ -301,9 +294,6 @@ var styles = StyleSheet.create({
     paddingLeft: 16,
     paddingTop: 14,
     paddingBottom: 16,
-  },
-  liContainer: {
-    flex: 2,
   },
   liText: {
     color: '#333',

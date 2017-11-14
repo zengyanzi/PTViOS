@@ -23,7 +23,7 @@ t.form.Form.stylesheet.textbox.normal.backgroundColor = '#ecf0f1';
 var Person = t.struct({
   Name: t.String,              // a required string
   surname: t.maybe(t.String),  // an optional string
-  phone:t.maybe(t.Number),  
+  phone:t.maybe(t.Number),
   email:t.String,             // a required number
   password:t.String,            // a required number
   //rememberMe: t.Boolean        // a boolean
@@ -34,7 +34,6 @@ var options = {
       password: true,
       secureTextEntry: true,
     },
-
   }
 }; // optional rendering options (see documentation)
 var TraineeregisterView = React.createClass({
@@ -63,19 +62,19 @@ var TraineeregisterView = React.createClass({
       }).then(function(res){
         console.log(res);
       }).catch((error)=>{
-        Alert.alert('Sorry','Please input your information '); 
+        Alert.alert('Sorry','Please input your information ');
       });
       _navigator.push({
         title:'TraineeloinView',
         id:'traineelogin'
       })
     }else{
-      Alert.alert('Sorry','Please input your information '); 
+      Alert.alert('Sorry','Please input your information ');
     }
   },
   render: function(){
     return (
-      <ScrollView 
+      <ScrollView
             contentContainerStyle={{flex:1}}
             keyboardDismissMode='on-drag'
             keyboardShouldPersistTaps="always"
@@ -100,21 +99,6 @@ var TraineeregisterView = React.createClass({
   }
 });
 var styles = StyleSheet.create({
-  container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-  },
-  Top:{
-    height:50,
-    alignItems: 'center',
-    backgroundColor:'#38bda0',
-    justifyContent: 'center',
-  },
-  WelcomeText:{
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: '#d7499a', 
-  },
  maincontain:
   {
     flex: 10,
@@ -123,20 +107,6 @@ var styles = StyleSheet.create({
     backgroundColor: '#38bda0',
     justifyContent: 'center',
  },
-  birthday:{
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: 'black',
- },
-   logo:{
-    width:160,
-    height:160,
-  },
-  text:{
-    fontWeight: 'bold',
-    fontSize: 14,
-    color: '#241003',
-  },
    buttonText: {
     fontSize: 18,
     color: 'white',
@@ -153,10 +123,9 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
   formstyle:{
-
     borderRadius: 8,
     borderColor: '#2cb395',
-  },  
+  },
   bottom:{
      alignSelf: 'stretch',
      alignItems: 'center',

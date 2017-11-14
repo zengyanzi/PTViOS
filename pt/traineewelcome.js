@@ -30,19 +30,17 @@ var TraineewelcomeView = React.createClass({
     AsyncStorage.setItem("type",'trainee');
     var type = AsyncStorage.getItem('type',(err, result) => {
       console.log(result);
-    });   
+    });
     return {
     };
   },
   render: function(){
     return (
-      <ScrollView 
+      <ScrollView
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps="always"
-      >        
-       <View style={styles.container}>
-       </View>
+      >
        <View style={styles.maincontain}>
          <Image source={require('../img/welcometrainer.png')} style={{width: 280, height: 140}} />
             <View style={styles.choose}>
@@ -65,21 +63,6 @@ var TraineewelcomeView = React.createClass({
   }
 });
 var styles = StyleSheet.create({
-  container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-  },
-  Top:{
-    height:50,
-    alignItems: 'center',
-    backgroundColor:'#38bda0',
-    justifyContent: 'center',
-  },
-  WelcomeText:{
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: '#d7499a', 
-  },
   maincontain:
   {
     flex: 10,
@@ -88,10 +71,6 @@ var styles = StyleSheet.create({
     backgroundColor: '#38bda0',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-   logo:{
-    width:160,
-    height:160,
   },
   choose:{
     flexDirection:'row'
@@ -118,7 +97,7 @@ var styles = StyleSheet.create({
      justifyContent: 'center',
      backgroundColor: '#2cb395',
      height: 50,
-   
+
   },
 });
 

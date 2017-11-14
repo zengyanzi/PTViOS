@@ -43,7 +43,7 @@ var TraineeloginView = React.createClass({
       var url = URLnetowrk+'traineelogin.action';
       // var url = 'http://192.168.20.12:8080/pt_server/traineelogin.action';
       url += '?email='+email+'&password='+password;
-      fetch(url).then(function(response) {  
+      fetch(url).then(function(response) {
         return response.json();
       }).then(function(res){
         console.log(res);
@@ -59,9 +59,9 @@ var TraineeloginView = React.createClass({
           var height=res['data']['height'].toString();
           AsyncStorage.setItem("height",height);
           var initial_weight=res['data']['initial_weight'].toString();
-          AsyncStorage.setItem("initial_weight",initial_weight); 
+          AsyncStorage.setItem("initial_weight",initial_weight);
           var target_weight=res['data']['target_weight'].toString();
-          AsyncStorage.setItem("target_weight",target_weight);             
+          AsyncStorage.setItem("target_weight",target_weight);
           var userid=res['data']['id'].toString();
           AsyncStorage.setItem('userid',userid);
           var bmi=res['data']['bmi'].toString();
@@ -72,27 +72,27 @@ var TraineeloginView = React.createClass({
             id:'Thome'
           });
         }else{
-          Alert.alert('Fail to login','Please check your password');  
+          Alert.alert('Fail to login','Please check your password');
         }
-      });        
+      });
     }else{
-      Alert.alert('Sorry','Please input your information '); 
+      Alert.alert('Sorry','Please input your information ');
     }
   },
  render: function(){
    return (
-      <ScrollView 
+      <ScrollView
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps="always"
-      >  
+      >
         <View style={styles.container}>
           <View style={styles.Top}>
             <Text style={styles.WelcomeText}>Welcome Back to Training</Text>
           </View>
         </View>
         <View style={styles.maincontain}>
-          <Form 
+          <Form
             ref="form"
             type={User}
             options={options}
@@ -130,19 +130,14 @@ var styles = StyleSheet.create({
   WelcomeText:{
     fontWeight: 'bold',
     fontSize: 18,
-    color: '#ffffff', 
+    color: '#ffffff',
   },
-  maincontain:
-  {
+  maincontain:{
     flex: 10,
     paddingLeft: 10,
     paddingRight: 10,
     backgroundColor: '#38bda0',
     justifyContent: 'center',
-  },
-   logo:{
-    width:160,
-    height:160,
   },
   choose:{
     flexDirection:'row'
@@ -151,7 +146,7 @@ var styles = StyleSheet.create({
    height: 40,
    width:200,
    marginTop: 10, //间隔
-   borderWidth: 1, 
+   borderWidth: 1,
    borderRadius: 5, //圆角
    borderColor: 'lightblue'
   },

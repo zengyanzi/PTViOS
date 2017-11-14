@@ -52,16 +52,16 @@ var ThomeView = React.createClass({
       var urlmap =URLnetowrk+'find_mapping.action';//FIND TRAINEES MAPPING STATUS;
       urlmap+= '?trainee_id='+trainee_id;
       console.log(urlmap);
-      fetch(urlmap).then(function(response) {  
+      fetch(urlmap).then(function(response) {
         return response.json();
       }).then(function(res) {
-        console.log(res);   
-      }); 
+        console.log(res);
+      });
     });
   },
- render: function(){ 
+ render: function(){
     return (
-      <ScrollView 
+      <ScrollView
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps='never'
@@ -82,7 +82,7 @@ var ThomeView = React.createClass({
               title="Record"
               renderIcon={() => <Image  source={require('../img/record_normal.png') }/>}
               renderSelectedIcon={() => <Image  source={require('../img/record_pressed.png') }/>}
-              onPress={() => this.setState({ selectedTab: 'Record' })}       
+              onPress={() => this.setState({ selectedTab: 'Record' })}
             >
               <RecordView {...this.props}/>
             </TabNavigator.Item>
@@ -91,16 +91,16 @@ var ThomeView = React.createClass({
               title="Gym"
               renderIcon={() => <Image  source={require('../img/gym_normal.png') }/>}
               renderSelectedIcon={() => <Image  source={require('../img/gym_pressed.png') }/>}
-              onPress={() => this.setState({ selectedTab: 'Gym' })}       
+              onPress={() => this.setState({ selectedTab: 'Gym' })}
             >
-              <GymView {...this.props}/>                       
+              <GymView {...this.props}/>
             </TabNavigator.Item>
             <TabNavigator.Item
               selected={this.state.selectedTab === 'Trainer'}
               title="Trainer"
               renderIcon={() => <Image  source={require('../img/trainer_normal.png') }/>}
               renderSelectedIcon={() => <Image  source={require('../img/trainer_pressed.png') }/>}
-              onPress={() => this.setState({ selectedTab: 'Trainer' })}       
+              onPress={() => this.setState({ selectedTab: 'Trainer' })}
             >
               <TrainerView {...this.props}/>
             </TabNavigator.Item>
@@ -109,7 +109,7 @@ var ThomeView = React.createClass({
               title="Profile"
               renderIcon={() => <Image  source={require('../img/profile_normal.png') }/>}
               renderSelectedIcon={() => <Image source={require('../img/profile_pressed.png') }/>}
-              onPress={() => this.setState({ selectedTab: 'Profile' })}       
+              onPress={() => this.setState({ selectedTab: 'Profile' })}
             >
               <ProfileView {...this.props}/>
             </TabNavigator.Item>
@@ -120,49 +120,12 @@ var ThomeView = React.createClass({
   },
 });
 var styles = StyleSheet.create({
-  container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
-  Top:{
-    flexDirection: 'row',
-    height:50,
-    alignItems: 'center',
-    backgroundColor:'#38bda0',
-    justifyContent: 'center',
-  },
-  Bottomline:{
-    borderBottomWidth:2,
-    borderColor:'gray'
-  },
-  Topbar:{
-    flex:1,
-    alignItems: 'center',
-  },
-  Left:{
-    position: 'absolute', 
-    top: 5, 
-    left: 5
-  },
-  Right:{
-    position: 'absolute', 
-    top: 5, 
-    right: 5,
-  },
-  WelcomeText:{
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: '#d7499a', 
-  },
   maincontain:
   {
     flex: 1,
     backgroundColor: '#38bda0',
     flexDirection:'column',
   },
-  choose:{
-    flexDirection:'row'
-  },
+
 });
 module.exports = ThomeView;

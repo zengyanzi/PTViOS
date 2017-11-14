@@ -538,6 +538,7 @@
 				00E356EF1AD99517003FC87E /* ptviosTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				B91DACF6698047FBAA79F61C /* Resources */,
+				CE4171E01F79C0AE00863DBC /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -569,6 +570,16 @@
 				15BC9B6D50CB42D397CA6F2F /* Zocial.ttf */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		CE4171E01F79C0AE00863DBC /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				5C97CCCA7E784A50BE91ED29 /* libRNSVG.a */,
+				5A9A5E0E99064D3C8B41C22C /* libRNVectorIcons.a */,
+				E46E2ABB9DF44E08B298655A /* libRNImagePicker.a */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		CE75CB771EBC866E0084F212 /* Products */ = {

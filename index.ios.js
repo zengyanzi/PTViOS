@@ -78,7 +78,7 @@ export default class ptvios extends React.Component {
                 var url = URLnetowrk+'instructor/login.action';
                 url += '?email='+email+'&password='+password;
                 console.log(url);
-                fetch(url).then(function(response) {  
+                fetch(url).then(function(response) {
                   return response.json();
                 }).then(function(res) {
                   console.log(res);
@@ -104,7 +104,7 @@ export default class ptvios extends React.Component {
                 var url = URLnetowrk+'traineelogin.action';
                 url += '?email='+email+'&password='+password;
                 console.log(url);
-                fetch(url).then(function(response) {  
+                fetch(url).then(function(response) {
                   return response.json();
                 }).then(function(res) {
                   console.log(res);
@@ -119,7 +119,7 @@ export default class ptvios extends React.Component {
             });
           }
         };
-      }); 
+      });
 
       } else  {
 
@@ -138,7 +138,7 @@ export default class ptvios extends React.Component {
         });
       }
     });
-  
+
     }
   configureScenceAndroid(){
     return Navigator.SceneConfigs.FadeAndroid;
@@ -148,13 +148,11 @@ export default class ptvios extends React.Component {
     _navigator = navigator;
     if(route.id === 'main'){
       return (
-        <ScrollView 
+        <ScrollView
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps='never'
-        >  
-          <View style={styles.container}>
-          </View>
+        >
           <View style={styles.maincontain}>
             <Image source={require('./img/ptv.png')} style={{width: 280, height: 140}}/>
             <View style={styles.choose}>
@@ -325,7 +323,7 @@ export default class ptvios extends React.Component {
       return (
         <PhoneModifyView {...route.params} navigator={navigator} route={route}/>
       );
-    }  
+    }
     if(route.id === 'iphonedmodify'){
       return (
         <IPhoneModifyView {...route.params} navigator={navigator} route={route}/>
@@ -409,26 +407,11 @@ export default class ptvios extends React.Component {
       renderScene={renderScene}/>
    );
   }
- 
+
 
 
 }
 const styles = StyleSheet.create({
-  container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-  },
-  Top:{
-    height:50,
-    alignItems: 'center',
-    backgroundColor:'#f5f2f0',
-    justifyContent: 'center',
-  },
-  WelcomeText:{
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: '#d7499a',
-  },
   maincontain:
   {
     flex: 10,
@@ -437,10 +420,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#38bda0',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-   logo:{
-    width:160,
-    height:160,
   },
   choose:{
     flexDirection:'row'

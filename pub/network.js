@@ -1,5 +1,5 @@
 import React from 'react';
 
-var URLnetowrk = 'http://54.191.60.204:8080/pt_server/';
+var URLnetowrk = 'http://www.thevirtualpt.com:8080/pt_server/';
 
 export default URLnetowrk;
