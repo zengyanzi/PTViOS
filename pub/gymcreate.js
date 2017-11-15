@@ -53,68 +53,68 @@ var Gymcreate = React.createClass({
   },
    _save:function(){
     var value = this.refs.form.getValue();
-    var name = value["name"];
-    var opendate=value["open"];
-    var slogan = value["slogan"];
-    var location = value["location"];
-    var contact =value["contact"];
-    var description=value["description"];
-    var url=URLnetowrk+'create_gym.action'; 
-    url += '?name='+name+'&location='+location+'&opendate='+opendate+'&description='+description+'&contact='+contact+'&slogan='+slogan;
-    console.log(url);
-    fetch(url).then(function(response) {  
-      return response.json();
-    }).then(function(res) {
-      if (res["data"]!=null) {
-        console.log(res);
-          _navigator.push({
-          title:'ThomeView',
-          id:'Thome',
-        })
-      }
-      else{
-         Alert.alert('Fail to display','Please check your data'); 
-      }
-    })          
+    if (value!=null) {
+      var name = value["name"];
+      var opendate=value["open"];
+      var slogan = value["slogan"];
+      var location = value["location"];
+      var contact =value["contact"];
+      var description=value["description"];
+      var url=URLnetowrk+'create_gym.action';
+      url += '?name='+name+'&location='+location+'&opendate='+opendate+'&description='+description+'&contact='+contact+'&slogan='+slogan;
+      console.log(url);
+      fetch(url).then(function(response) {
+        return response.json();
+      }).then(function(res) {
+        if (res["data"]!=null) {
+          console.log(res);
+            _navigator.push({
+            title:'ThomeView',
+            id:'Thome',
+          })
+        }
+        else{
+           Alert.alert('Fail to display','Please check your data');
+        }
+      })
+    }else{
+        Alert.alert('Sorry','Please input your information ');
+    }
+
   },
   render: function(){
     return(
-       <ScrollView 
+       <ScrollView
           contentContainerStyle={{flex:1}}
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps='never'>
         <View style={styles.maincontain}>
           <View style={[styles.Top,styles.Bottomline]}>
             <View style={[styles.Topbar,styles.Left]}>
-              <TouchableOpacity 
-                  onPress={() => _navigator.jumpBack()}>
-                <Image source={require('../img/back.png') }/>
-              </TouchableOpacity> 
+                <TouchableOpacity
+                    onPress={() => _navigator.jumpBack()}>
+                  <Image source={require('../img/back.png') }/>
+                 </TouchableOpacity>
             </View>
             <View style={styles.Topbar}>
-              <Image source={require('../img/ptv_sized.png') }/>
+              <Text style={{color:'#ffffff',fontSize:18,position:'absolute',left:-60}}>Create A New Gym</Text>
             </View>
-              <View style={[styles.Topbar,styles.Right]}>             
+              <View style={[styles.Topbar,styles.Right]}>
             </View>
           </View>
           <View>
-          <Form 
+
+          <Form
               ref="form"
               type={Gym}
           />
-          </View> 
+          </View>
           <View>
             <TouchableOpacity style={styles.btn}
               onPress={this._save}>
-              <Text style={styles.text}>Save</Text>
+              <Text style={{color:'#ffffff',fontSize:18}}>Save</Text>
              </TouchableOpacity>
-          </View> 
-          <View>
-            <TouchableOpacity style={styles.btn}
-             onPress={() =>_navigator.jumpBack()}>
-              <Text style={{color:"white",fontSize:18}}>Back</Text>
-            </TouchableOpacity> 
-          </View>     
+          </View>
         </View>
       </ScrollView>
     );
@@ -122,69 +122,38 @@ var Gymcreate = React.createClass({
 });
 
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
   Top:{
-    flexDirection: 'row',
-    height:50,
-    alignItems: 'center',
-    backgroundColor:'#38bda0',
-    justifyContent: 'center',
-  },
-  Bottomline:{
-    borderBottomWidth:2,
-    borderColor:'gray'
-  },
-
-  Topbar:{
-    flex:1,
-    alignItems: 'center',
-  },
+   flexDirection: 'row',
+   height:50,
+   alignItems: 'center',
+   backgroundColor:'#38bda0',
+   justifyContent: 'space-between',
+   marginTop:20,
+   marginBottom:0
+ },
+ Bottomline:{
+   borderBottomWidth:2,
+   borderColor:'gray',
+ },
+ Topbar:{
+   flex:2,
+   flexDirection: 'row',
+   marginBottom:10,
+ },
   Left:{
-    position: 'absolute', 
-    top: 5, 
-    left: 5
-  },
-  Right:{
-    position: 'absolute', 
-    top: 5, 
-    right: 5,
-  },
+   flexDirection: 'row',
+   marginBottom:0
+ },
+ Right:{
+   position: 'absolute',
+   top: 5,
+   right: 5,
+ },
   maincontain:
   {
     flex: 1,
     backgroundColor: '#38bda0',
     flexDirection:'column',
-  },
-  header:{
-    flexDirection: 'row',
-    height:50,
-    alignItems: 'center',
-    backgroundColor:'#fff',
-    justifyContent: 'center',
-  },
-  listview: {
-    flex: 1,
-  },
-  li: {
-    backgroundColor: '#fff',
-    borderBottomColor: '#38bda0',
-    borderColor: 'transparent',
-    borderWidth: 1,
-    paddingLeft: 16,
-    paddingTop: 14,
-    paddingBottom: 16,
-  },
-  liContainer: {
-    flex: 2,
-  },
-  liText: {
-    color: '#333',
-    fontSize: 16,
-    height:50,
   },
   button: {
     margin:5,

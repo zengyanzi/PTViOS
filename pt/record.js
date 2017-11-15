@@ -230,8 +230,8 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
   },
   Right:{
-  flex:1,
-  flexDirection: 'row',
+    flex:1,
+    flexDirection: 'row',
   },
   listview: {
     flex: 1,

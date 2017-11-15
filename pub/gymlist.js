@@ -39,9 +39,8 @@ var rows = [
   {
     Name:"Jetts",
     text: "Enjoy you and your beauty",
-  } 
+  }
 ];
-
 var GymlistView = React.createClass({
   getInitialState: function(){
     _navigator = this.props.navigator;
@@ -60,7 +59,7 @@ var GymlistView = React.createClass({
       var ds = new ListView.DataSource({rowHasChanged: (row1, row2) => true});
        var url = URLnetowrk+'gym.action';// load gym list
        console.log(url);
-       fetch(url).then(function(response) {  
+       fetch(url).then(function(response) {
          return response.json();
        }).then(function(res) {
          console.log(res);
@@ -70,9 +69,9 @@ var GymlistView = React.createClass({
              rows:res["data"][0]
            });
          }else{
-           Alert.alert('Fail to display','Please check your data'); 
-         }    
-       }); 
+           Alert.alert('Fail to display','Please check your data');
+         }
+       });
    },
 //  set scrolling to true/false
   allowScroll(scrollEnabled) {
@@ -95,12 +94,8 @@ var GymlistView = React.createClass({
       dataSource: this.state.dataSource.cloneWithRows(data),
     });
   },
- 
-
   renderRow(rowData: string, sectionID: number, rowID: number) {
     return (
-
-
         <TouchableOpacity style={styles.btn}
                 onPress={() => _navigator.push({title:'DetailGymView',id:'detailgym',params:{data:rowData}})}>
           <View style={styles.li}>
@@ -108,12 +103,11 @@ var GymlistView = React.createClass({
               <Text style={styles.liText}>Slogan:{rowData.description}</Text>
           </View>
         </TouchableOpacity>
-
     );
   },
   render: function(){
     return(
-       <ScrollView 
+       <ScrollView
           contentContainerStyle={{flex:1}}
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps="always">
@@ -129,43 +123,6 @@ var GymlistView = React.createClass({
 });
 
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
-  Top:{
-    flexDirection: 'row',
-    height:50,
-    alignItems: 'center',
-    backgroundColor:'#38bda0',
-    justifyContent: 'center',
-  },
-  Bottomline:{
-    borderBottomWidth:2,
-    borderColor:'gray'
-  },
-
-  Topbar:{
-    flex:1,
-    alignItems: 'center',
-  },
-  Left:{
-    position: 'absolute', 
-    top: 5, 
-    left: 5
-  },
-  Right:{
-    position: 'absolute', 
-    top: 5, 
-    right: 5,
-  },
-  maincontain:
-  {
-    flex: 1,
-    backgroundColor: '#38bda0',
-    flexDirection:'column',
-  },
   listview: {
     flex: 1,
   },

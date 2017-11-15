@@ -33,16 +33,12 @@ BackAndroid.addEventListener('hardwareBackPress', function() {
   _navigator.pop();
   return true;
 });
-
 const ASPECT_RATIO = width / height;
-
 // (Initial Static Location) Mumbai
 const LATITUDE = 30.5728;
 const LONGITUDE = 104.0668;
-
 const LATITUDE_DELTA = 0.01;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-
 var GymmapView = React.createClass({
   getInitialState() {
     return {
@@ -54,7 +50,6 @@ var GymmapView = React.createClass({
       },
     };
   },
-
   componentDidMount: function() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -83,15 +78,12 @@ var GymmapView = React.createClass({
       this.onRegionChange(newRegion);
     });
   },
-
   componentWillUnmount: function() {
     navigator.geolocation.clearWatch(this.watchID);
   },
-
   onRegionChange(region) {
     this.setState({ region });
   },
-
   render() {
     return (
         <WebView
@@ -101,31 +93,4 @@ var GymmapView = React.createClass({
     );
   },
 });
-
-var styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  map: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  bubble: {
-    backgroundColor: 'rgba(255,255,255,0.7)',
-    paddingHorizontal: 18,
-    paddingVertical: 12,
-    borderRadius: 20,
-  },
-});
-
-
 module.exports = GymmapView;

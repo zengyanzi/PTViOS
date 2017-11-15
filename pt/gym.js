@@ -24,7 +24,7 @@ var width = Dimensions.get('window').width;
 var _navigator ;
 var GymView = React.createClass({
   getInitialState: function(){
-    _navigator = this.props.navigator;  
+    _navigator = this.props.navigator;
     this.state = {
     };
     return {
@@ -35,7 +35,7 @@ var GymView = React.createClass({
     var url = URLnetowrk+'search_gym.action'; // get the item data again
     url+= '?query='+query;
     console.log(url);
-    fetch(url).then(function(response) {  
+    fetch(url).then(function(response) {
        return response.json();
     }).then(function(res) {
       console.log(res);
@@ -56,30 +56,30 @@ var GymView = React.createClass({
   },
   render: function(){
     return(
-      <ScrollView 
+      <ScrollView
           contentContainerStyle={{flex:1}}
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps="always">
         <View style={[styles.Top,styles.Bottomline]}>
-          <TouchableOpacity 
+          <TouchableOpacity
               onPress={() => _navigator.push({title:'Additemtoday',id:'additemtoday'})}>
             <Image source={require('../img/add_pressed.png') }/>
-          </TouchableOpacity> 
+          </TouchableOpacity>
           <View style={styles.Topbar}>
           </View>
           <View style={styles.right}>
-            <TouchableOpacity 
+            <TouchableOpacity
                       onPress={() => _navigator.push({title:'ChartView',id:'chart'})}>
               <Image source={require('../img/chart-pressed.png') }/>
-            </TouchableOpacity> 
+            </TouchableOpacity>
           </View>
         </View>
         <SearchBar
             round
             onSubmitEditing={() => this._search()}
             onChangeText={(text) => this.setState({keyword: text})}
-            placeholder='Find your Gym here' />                          
-        <ScrollableTabView           
+            placeholder='Find your Gym here' />
+        <ScrollableTabView
             initialPage={1}
             renderTabBar={() => <ScrollableTabBar  />}
           >
@@ -93,17 +93,12 @@ var GymView = React.createClass({
                 <GymlistView {...this.props}/>
               </View>
             </ScrollView>
-          </ScrollableTabView>    
+          </ScrollableTabView>
       </ScrollView>
     );
   },
 });
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
   Top:{
     flexDirection: 'row',
     height:50,
@@ -115,31 +110,17 @@ var styles = StyleSheet.create({
     borderBottomWidth:2,
     borderColor:'gray'
   },
-
   Topbar:{
     flex:2,
     flexDirection: 'row',
-
   },
    Left:{
     flex:1,
     flexDirection: 'row',
   },
   Right:{
-  flex:1,
-  flexDirection: 'row',
-
-  },
-  maincontain:
-  {
-    flex: 1,
-    backgroundColor: '#38bda0',
-    flexDirection:'column',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
+    flex:1,
+    flexDirection: 'row',
   },
   tabView: {
     flex: 1,
