@@ -204,19 +204,19 @@ var TCreateplanView = React.createClass({
   },
 });
 var styles = StyleSheet.create({
-   
-  Top:{
+   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-     justifyContent: 'space-between',
+    justifyContent: 'space-between',
+    marginTop:20,
+    marginBottom:0
   },
   Bottomline:{
     borderBottomWidth:2,
     borderColor:'gray'
   },
-
   Topbar:{
     flexDirection: 'row',
 
@@ -249,7 +249,6 @@ var styles = StyleSheet.create({
      backgroundColor: '#2cb395',
      height: 50,
      borderRadius: 5,
-
 
   },
   item: {

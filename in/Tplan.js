@@ -217,42 +217,30 @@ var TPlanView = React.createClass({
   },
 });
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
    Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-     justifyContent: 'space-between',
+    justifyContent: 'space-between',
+    marginTop:20,
+    marginBottom:0
   },
   Bottomline:{
     borderBottomWidth:2,
     borderColor:'gray'
   },
-
   Topbar:{
     flex:2,
     flexDirection: 'row',
-
   },
    Left:{
     flexDirection: 'row',
   },
   Right:{
- position: 'absolute', 
+    position: 'absolute', 
     top: 5, 
     right: 5,
-  },
-  maincontain:
-  {
-    flex: 1,
-    backgroundColor: '#38bda0',
-    flexDirection:'column',
-
   },
   listview: {
     flex: 1,
@@ -266,9 +254,6 @@ var styles = StyleSheet.create({
     paddingTop: 14,
     height:120,
     paddingBottom: 16,
-  },
-  liContainer: {
-    flex: 2,
   },
   liText: {
     color: '#333',

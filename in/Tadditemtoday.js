@@ -109,10 +109,10 @@ _submit:function(){
         <View style={styles.maincontain}>
          <View style={[styles.Top,styles.Bottomline]}>
             <View style={[styles.Topbar,styles.Left]}>
-                <TouchableOpacity 
-                    onPress={() => _navigator.jumpBack()}>
-                  <Image source={require('../img/back.png') }/>
-                 </TouchableOpacity> 
+              <TouchableOpacity 
+                  onPress={() =>  _navigator.jumpBack()}>
+                <Image source={require('../img/back.png') }/>
+              </TouchableOpacity> 
             </View>
             <View style={styles.Topbar}>
               <Image source={require('../img/ptv_sized.png') }/>
@@ -187,17 +187,14 @@ var customStyles2 = StyleSheet.create({
   }
 });
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
-  Top:{
+   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    marginTop:20,
+    marginBottom:0
   },
   Bottomline:{
     borderBottomWidth:2,

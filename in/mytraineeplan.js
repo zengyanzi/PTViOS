@@ -38,24 +38,7 @@ var rows = [
     Calories :"457",
     text: "Row:5min;Treadmill:6min;Xtrainer:5min",
     autoClose: true,
-  }, {
-    day:"2017-02-09",
-    name:"Vincent",
-    Calories :"457",
-    text: "Row:5min;Treadmill:6min;Xtrainer:5min",
-    autoClose: true,
-  }, {
-    day:"2017-02-10",
-    name:"Jenny",
-    Calories :"457",
-    text: "Row:5min;Treadmill:6min;Xtrainer:5min",
-    autoClose: true,
-  }, {
-    day:"2017-02-11",
-    name:"Jenny",
-    Calories :"457",
-    text: "Row:5min;Treadmill:6min;Xtrainer:5min",
-  },  
+  } 
 ];
 
 var MytraineePlanView = React.createClass({
