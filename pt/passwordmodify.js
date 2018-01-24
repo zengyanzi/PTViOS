@@ -101,12 +101,6 @@ var PasswordModifyView = React.createClass({
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps="always">
           <View style={styles.maincontain}>
-            <View style={[styles.Top,styles.Bottomline]}>      
-              <View style={styles.Topbar}>
-              </View>
-              <View style={styles.right}>
-              </View>
-            </View>
            <View >
             <Form 
               ref="form"
@@ -119,10 +113,6 @@ var PasswordModifyView = React.createClass({
               onPress={this._save}>
               <Text style={styles.text}>Save</Text>
             </TouchableOpacity>
-                  <TouchableOpacity style={styles.btn}
-             onPress={() =>_navigator.jumpBack()}>
-              <Text style={{color:"white",fontSize:18}}>Back</Text>
-            </TouchableOpacity>  
           </View>   
         </View>       
       </ScrollView>

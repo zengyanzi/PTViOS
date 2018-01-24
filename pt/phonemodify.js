@@ -31,6 +31,15 @@ var PhoneModifyView = React.createClass({
     };
 
   },
+  componentWillMount() {
+    let _that=this;
+    AsyncStorage.getItem('phone',(err,result)=>{
+       phone=result;
+       _that.setState({
+          phone:phone
+       })
+    })
+  },
   _save:function(){    
       var newPhone=this.state.newPhone
       AsyncStorage.getItem('userid',(err, result) => {
@@ -69,18 +78,14 @@ var PhoneModifyView = React.createClass({
               </View>
             </View>
            <View >
-            <FormLabel labelStyle={{color: '#fff',fontSize:18}}> Origin:{this.props.phone}</FormLabel>
-            <FormInput containerStyle={{borderBottomColor: '#fff',borderBottomWidth:2}} onChangeText={(text) => this.setState({newPhone: text})}/>
+             <FormLabel labelStyle={{color: '#fff',fontSize:18}}> Origin:{this.state.phone}</FormLabel>
+            <FormInput  inputStyle={{color: '#fff',fontSize:18,borderBottomColor: '#fff',borderBottomWidth:2}} onChangeText={(text) => this.setState({newPhone: text})}/>
           </View>   
           <View>
             <TouchableOpacity style={styles.btn}
               onPress={this._save}>
               <Text style={styles.text}>Save</Text>
              </TouchableOpacity>
-            <TouchableOpacity style={styles.btn}
-             onPress={() =>_navigator.jumpBack()}>
-              <Text style={{color:"white",fontSize:18}}>Back</Text>
-            </TouchableOpacity>  
           </View> 
         </View>       
       </ScrollView>
