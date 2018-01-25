@@ -10,13 +10,15 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Picker,
-  Modal,
   ListView
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
+import Modal from 'react-native-modalbox';
 import { List, ListItem } from 'react-native-elements';
-import URLnetowrk from '../pub/network';
+import Description from './description';
+import IGenderModifyView from './igendermodify';
+import IBirthModifyView from './ibirthmodify';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var InstructProfileView = React.createClass({
@@ -91,14 +93,14 @@ var InstructProfileView = React.createClass({
               </List>
             </TouchableOpacity>
             <List>
-              <TouchableOpacity onPress={() => _navigator.push({title:'IGenderModifyView',id:'igendermodify',params:{email:this.state.email}})}>
+              <TouchableOpacity onPress={() =>this.refs.modal2.open()}>
                 <ListItem
                   roundAvatar
                   title='Gender'
                   avatar={require('../img/gender.png')}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => _navigator.push({title:'Description',id:'description',params:{email:this.state.email}})}>
+              <TouchableOpacity onPress={() =>this.refs.modal1.open()}>
                 <ListItem
                   roundAvatar
                   title='Description'
@@ -110,7 +112,7 @@ var InstructProfileView = React.createClass({
                   avatar={require('../img/Heart.png')}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => _navigator.push({title:'IBirthModifyView',id:'ibirthmodify',params:{email:this.state.email}})}>
+              <TouchableOpacity onPress={() =>this.refs.modal3.open()}>
                 <ListItem
                   roundAvatar
                   title='Birthday'
@@ -126,6 +128,21 @@ var InstructProfileView = React.createClass({
             </View>       
           </View> 
         </View>   
+         <Modal style={[styles.modal, styles.modal4]} 
+            position={"center"} ref={"modal1"} 
+            isDisabled={this.state.isDisabled}>
+            <Description {...this.props}/>
+          </Modal>
+          <Modal style={[styles.modal, styles.modal5]} 
+            position={"center"} ref={"modal2"} 
+            isDisabled={this.state.isDisabled}>
+            <IGenderModifyView {...this.props}/>
+          </Modal>   
+          <Modal style={[styles.modal, styles.modal4]} 
+            position={"center"} ref={"modal3"} 
+            isDisabled={this.state.isDisabled}>
+            <IBirthModifyView {...this.props}/>
+          </Modal>    
       </ScrollView>
     );
   },
@@ -185,6 +202,27 @@ var styles = StyleSheet.create({
      backgroundColor: '#2cb395',
      height: 50,
      borderRadius: 5,
-   }
+   },
+   modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modal3: {
+    height: 160,
+    borderRadius:25
+  },
+    modal4: {
+    height: 220,
+    backgroundColor:'#38bda0',
+    borderRadius:25
+  },
+    modal5: {
+    height: 220,
+    borderRadius:25
+  },
+    text: {
+    color: "black",
+    fontSize: 22
+  }
 });
 module.exports = InstructProfileView;

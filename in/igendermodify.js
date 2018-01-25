@@ -52,53 +52,37 @@ var IGenderModifyView = React.createClass({
   
     });
   },
-  render: function(){
+    render: function(){
     return(
-       <ScrollView 
-          contentContainerStyle={{flex:1}}
-          keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps='never'>
-          <View style={styles.maincontain}>
-            <View style={[styles.Top,styles.Bottomline]}>      
-              <View style={styles.Topbar}>
-              </View>
-              <View style={styles.right}>
-              </View>
-            </View>
+
            <View >
             <Picker 
-                prompt="Please choose sportname"
-                style={{width:200,color:'#fff',alignItems:'center'}}
+                style={{width:300}}
+                itemStyle={{color:'#38bda0'}}
                 selectedValue={this.state.gender}
                 onValueChange={(value) => this.setState({gender: value})}>       
                 <Picker.Item label="Male" value="Male" />
                 <Picker.Item label="Female" value="Female" />   
             </Picker>
-          </View>   
-          <View>
+
             <TouchableOpacity style={styles.btn}
               onPress={this._save}>
               <Text style={styles.text}>Save</Text>
              </TouchableOpacity>
           </View> 
-        </View>       
-      </ScrollView>
+
+
     );
   },
 });
 
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-     justifyContent: 'space-between',
+    justifyContent: 'space-between',
   },
   Bottomline:{
     borderBottomWidth:2,
@@ -124,13 +108,14 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#38bda0',
     flexDirection:'column',
+         justifyContent: 'center',
 
   },   
   btn:{
      alignItems: 'center',
      justifyContent: 'center',
      backgroundColor: '#2cb395',
-     marginTop:50,
+     marginTop:10,
      height: 30,
      borderRadius: 5,
    },

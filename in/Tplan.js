@@ -24,21 +24,7 @@ var rows = [
     Calories :"457",
     text: "Row:5min;Treadmill:6min;Xtrainer:5min",
     autoClose: true,
-  }, {
-    Pdate:"2017-02-09",
-    Calories :"457",
-    text: "Row:5min;Treadmill:6min;Xtrainer:5min",
-    autoClose: true,
-  }, {
-    Pdate:"2017-02-10",
-    Calories :"457",
-    text: "Row:5min;Treadmill:6min;Xtrainer:5min",
-    autoClose: true,
-  }, {
-    Pdate:"2017-02-11",
-    Calories :"457",
-    text: "Row:5min;Treadmill:6min;Xtrainer:5min",
-  },
+  }, 
 ];
 var TPlanView = React.createClass({
   getInitialState: function(){
@@ -252,7 +238,6 @@ var styles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 16,
     paddingTop: 14,
-    height:120,
     paddingBottom: 16,
   },
   liText: {

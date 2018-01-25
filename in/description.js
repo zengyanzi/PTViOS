@@ -31,6 +31,21 @@ var Description = React.createClass({
     };
 
   },
+ componentWillMount() {
+    let _that=this;
+    AsyncStorage.getItem('email',(err,result)=>{
+       email=result;
+       _that.setState({
+          email:email
+       })
+    })
+    AsyncStorage.getItem('description',(err,result)=>{
+       description=result;
+       _that.setState({
+          description:description
+       })
+    })
+  },
   _save:function(){    
       var description=this.state.description
       AsyncStorage.getItem('userid',(err, result) => {
@@ -56,19 +71,10 @@ var Description = React.createClass({
     },
   render: function(){
     return(
-       <ScrollView 
-          contentContainerStyle={{flex:1}}
-          keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps='never'>
-          <View style={styles.maincontain}>
-            <View style={[styles.Top,styles.Bottomline]}>      
-              <View style={styles.Topbar}>
-              </View>
-              <View style={styles.right}>
-              </View>
-            </View>
+
+        <View >
            <View >
-            <FormLabel labelStyle={{color: '#fff',fontSize:18}}> Origin:{this.props.phone}</FormLabel>
+            <FormLabel labelStyle={{color: '#fff',fontSize:18}}> Origin:{this.state.phone}</FormLabel>
             <FormInput containerStyle={{borderBottomColor: '#fff',borderBottomWidth:2}} onChangeText={(text) => this.setState({description: text})}/>
           </View>   
           <View>
@@ -78,17 +84,12 @@ var Description = React.createClass({
              </TouchableOpacity>
           </View> 
         </View>       
-      </ScrollView>
+
     );
   },
 });
 
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
   Top:{
     flexDirection: 'row',
     height:50,

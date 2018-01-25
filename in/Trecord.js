@@ -35,21 +35,7 @@ var rows = [
     Calories :"457",
     text: "Row:5min;Treadmill:6min;Xtrainer:5min",
     autoClose: true,
-  }, {
-    day:"2017-03-04",
-    Calories :"457",
-    text: "Row:5min;Treadmill:6min;Xtrainer:5min",
-    autoClose: true,
-  }, {
-    day:"2017-03-05",
-    Calories :"457",
-    text: "Row:5min;Treadmill:6min;Xtrainer:5min",
-    autoClose: true,
-  }, {
-    day:"2017-03-06",
-    Calories :"457",
-    text: "Row:5min;Treadmill:6min;Xtrainer:5min",
-  },
+  }, 
 ];
 var TRecordView = React.createClass({
   getInitialState: function(){
@@ -191,8 +177,16 @@ var TRecordView = React.createClass({
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps='never'>
         <View style={[styles.Top,styles.Bottomline]}>
-       
-        </View>
+          <View style={[styles.Topbar,styles.Left]}>
+              <TouchableOpacity 
+                  onPress={() => _navigator.push({title:'TAddrecordtodayView',id:'Taddrecordtoday',params:{trainee_id:this.props.trainee_id}})}>
+                <Image source={require('../img/add_pressed.png') }/>
+               </TouchableOpacity> 
+          </View>
+          <View style={styles.Topbar}>
+            <Image source={require('../img/ptv_sized.png') }/>
+          </View>
+         </View>
         <View style={[styles.header,styles.Bottomline]}>
           <Image  source={require('../img/plan_normal.png') }/>
           <Text>{this.props.trainee_name}   {this.state.day} </Text>
@@ -212,30 +206,25 @@ var TRecordView = React.createClass({
   },
 });
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
-  Top:{
+   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    marginTop:20,
+    marginBottom:0
   },
   Bottomline:{
     borderBottomWidth:2,
     borderColor:'gray'
   },
-  Topbar:{
-    flex:1,
-    alignItems: 'center',
+ Topbar:{
+    flex:2,
+    flexDirection: 'row',
   },
-  Left:{
-    position: 'absolute', 
-    top: 5, 
-    left: 5
+   Left:{
+    flexDirection: 'row',
   },
   Right:{
     position: 'absolute', 

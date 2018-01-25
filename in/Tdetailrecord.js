@@ -36,17 +36,6 @@ var btnsDefault = [ { text: 'Button' } ];
       Calories :"457",
       text:"Rower Moderate  5 min 30 sec fast:60 sec slow",
       autoClose: true,
-    }, {
-      Calories :"457",
-      text: "Walking Weighted Lunge  Controlled  Light 3 15  60Sec",
-      autoClose: true,
-    }, {
-      Calories :"457",
-      text: "Upper Back 18,29 30-60 sec 1 1",
-      autoClose: true,
-    }, {
-      Calories :"457",
-      text: "Bike Fast  3min  Moderate  15  60Sec",
     },
   ];
 var TDetailRecordView = React.createClass({
@@ -190,17 +179,14 @@ _editplan:function(){
 });
 
 var styles = StyleSheet.create({
-   container:{
-    flex: 1,
-    backgroundColor: '#38bda0',
-    justifyContent: 'center',
-  },
-  Top:{
+   Top:{
     flexDirection: 'row',
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    marginTop:20,
+    marginBottom:0
   },
   Bottomline:{
     borderBottomWidth:2,

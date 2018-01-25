@@ -58,7 +58,6 @@ var GenderModifyView = React.createClass({
 
            <View >
             <Picker 
-                prompt="Please choose sportname"
                 style={{width:300}}
                 itemStyle={{color:'#38bda0'}}
                 selectedValue={this.state.gender}
@@ -84,7 +83,7 @@ var styles = StyleSheet.create({
     height:50,
     alignItems: 'center',
     backgroundColor:'#38bda0',
-     justifyContent: 'space-between',
+    justifyContent: 'space-between',
   },
   Bottomline:{
     borderBottomWidth:2,

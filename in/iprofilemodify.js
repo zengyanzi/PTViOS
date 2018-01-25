@@ -10,14 +10,16 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Picker,
-  Modal,
   TouchableHighlight,
   ListView
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Dimensions from 'Dimensions';
 import { List, ListItem } from 'react-native-elements';
+import Modal from 'react-native-modalbox';
 import URLnetowrk from '../pub/network';
+import IPhoneModifyView from './iphonemodify';
+import IPasswordModifyView from './ipasswordmodify';
 var screenW = Dimensions.get('window').width;
 var _navigator ;
 var IProfileModifyView = React.createClass({
@@ -58,7 +60,7 @@ var IProfileModifyView = React.createClass({
           </View>
           <View >
             <List>
-              <TouchableOpacity onPress={() => _navigator.push({title:'IPhoneModifyView',id:'iphonedmodify',params:{phone:this.state.phone}})}>
+              <TouchableOpacity onPress={() =>this.refs.modal1.open()}>
                 <ListItem
                   roundAvatar
                   title='Modify Phone number'
@@ -69,15 +71,29 @@ var IProfileModifyView = React.createClass({
                   }
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => _navigator.push({title:'IPasswordModifyView',id:'ipasswordmodify',params:{email:this.state.email}})}>
+              <TouchableOpacity onPress={() =>this.refs.modal2.open()}>
               <ListItem
                 roundAvatar
                 title='Modify Password'     
               />
               </TouchableOpacity>
             </List>
-          </View>   
-        </View>   
+          </View>
+            <TouchableOpacity style={styles.btn}
+             onPress={() =>_navigator.jumpBack()}>
+              <Text style={{color:"white",fontSize:18}}>Back</Text>
+            </TouchableOpacity>    
+        </View>
+        <Modal style={[styles.modal, styles.modal3]} 
+          position={"center"} ref={"modal1"} 
+          isDisabled={this.state.isDisabled}>
+          <IPhoneModifyView {...this.props}/>
+        </Modal>
+        <Modal style={[styles.modal, styles.modal3]} 
+          position={"center"} ref={"modal2"} 
+          isDisabled={this.state.isDisabled}>
+          <IPasswordModifyView {...this.props}/>
+        </Modal>   
       </ScrollView>
     );
   },
@@ -128,6 +144,13 @@ var styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     color: '#FFF'
+  },
+  modal: {
+    padding:20
+  },
+  modal3: {
+    height: 320,
+    borderRadius:25
   },
 });
 module.exports = IProfileModifyView;

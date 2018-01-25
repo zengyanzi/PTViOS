@@ -96,17 +96,8 @@ var IPasswordModifyView = React.createClass({
   },
   render: function(){
     return(
-       <ScrollView 
-          contentContainerStyle={{flex:1}}
-          keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps='never'>
+
           <View style={styles.maincontain}>
-            <View style={[styles.Top,styles.Bottomline]}>      
-              <View style={styles.Topbar}>
-              </View>
-              <View style={styles.right}>
-              </View>
-            </View>
            <View >
             <Form 
               ref="form"
@@ -121,7 +112,7 @@ var IPasswordModifyView = React.createClass({
              </TouchableOpacity>
           </View>   
         </View>       
-      </ScrollView>
+
     );
   },
 });

@@ -133,8 +133,13 @@ var PlanCreateView = React.createClass({
         sectionID={sectionID}
         autoClose={rowData.autoClose}
         backgroundColor='transparent'
-        close={!rowData.active}
-        onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
+        onOpen={(sectionID, rowID) => {
+          this.setState({
+            sectionID,
+            rowID,
+          })
+        }}
+        onClose={() => console.log('===close') }
         scroll={event => this.allowScroll(event)}>
           <TouchableHighlight style={styles.li} activeOpacity={0.5} underlayColor = '#2cb395'  onPress={() =>this.setState({planid:rowData.id})}>
             <Text style={styles.liText}>Plan NO: {rowData.id} {rowData.title}</Text>        

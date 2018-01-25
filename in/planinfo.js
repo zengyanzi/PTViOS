@@ -153,8 +153,13 @@ componentWillMount() {
         sectionID={sectionID}
         autoClose={rowData.autoClose}
         backgroundColor={rowData.backgroundColor}
-        close={!rowData.active}
-        onOpen={(sectionID, rowID) => this.handleSwipeout(sectionID, rowID) }
+        onOpen={(sectionID, rowID) => {
+          this.setState({
+            sectionID,
+            rowID,
+          })
+        }}
+        onClose={() => console.log('===close') }
         scroll={event => this.allowScroll(event)}>
         <View style={styles.li}>
               <Text style={styles.liText}>{rowData.itemname} sportsize: {rowData.sportsize}</Text>        

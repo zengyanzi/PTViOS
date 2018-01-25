@@ -37,16 +37,7 @@ detailrows = [
     {
       Calories :"457",
       text:"Rower Moderate  5 min 30 sec fast:60 sec slow",  
-    }, {
-      Calories :"457",
-      text: "Walking Weighted Lunge  Controlled  Light 3 15  60Sec",  
-    }, {
-      Calories :"457",
-      text: "Upper Back 18,29 30-60 sec 1 1",
-    }, {
-      Calories :"457",
-      text: "Bike Fast  3min  Moderate  15  60Sec",      
-    },   
+    },
   ];
 var TDetailPlanView = React.createClass({
   getInitialState: function(){
@@ -282,7 +273,6 @@ var styles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 16,
     paddingTop: 14,
-    height:120,
     paddingBottom: 16,
   },
   liContainer: {
