@@ -208,12 +208,11 @@ var TRecordView = React.createClass({
 var styles = StyleSheet.create({
    Top:{
     flexDirection: 'row',
-    height:50,
+    height:60,
     alignItems: 'center',
     backgroundColor:'#38bda0',
     justifyContent: 'space-between',
-    marginTop:20,
-    marginBottom:0
+    paddingTop:25,
   },
   Bottomline:{
     borderBottomWidth:2,
@@ -222,13 +221,14 @@ var styles = StyleSheet.create({
  Topbar:{
     flex:2,
     flexDirection: 'row',
+    marginBottom:20
   },
    Left:{
     flexDirection: 'row',
   },
   Right:{
-    position: 'absolute', 
-    top: 5, 
+    position: 'absolute',
+    top: 18,
     right: 5,
   },
   maincontain:

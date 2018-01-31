@@ -163,15 +163,15 @@ var TPlanView = React.createClass({
   },
   render: function(){
     return(
-      <ScrollView 
+      <ScrollView
         contentContainerStyle={{flex:1}}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps="always">
          <View>
            <View style={[styles.Top,styles.Bottomline]}>
             <View style={[styles.Topbar,styles.Left]}>
-                <TouchableOpacity >
-                  <Icon   reverse  name='settings'   color='#38bda0' onPress={() => _navigator.push({title:'TCreateplanView',id:'Tcreateplan',params:{trainee_id:this.props.trainee_id}})} />
+                <TouchableOpacity style={{marginBottom:0}} >
+                  <Icon  size={22} reverse  name='settings'   color='#38bda0' onPress={() => _navigator.push({title:'TCreateplanView',id:'Tcreateplan',params:{trainee_id:this.props.trainee_id}})} />
                  </TouchableOpacity> 
             </View>
             <View style={styles.Topbar}>
@@ -205,27 +205,27 @@ var TPlanView = React.createClass({
 var styles = StyleSheet.create({
    Top:{
     flexDirection: 'row',
-    height:50,
+    height:60,
     alignItems: 'center',
     backgroundColor:'#38bda0',
     justifyContent: 'space-between',
-    marginTop:20,
-    marginBottom:0
+    paddingTop:25,
   },
   Bottomline:{
     borderBottomWidth:2,
-    borderColor:'gray'
+    borderColor:'gray',
   },
   Topbar:{
     flex:2,
     flexDirection: 'row',
+    marginBottom:20
   },
    Left:{
     flexDirection: 'row',
   },
   Right:{
-    position: 'absolute', 
-    top: 5, 
+    position: 'absolute',
+    top: 18,
     right: 5,
   },
   listview: {
